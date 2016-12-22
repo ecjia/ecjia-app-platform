@@ -23,13 +23,13 @@ class admin_switch extends ecjia_admin {
 	    
 	    if (platform_account::getCurrentUUID($platform) == $uuid) {
 	        $url = $_SERVER['HTTP_REFERER'];
-	        return $this->showmessage("当前已在【{$account['name']}】公众号中！", ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $url));
+	        return $this->showmessage(sprintf(RC_Lang::get('platform::platform.exists_public'), $account['name']), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $url));
 	    }
 
 	    platform_account::setCurrentUUID($platform, $uuid);
 	    
 		$url = $_SERVER['HTTP_REFERER'];
-		return $this->showmessage("正在切换【{$account['name']}】公众号中，请稍等……", ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $url));
+		return $this->showmessage(sprintf(RC_Lang::get('platform::platform.switch_public'), $account['name']), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $url));
 	}
 }
 
