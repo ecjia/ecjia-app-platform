@@ -149,7 +149,7 @@ class admin_extend extends ecjia_admin {
 		$this->db_extend->where(array('ext_code' => $code))->update($data);
 		
 		ecjia_admin::admin_log($ext_name, 'stop', 'platform_extend');
-		return $this->showmessage("RC_Lang::get('platform::platform.plugin')<strong>RC_Lang::get('platform::platform.disabled')</strong>", ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin_extend/init')));
+		return $this->showmessage(RC_Lang::get('platform::platform.plugin').'<strong>'.RC_Lang::get('platform::platform.disabled').'</strong>', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin_extend/init')));
 	}
 	
 	/**
@@ -166,7 +166,7 @@ class admin_extend extends ecjia_admin {
 		$this->db_extend->where(array('ext_code' => $code))->update($data);
 	
 		ecjia_admin::admin_log($ext_name, 'use', 'platform_extend');
-		return $this->showmessage("RC_Lang::get('platform::platform.plugin')<strong>RC_Lang::get('platform::platform.enabled')</strong>", ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin_extend/init')));
+		return $this->showmessage(RC_Lang::get('platform::platform.plugin').'<strong>'.RC_Lang::get('platform::platform.enabled').'</strong>', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin_extend/init')));
 	}
 	
 	/**
