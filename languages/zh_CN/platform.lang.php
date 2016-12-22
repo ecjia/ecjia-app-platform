@@ -183,7 +183,7 @@ return array(
     'edit_pub_help'             => '关于编辑公众号帮助文档',
     'pub_extend_help'           => '关于公众号扩展帮助文档',
     'pub_editext_help'          => '关于公众号编辑扩展帮助文档',
-    'exists_public'             => '当前已在【%s}】公众号中！',
+    'exists_public'             => '当前已在【%s】公众号中！',
     'switch_public'             => '正在切换【%s】公众号中，请稍等……',
     
     
