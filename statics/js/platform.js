@@ -241,6 +241,9 @@
                     }
                 },    
 				submitHandler:function(){
+					if ($form.children('button').css('display') == 'none') {
+						return false;
+					}
 					$form.ajaxSubmit({
 						dataType : "json",
 						success : function(data) {
