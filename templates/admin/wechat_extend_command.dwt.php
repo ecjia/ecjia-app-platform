@@ -8,7 +8,7 @@
 		[
 			[1,'<input type="text" class="txt w180" name="newcmd_word[]">'],
 			[1,'<input type="text" class="txt w180" name="newsub_code[]">'],
-			[1,'<a class="ecjiafc-red cursor_pointer l_h30" title="取消" data-toggle="remove-node"><i class="fontello-icon-cancel"></i></a>']
+			[1,'<a class="ecjiafc-red cursor_pointer l_h30" title="取消" data-toggle="remove-node"><i class="command_icon fontello-icon-cancel"></i></a>']
 		]
 	]
 	{literal}
@@ -85,15 +85,15 @@
 						<td><input class="w180" type="text" name="cmd_word" value="{$module.cmd_word}"></td>
 						<td><input class="w180" type="text" name="sub_code" value="{$module.sub_code}"></td>
 						<td>
-							<a class="cursor_pointer" data-toggle="edit_toggle" data-href='{RC_Uri::url("platform/admin_command/update", "code={$code}&account_id={$module.account_id}&cmd_id={$module.cmd_id}")}' title="{lang key='system::system.edit'}"><i class="fontello-icon-ok l_h30"></i></a>
-							<a class="data-pjax" href='{RC_Uri::url("platform/admin_command/init", "code={$code}&account_id={$module.account_id}")}' title="{lang key='platform::platform.close'}"><i class="fontello-icon-cancel l_h30"></i></a>
+							<a class="cursor_pointer" data-toggle="edit_toggle" data-href='{RC_Uri::url("platform/admin_command/update", "code={$code}&account_id={$module.account_id}&cmd_id={$module.cmd_id}")}' title="{lang key='system::system.edit'}"><i class="command_icon fontello-icon-ok l_h30"></i></a>
+							<a class="data-pjax" href='{RC_Uri::url("platform/admin_command/init", "code={$code}&account_id={$module.account_id}")}' title="{lang key='platform::platform.close'}"><i class="command_icon fontello-icon-cancel l_h30"></i></a>
 						</td>
 						<!-- {else} -->
 						<td>{$module.cmd_word}</td>
 						<td>{$module.sub_code}</td>
 						<td>
-							<a class="cursor_pointer" data-toggle="edit_toggle" data-href='{RC_Uri::url("platform/admin_command/init", "code={$code}&account_id={$module.account_id}&cmd_id={$module.cmd_id}")}' title="{lang key='system::system.edit'}"><i class="fontello-icon-edit"></i></a>
-							<a class="ajaxremove" data-toggle="ajaxremove" data-msg="{lang key='platform::platform.sure_del_command'}" href='{RC_Uri::url("platform/admin_command/remove", "cmd_id={$module.cmd_id}")}' title="{lang key='platform::platform.remove'}"><i class="fontello-icon-trash"></i></a>
+							<a class="cursor_pointer" data-toggle="edit_toggle" data-href='{RC_Uri::url("platform/admin_command/init", "code={$code}&account_id={$module.account_id}&cmd_id={$module.cmd_id}")}' title="{lang key='system::system.edit'}"><i class="command_icon fontello-icon-edit"></i></a>
+							<a class="ajaxremove" data-toggle="ajaxremove" data-msg="{lang key='platform::platform.sure_del_command'}" href='{RC_Uri::url("platform/admin_command/remove", "cmd_id={$module.cmd_id}")}' title="{lang key='platform::platform.remove'}"><i class="command_icon fontello-icon-trash"></i></a>
 						</td>
 						<!-- {/if} -->
 					</tr>

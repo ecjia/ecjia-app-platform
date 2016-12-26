@@ -204,12 +204,12 @@
 				$('.btn-gebo').show();
 			}
 			
-			$('.fontello-icon-edit').on('click', function(e){
+			$('.command_icon.fontello-icon-edit').on('click', function(e){
 				var url = $(this).parent().attr('data-href'); 
 				ecjia.pjax(url);
 			});
 			
-			$('.fontello-icon-ok').on('click', function(e){
+			$('.command_icon.fontello-icon-ok').on('click', function(e){
 				var url = $(this).parent().attr('data-href'); 
 				var cmd_word = $("input[name='cmd_word']").val();
 				var sub_code = $("input[name='sub_code']").val();
