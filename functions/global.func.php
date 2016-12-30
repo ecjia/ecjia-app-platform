@@ -1,4 +1,6 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 	function assign_adminlog_content() {
 		ecjia_admin_log::instance()->add_object('platform_extend', RC_Lang::get('platform::platform.function_extension'));
 		ecjia_admin_log::instance()->add_object('wechat', RC_Lang::get('platform::platform.platform_num'));

@@ -1,4 +1,6 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 class platform_account {
     protected static $uuid_pool = array();
     

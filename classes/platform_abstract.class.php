@@ -1,4 +1,6 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 帐号连接抽象类
  * @author royalwang
