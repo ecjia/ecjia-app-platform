@@ -1,5 +1,7 @@
 <?php
+
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 公众平台插件卸载
  * @author royalwang

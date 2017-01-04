@@ -1,8 +1,9 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 公众平台命令速查
  */
-defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_command extends ecjia_admin {
 	private $command_viewdb;

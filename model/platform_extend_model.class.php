@@ -7,7 +7,6 @@ class platform_extend_model extends Component_Model_Model {
 		$this->table_name = 'platform_extend';
 		parent::__construct();
 	}
-
 }
 
 // end

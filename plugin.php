@@ -37,7 +37,6 @@ class plugin extends ecjia_front {
 	        $handle->action();
 	    }
 	}
-
 }
 
 // end

@@ -12,7 +12,6 @@ class platform_installer  extends ecjia_installer {
         parent::__construct($id);
     }
     
-    
     public function install() {
         $table_name = 'platform_account';
         if (!RC_Model::make()->table_exists($table_name)) {
@@ -79,7 +78,6 @@ class platform_installer  extends ecjia_installer {
         return true;
     }
     
-    
     public function uninstall() {
         $table_name = 'platform_account';
         if (RC_Model::make()->table_exists($table_name)) {
@@ -103,7 +101,6 @@ class platform_installer  extends ecjia_installer {
         
         return true;
     }
-    
 }
 
 // end

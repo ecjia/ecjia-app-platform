@@ -6,6 +6,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * @author royalwang
  *
  */ 
+ 
 abstract class platform_abstract {
     
     protected $configure = array();

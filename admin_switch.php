@@ -1,10 +1,9 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
 
 /**
  * ECJIA切换公众号
  */
-
-defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_switch extends ecjia_admin {
 

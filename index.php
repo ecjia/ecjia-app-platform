@@ -22,7 +22,6 @@ class index extends ecjia_api {
            echo 'NO ACCESS';
        }
 	}
-
 }
 
 // end

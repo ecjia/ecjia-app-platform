@@ -7,7 +7,6 @@ class platform_config_model extends Component_Model_Model {
 		$this->table_name = 'platform_config';
 		parent::__construct();
 	}
-
 }
 
 // end

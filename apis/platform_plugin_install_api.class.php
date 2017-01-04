@@ -1,9 +1,11 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 公众平台插件安装API
  * @author royalwang
  */
+ 
 class platform_plugin_install_api extends Component_Event_Api 
 {
 	
@@ -76,7 +78,6 @@ class platform_plugin_install_api extends Component_Event_Api
 	        return true;
 	    }
 	}
-	
 }
 
 // end

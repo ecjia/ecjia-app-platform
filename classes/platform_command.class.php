@@ -44,7 +44,6 @@ class platform_command {
             return false;
         }
     }
-    
 }
 
 // end

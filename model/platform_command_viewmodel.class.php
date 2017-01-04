@@ -1,7 +1,6 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
 
-
 class platform_command_viewmodel extends Component_Model_View {
 	public $table_name = '';
 	public $view = array();
@@ -24,7 +23,6 @@ class platform_command_viewmodel extends Component_Model_View {
 		
 		parent::__construct();
 	}
-
 }
 
 // end

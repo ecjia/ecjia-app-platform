@@ -7,7 +7,6 @@ class platform_command_model extends Component_Model_Model {
 		$this->table_name = 'platform_command';
 		parent::__construct();
 	}
-
 }
 
 // end
