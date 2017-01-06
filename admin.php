@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJIA平台、公众号配置
  */
-
 class admin extends ecjia_admin {
 	private $db_platform_account;
 	private $db_extend;
@@ -425,6 +424,7 @@ class admin extends ecjia_admin {
 	 */
 	public function wechat_extend_edit() {
 		$this->admin_priv('platform_extend_update');
+		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.edit_pub_extend')));
 		
 		ecjia_screen::get_current_screen()->add_help_tab(array(

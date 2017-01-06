@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJIA 功能扩展
  */
-
 class admin_extend extends ecjia_admin {
 	private $db_extend;
 	private $db_command;

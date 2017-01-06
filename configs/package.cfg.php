@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * 公众平台应用
  */
-
 return array(
 	'identifier' 	=> 'ecjia.platform',
 	'directory' 	=> 'platform',

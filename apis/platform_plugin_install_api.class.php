@@ -5,7 +5,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * 公众平台插件安装API
  * @author royalwang
  */
- 
 class platform_plugin_install_api extends Component_Event_Api 
 {
 	
@@ -65,7 +64,7 @@ class platform_plugin_install_api extends Component_Event_Api
 	                'ext_name' 		=> $format_name,
 	                'ext_desc' 		=> $format_description,
 	                'ext_config' 	=> $connect_config,
-	                'enabled' 		    => 1,
+	                'enabled' 		=> 1,
 	            );
 	            $db->insert($data);
 	        }

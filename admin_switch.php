@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJIA切换公众号
  */
-
 class admin_switch extends ecjia_admin {
 
 	public function __construct() {

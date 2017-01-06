@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * 公众平台命令速查
  */
-
 class admin_command extends ecjia_admin {
 	private $command_viewdb;
 	private $db_platform_account;

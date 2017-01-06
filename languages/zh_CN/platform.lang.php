@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJIA 应用语言包
  */
-
 return array(
     /*API*/
     'platform_num_manage'    => '公众号管理',
