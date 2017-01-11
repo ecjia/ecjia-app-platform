@@ -97,6 +97,7 @@ abstract class platform_abstract {
             /* 循环插件中所有属性 */
             if (!empty($forms)) {
                 foreach ($forms as $key => $value) {
+                    //todo 语言包升级待确认
                     $ext_config[$key]['desc'] = RC_Lang::lang($value['name'] . '_desc') ? RC_Lang::lang($value['name'] . '_desc') : '';
                     $ext_config[$key]['label'] = RC_Lang::lang($value['name']);
                     $ext_config[$key]['name'] = $value['name'];
@@ -110,6 +111,7 @@ abstract class platform_abstract {
                      
                     if ($ext_config[$key]['type'] == 'select' ||
                         $ext_config[$key]['type'] == 'radiobox') {
+                        //todo 语言包升级待确认
                             $ext_config[$key]['range'] = RC_Lang::lang($ext_config[$key]['name'] . '_range');
                         }
                 }
