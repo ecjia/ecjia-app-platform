@@ -224,8 +224,7 @@ class admin extends ecjia_admin {
 		if (!empty($wechat['logo'])) {
 			$wechat['logo'] = RC_Upload::upload_url($wechat['logo']);
 		}
-		
-		$url = RC_Uri::site_url().'/?uuid='.$wechat['uuid'];
+		$url = RC_Uri::home_url().'/sites/platform/?uuid='.$wechat['uuid'];
 		$this->assign('wechat', $wechat);
 		$this->assign('url', $url);
 	
