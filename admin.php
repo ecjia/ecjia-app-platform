@@ -157,7 +157,7 @@ class admin extends ecjia_admin {
 	 * 添加公众号处理
 	 */
 	public function insert() {
-		$this->admin_priv('platform_config_add');
+		$this->admin_priv('platform_config_add', ecjia::MSGTYPE_JSON);
 		
 		if (empty($_POST['platform'])) {
 			return $this->showmessage(RC_Lang::get('platform::platform.select_terrace'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -238,7 +238,7 @@ class admin extends ecjia_admin {
 	 * 编辑公众号处理
 	 */
 	public function update() {
-		$this->admin_priv('platform_config_update');
+		$this->admin_priv('platform_config_update', ecjia::MSGTYPE_JSON);
 		
 		$id = isset($_POST['id']) ? intval($_POST['id']) : 0;
 		if (empty($_POST['platform'])) {
@@ -288,7 +288,7 @@ class admin extends ecjia_admin {
 	 * 删除公众号
 	 */
 	public function remove()  {
-		$this->admin_priv('platform_config_delete');
+		$this->admin_priv('platform_config_delete', ecjia::MSGTYPE_JSON);
 		
 		$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 		$info = $this->db_platform_account->where(array('id' => $id))->field('name, logo')->find();
@@ -314,7 +314,7 @@ class admin extends ecjia_admin {
 	 * 删除logo
 	 */
 	public function remove_logo() {
-		$this->admin_priv('platform_config_update');
+		$this->admin_priv('platform_config_update', ecjia::MSGTYPE_JSON);
 		
 		$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 		$info = $this->db_platform_account->where(array('id' => $id))->field('name,logo')->find();
@@ -338,7 +338,7 @@ class admin extends ecjia_admin {
 	 * 切换状态
 	 */
 	public function toggle_show() {
-		$this->admin_priv('platform_config_update');
+		$this->admin_priv('platform_config_update', ecjia::MSGTYPE_JSON);
 		
 		$id	 = intval($_POST['id']);
 		$val = intval($_POST['val']);
@@ -357,7 +357,7 @@ class admin extends ecjia_admin {
 	 * 手动排序
 	 */
 	public function edit_sort() {
-		$this->admin_priv('platform_config_update');
+		$this->admin_priv('platform_config_update', ecjia::MSGTYPE_JSON);
 	
 		$id    = intval($_POST['pk']);
 		$sort  = trim($_POST['value']);
@@ -432,7 +432,7 @@ class admin extends ecjia_admin {
 	 * 公众号扩展插入
 	 */
 	public function wechat_extend_insert() {
-		$this->admin_priv('platform_extend_add');
+		$this->admin_priv('platform_extend_add', ecjia::MSGTYPE_JSON);
 		
 		$id = !empty($_POST['id']) ? intval($_POST['id']) : 0;
 		if (empty($_POST['ext_code'])) {
@@ -515,7 +515,7 @@ class admin extends ecjia_admin {
 	 * 编辑扩展功能处理
 	 */
 	public function wechat_extend_save() {
-		$this->admin_priv('platform_extend_update');
+		$this->admin_priv('platform_extend_update', ecjia::MSGTYPE_JSON);
 		
 		$account_id = !empty($_POST['account_id']) ? intval($_POST['account_id']) : 0;
 		$ext_code = !empty($_POST['ext_code']) ? trim($_POST['ext_code']) : '';
@@ -548,7 +548,7 @@ class admin extends ecjia_admin {
 	 * 删除公众号扩展
 	 */
 	public function wechat_extend_remove() {
-		$this->admin_priv('platform_extend_delete');
+		$this->admin_priv('platform_extend_delete', ecjia::MSGTYPE_JSON);
 		
 		$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 		$ext_code = !empty($_GET['code']) ? trim($_GET['code']) : '';
@@ -571,7 +571,7 @@ class admin extends ecjia_admin {
 	 * 批量删除
 	 */
 	public function batch_remove() {
-		$this->admin_priv('platform_extend_delete');
+		$this->admin_priv('platform_extend_delete', ecjia::MSGTYPE_JSON);
 		
 		$idArr	= explode(',', $_POST['id']);
 		$count	= count($idArr);

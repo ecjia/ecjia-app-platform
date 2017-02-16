@@ -183,7 +183,7 @@ class admin_command extends ecjia_admin {
 	 * 添加公众号扩展下的命令
 	 */
 	public function insert() {
-		$this->admin_priv('platform_command_add');
+		$this->admin_priv('platform_command_add', ecjia::MSGTYPE_JSON);
 	
 		$code = !empty($_GET['code']) ? trim($_GET['code']) : '';
 		$account_id = !empty($_GET['account_id']) ? intval($_GET['account_id']) : 0;
@@ -237,7 +237,7 @@ class admin_command extends ecjia_admin {
 	 * 更新公众号扩展下的命令
 	 */
 	public function update() {
-		$this->admin_priv('platform_command_update');
+		$this->admin_priv('platform_command_update', ecjia::MSGTYPE_JSON);
 	
 		$cmd_word 	= !empty($_POST['cmd_word']) 	? trim($_POST['cmd_word']) 	: '';
 		$sub_code 	= !empty($_POST['sub_code']) 	? trim($_POST['sub_code']) 	: '';
@@ -273,7 +273,7 @@ class admin_command extends ecjia_admin {
 	 * 删除公众号扩展下的命令
 	 */
 	public function remove() {
-		$this->admin_priv('platform_command_delete');
+		$this->admin_priv('platform_command_delete', ecjia::MSGTYPE_JSON);
 	
 		$cmd_id = intval($_GET['cmd_id']);
 		$data = $this->db_command->find(array('cmd_id' => $cmd_id));

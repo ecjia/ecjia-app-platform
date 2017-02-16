@@ -156,7 +156,7 @@ class admin_extend extends ecjia_admin {
 	 * 编辑扩展功能处理
 	 */
 	public function save() {
-		$this->admin_priv('extend_update');
+		$this->admin_priv('extend_update', ecjia::MSGTYPE_JSON);
 
 		$data['ext_name'] = trim($_POST['ext_name']);
 		$data['ext_desc'] = trim($_POST['ext_desc']);
@@ -184,7 +184,7 @@ class admin_extend extends ecjia_admin {
 	 * 禁用扩展处理
 	 */
 	public function disable() {
-		$this->admin_priv('extend_update');
+		$this->admin_priv('extend_update', ecjia::MSGTYPE_JSON);
 	
 		$code = trim($_GET['code']);
 		$ext_name = $this->db_extend->where(array('ext_code' =>$code))->get_field('ext_name');
@@ -201,7 +201,7 @@ class admin_extend extends ecjia_admin {
 	 * 启用扩展处理
 	 */
 	public function enable() {
-		$this->admin_priv('extend_update');
+		$this->admin_priv('extend_update', ecjia::MSGTYPE_JSON);
 	
 		$code = trim($_GET['code']);
 		$ext_name = $this->db_extend->where(array('ext_code' =>$code))->get_field('ext_name');
