@@ -253,7 +253,7 @@ class admin_command extends ecjia_admin {
 		$count = $this->db_command->where(array('account_id' => $account_id, 'cmd_word' => $cmd_word, 'cmd_id' => array('neq' => $cmd_id)))->count();
 	
 		if ($count != 0) {
-			return $this->showmessage(sprintf(RC_Lang::get('platform::platform.keywords_exist'), $v), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(sprintf(RC_Lang::get('platform::platform.keywords_exist'), $cmd_word), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	
 		$data = array(

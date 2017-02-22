@@ -188,8 +188,8 @@ class admin extends ecjia_admin {
 			'appsecret'	=>	$_POST['appsecret'],
 			'aeskey'	=>	$_POST['aeskey'],
 			'add_time'	=>	RC_Time::gmtime(),
-			'sort'		=>	$_POST['sort'],
-			'status'	=>	$_POST['status'],
+			'sort'		=>	intval($_POST['sort']),
+			'status'	=>	intval($_POST['status']),
 		);
 	
 		$id = $this->db_platform_account->insert($data);
@@ -273,8 +273,8 @@ class admin extends ecjia_admin {
 			'appid'		=>	$_POST['appid'],
 			'appsecret'	=>	$_POST['appsecret'],
 			'aeskey'	=>	$_POST['aeskey'],
-			'sort'		=>	$_POST['sort'],
-			'status'	=>	$_POST['status'],
+			'sort'		=>	intval($_POST['sort']),
+			'status'	=>	intval($_POST['status']),
 		);
 	
 		$this->db_platform_account->where(array('id' => $id))->update($data);
