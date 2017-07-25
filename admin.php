@@ -598,6 +598,8 @@ class admin extends ecjia_admin {
 			$where[]= "name LIKE '%" . mysql_like_quote($filter['keywords']) . "%'";
 		}
 		
+		$where['platform'] = array('neq' => 'weapp');
+		
 		$platform = !empty($_GET['platform']) ? $_GET['platform'] : '';
 		if (!empty($platform)) {
 			$where['platform'] = $platform;
