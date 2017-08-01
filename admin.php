@@ -88,6 +88,7 @@ class admin extends ecjia_admin {
 		RC_Script::enqueue_script('goods-colorpicker-script', RC_Uri::admin_url('statics/lib/colorpicker/bootstrap-colorpicker.js'), array());
 		
 		RC_Script::enqueue_script('platform', RC_App::apps_url('statics/js/platform.js', __FILE__), array(), false, true);
+		RC_Script::enqueue_script('generate_token', RC_App::apps_url('statics/js/generate_token.js', __FILE__), array(), false, true);
 		RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
 		RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
 		
@@ -582,6 +583,15 @@ class admin extends ecjia_admin {
 		}
 		$this->db_platform_account->where(array('id' => $idArr))->delete();
 		return $this->showmessage(RC_Lang::get('platform::platform.deleted')."[ ".$count." ]".RC_Lang::get('platform::platform.record_account'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/init')));
+	}
+	
+	/**
+	 * 生成token
+	 */
+	public function generate_token() {
+		$key = rc_random(16, 'abcdefghijklmnopqrstuvwxyz0123456789');
+		$key = 'ecjia'.$key;
+		return $this->showmessage('生成token成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('token' => $key));
 	}
 	
 	/**
