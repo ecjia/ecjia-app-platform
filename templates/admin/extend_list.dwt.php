@@ -35,12 +35,15 @@
 				<div class="edit-list">
 					<a class="data-pjax" href='{RC_Uri::url("platform/admin_command/extend_command", "code={$module.ext_code}")}' title="{lang key='platform::platform.help_command'}">{lang key='platform::platform.help_command'}</a>&nbsp;|&nbsp;
 					<a class="data-pjax" href='{RC_Uri::url("platform/admin_plugin/edit", "code={$module.ext_code}")}' title="{lang key='platform::platform.edit'}">{lang key='platform::platform.edit'}</a>&nbsp;|&nbsp;
-					<a class="switch ecjiafc-red" href="javascript:;" data-url='{RC_Uri::url("platform/admin_plugin/disable", "code={$module.ext_code}")}' title="{lang key='platform::platform.forbidden'}">{lang key='platform::platform.forbidden'}</a>
+					
+					{assign var=platform_disable value=RC_Uri::url('platform/admin_plugin/disable',"code={$module.ext_code}")}
+					<a class="ecjiafc-red ajaxall" href="{$platform_disable}" data-url="{$platform_disable}" title="{lang key='platform::platform.forbidden'}">{lang key='platform::platform.forbidden'}</a>
 				</div>
 			<!-- {else} -->
 				{$module.ext_code}
 				<div class="edit-list">
-					<a class="switch" href="javascript:;" data-url='{RC_Uri::url("platform/admin_plugin/enable", "code={$module.ext_code}")}' title="{lang key='platform::platform.start_using'}">{lang key='platform::platform.start_using'}</a>
+					{assign var=platform_enable value=RC_Uri::url('platform/admin_plugin/enable',"code={$module.ext_code}")}
+					<a class="ajaxall" href="{$platform_enable}" data-url="{$platform_enable}" title="{lang key='platform::platform.start_using'}">{lang key='connect::connect.enable'}</a>
 				</div>
 			<!-- {/if} -->
 			</td>
