@@ -53,7 +53,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
 class platform_plugin_menu_api extends Component_Event_Api {
 	
 	public function call(&$options) {	
-		$menus = ecjia_admin::make_admin_menu('platform_list', '功能扩展', RC_Uri::url('platform/admin_plugin/init'), 1)->add_purview('platform_extend_manage')->add_base('platform');
+		$menus = ecjia_admin::make_admin_menu('platform_list', '公众平台', RC_Uri::url('platform/admin_plugin/init'), 1)->add_purview('platform_extend_manage')->add_base('platform');
 
 		return $menus;
 	}

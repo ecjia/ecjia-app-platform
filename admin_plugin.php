@@ -81,7 +81,7 @@ class admin_plugin extends ecjia_admin {
 		RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
 		
 		RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.function_extend'), RC_Uri::url('platform/admin_plugin/init')));
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('公众平台', RC_Uri::url('platform/admin_plugin/init')));
 		ecjia_screen::get_current_screen()->set_parentage('platform', 'platform/admin_plugin.php');
 		
 	}
@@ -92,8 +92,7 @@ class admin_plugin extends ecjia_admin {
 	public function init () {
 		$this->admin_priv('extend_manage');
 		
-		ecjia_screen::get_current_screen()->remove_last_nav_here();
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.function_extend')));
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here("功能扩展"));
 		ecjia_screen::get_current_screen()->add_help_tab(array(
 			'id'		=> 'overview',
 			'title'		=> RC_Lang::get('platform::platform.summarize'),
@@ -105,7 +104,7 @@ class admin_plugin extends ecjia_admin {
 			'<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:功能扩展#.E5.8A.9F.E8.83.BD.E6.89.A9.E5.B1.95" target="_blank">'.RC_Lang::get('platform::platform.function_extend_help').'</a>') . '</p>'
 		);
 		
-		$this->assign('ur_here', RC_Lang::get('platform::platform.function_extend'));
+		$this->assign('ur_here', '公众平台-功能扩展');
 		
 		$modules = $this->exts_list();
 		$this->assign('modules', $modules);
