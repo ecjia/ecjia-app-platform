@@ -25,7 +25,7 @@
 	<!-- {block name="meta"} --><!-- {/block} -->
     <!-- {ecjia:hook id=platform_head} -->
 </head>
-<body>
+<body class="vertical-layout vertical-content-menu 2-columns fixed-navbar  menu-expanded pace-done">
     <!-- start:wrapper -->
         <!-- {block name="common_header"} -->
         <!-- #BeginLibraryItem "/library/common_header.lbi" --><!-- #EndLibraryItem -->
@@ -34,6 +34,10 @@
         <!-- start:main -->
         <div class="app-content content">
         	<div class="content-wrapper">
+        		<div class="content-header row">
+        			<!-- #BeginLibraryItem "/library/common_sidebar.lbi" --><!-- #EndLibraryItem -->
+        		</div>
+        		<!-- #BeginLibraryItem "/library/common_sidebar.lbi" --><!-- #EndLibraryItem -->
 	            <div class="content-body">
 	                <!-- start:breadcrumb -->
 	                <!-- {ecjia:hook id=platform_print_main_header} -->
@@ -41,7 +45,6 @@
 	                <!-- {block name="home-content"} --><!-- {/block} -->
 	                <!-- {ecjia:hook id=platform_print_main_bottom} -->
 	            </div>
-	            <!-- #BeginLibraryItem "/library/common_sidebar.lbi" --><!-- #EndLibraryItem -->
             </div>
         </div>
         <!-- end:main -->

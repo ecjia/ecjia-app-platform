@@ -81,7 +81,7 @@ class ecjia_platform_loader {
 		$scripts->add( 'ecjia-platform-visitor-data',   			$base_url.'/platform/data/jvector/visitor-data.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-chart',   					$base_url.'/platform/vendors/js/charts/chart.min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-jquery-sparkline',   		$base_url.'/platform/vendors/js/charts/jquery.sparkline.min.js', array(), false, 1 );
-		$scripts->add( 'ecjia-platform-unslider',  					$base_url.'platform/vendors/js/extensions/unslider-min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-unslider',  					$base_url.'/platform/vendors/js/extensions/unslider-min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-app-menu', 					$base_url.'/platform/js/core/app-menu.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-app',    					$base_url.'/platform/js/core/app.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-customizer',					$base_url.'/platform/js/scripts/customizer.js', array(), false, 1 );
