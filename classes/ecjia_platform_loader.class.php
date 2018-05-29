@@ -63,38 +63,30 @@ class ecjia_platform_loader {
 
 		$scripts->remove('jquery');
 		$scripts->remove('bootstrap');
+		
+		$scripts->add( 'ecjia-platform-vendors', 	$base_url.'/platform/vendors/js/vendors.min.js' );
 
-		$scripts->add( 'bootstrap', 		        $base_url.'/mh-js/bootstrap.min.js' );
-		$scripts->add( 'jquery', 			        $base_url.'/mh-js/jquery-1.11.1.min.js' );
-		$scripts->add( 'ecjia-merchant', 			$base_url.'/ecjia/ecjia-merchant.js', array('jquery', 'ecjia') );
-		$scripts->add( 'ecjia-merchant-ui', 		$base_url.'/ecjia/ecjia-merchant-ui.js', array('jquery', 'ecjia') );
+		$scripts->add( 'ecjia-platform', 			$base_url.'/ecjia/ecjia-platform.js', array('jquery', 'ecjia') );
+		$scripts->add( 'ecjia-platform-ui',			$base_url.'/ecjia/ecjia-platform-ui.js', array('jquery', 'ecjia') );
 
-		// 添加 merchant-template-js
-		$scripts->add( 'ecjia-mh-jquery-customSelect',   $base_url.'/mh-js/jquery.customSelect.min.js', array('jquery'), false, 1 );
-
-	    $scripts->add( 'ecjia-mh-jquery-dcjqaccordion',  $base_url.'/mh-js/jquery.dcjqaccordion.2.7.min.js', array('jquery'), false, 1 );
-
-		$scripts->add( 'ecjia-mh-jquery-nicescroll',     $base_url.'/mh-js/jquery.nicescroll.js', array('jquery'), false, 1 );
-		$scripts->add( 'ecjia-mh-jquery-scrollTo',  $base_url.'/mh-js/jquery.scrollTo.min.js', array('jquery'), false, 1 );
-		$scripts->add( 'ecjia-mh-jquery-sparkline', $base_url.'/mh-js/jquery.sparkline.js', array('jquery'), false, 1 );
-		$scripts->add( 'ecjia-mh-jquery-stepy',     $base_url.'/mh-js/jquery.stepy.js', array('jquery'), false, 1 );
-		$scripts->add( 'ecjia-mh-jquery-tagsinput', $base_url.'/mh-js/jquery.tagsinput.js', array('jquery'), false, 1 );
-		$scripts->add( 'ecjia-mh-jquery-validate',  $base_url.'/mh-js/jquery.validate.min.js', array('jquery'), false, 1 );
-		$scripts->add( 'ecjia-mh-jquery-actual',   	$base_url.'/mh-js/jquery-actual.min.js', array('jquery'), false, 1 );
-		$scripts->add( 'ecjia-mh-jquery-migrate',   $base_url.'/mh-js/jquery-migrate.min.js', array('jquery'), false, 1 );
-		$scripts->add( 'ecjia-mh-jquery-quicksearch',   $base_url.'/mh-js/jquery.quicksearch.js', array('jquery'), false, 1 );
-
-		$scripts->add( 'ecjia-mh-jquery-easy-pie-chart',  $base_url.'/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js', array('jquery'), false, 1 );
-
-		$scripts->add( 'ecjia-mh-owl-carousel',     $base_url.'/mh-js/owl.carousel.js', array(), false, 1 );
-		$scripts->add( 'ecjia-mh-respond',          $base_url.'/mh-js/respond.min.js', array(), false, 1 );
-		$scripts->add( 'ecjia-mh-sparkline-chart',  $base_url.'/mh-js/sparkline-chart.js', array(), false, 1 );
-
-		$scripts->add( 'ecjia-mh-chosen-jquery',    $base_url.'/assets/chosen/chosen.jquery.min.js', array(), false, 1 );
-		$scripts->add( 'ecjia-mh-chart',    $base_url.'/assets/Chart/Chart.min.js', array(), false, 1 );
-
-		$scripts->add( 'ecjia-mh-bootstrap-fileupload-js',	$base_url.'/assets/bootstrap-fileupload/bootstrap-fileupload.js', array(), false, 1 );
-		$scripts->add( 'ecjia-mh-editable-js',    $base_url.'/assets/x-editable/bootstrap-editable/js/bootstrap-editable.min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-jquery-sticky', 	$base_url.'/platform/vendors/js/ui/jquery.sticky.js', array(), false, 1 );
+	    $scripts->add( 'ecjia-platform-headroom', 		$base_url.'/platform/vendors/js/ui/headroom.min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-jquery-knob',    $base_url.'/platform/vendors/js/extensions/jquery.knob.min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-knob',  			$base_url.'/platform/js/scripts/extensions/knob.js', array(), false, 1 );
+		
+		$scripts->add( 'ecjia-platform-raphael', 					$base_url.'/platform/vendors/js/charts/raphael-min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-morris',     				$base_url.'/platform/vendors/js/charts/morris.min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-jquery-jvectormap', 			$base_url.'/platform/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-jquery-jvectormap-world',  	$base_url.'/platform/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-visitor-data',   			$base_url.'/platform/data/jvector/visitor-data.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-chart',   					$base_url.'/platform/vendors/js/charts/chart.min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-jquery-sparkline',   		$base_url.'/platform/vendors/js/charts/jquery.sparkline.min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-unslider',  					$base_url.'/platform/vendors/js/extensions/unslider-min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-app-menu', 					$base_url.'/platform/js/core/app-menu.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-app',    					$base_url.'/platform/js/core/app.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-customizer',					$base_url.'/platform/js/scripts/customizer.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-breadcrumbs-with-stats',    	$base_url.'/platform/js/scripts/ui/breadcrumbs-with-stats.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-dashboard-analytics',    	$base_url.'/platform/js/scripts/pages/dashboard-analytics.js', array(), false, 1 );
 	}
 
 
@@ -119,27 +111,18 @@ class ecjia_platform_loader {
 		$styles->remove('bootstrap');
 		$styles->remove('bootstrap-reset');
 
-		$styles->add( 'bootstrap',         	              $base_url."/mh-css/bootstrap.min.css" );
-		$styles->add( 'bootstrap-reset',                  $base_url."/mh-css/bootstrap-reset.css" );
-		$styles->add( 'ecjia-merchant-ui',		          $base_url."/mh-css/ecjia-merchant.ui.css", array('bootstrap') );
-
-		// lib css
-		$styles->add( 'ecjia-mh-font-awesome',            $base_url."/mh-css/font-awesome.min.css" );
-		$styles->add( 'ecjia-mh-owl-carousel',            $base_url."/mh-css/owl.carousel.css" );
-		$styles->add( 'ecjia-mh-owl-theme',               $base_url."/mh-css/owl.theme.css" );
-		$styles->add( 'ecjia-mh-owl-transitions',         $base_url."/mh-css/owl.transitions.css" );
-		$styles->add( 'ecjia-mh-table-responsive',        $base_url."/mh-css/table-responsive.css" );
-
-		$styles->add( 'ecjia-mh-jquery-easy-pie-chart',   $base_url."/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" );
-
-		$styles->add( 'ecjia-mh-function',         		  $base_url."/mh-css/ecjia.function.css" );
-		$styles->add( 'ecjia-mh-page',         		      $base_url."/mh-css/page.css" );
-		$styles->add( 'ecjia-mh-chosen',         		  $base_url."/assets/chosen/chosen.css" );
-
-		$styles->add( 'googleapis-fonts',         	      $base_url."/mh-css/fonts/fonts.googleapis.css" );
-
-		$styles->add( 'ecjia-mh-bootstrap-fileupload-css', $base_url."/assets/bootstrap-fileupload/bootstrap-fileupload.css" );
-		$styles->add( 'ecjia-mh-editable-css', $base_url.'/assets/x-editable/bootstrap-editable/css/bootstrap-editable.css' );
+		$styles->add( 'ecjia-platform-vendors',           $base_url."/platform/css/vendors.css" );
+		$styles->add( 'ecjia-platform-jquery-jvectormap', $base_url."/platform/vendors/css/charts/jquery-jvectormap-2.0.3.css" );
+		$styles->add( 'ecjia-platform-morris',		      $base_url."/platform/vendors/css/charts/morris.css" );
+		$styles->add( 'ecjia-platform-unslider',          $base_url."/platform/vendors/css/extensions/unslider.css" );
+		$styles->add( 'ecjia-platform-climacons',         $base_url."/platform/vendors/css/weather-icons/climacons.min.css" );
+		$styles->add( 'ecjia-platform-app',               $base_url."/platform/css/app.css" );
+		
+		$styles->add( 'ecjia-platform-vertical-content-menu', 	$base_url."/platform/css/core/menu/menu-types/vertical-content-menu.css" );
+		$styles->add( 'ecjia-platform-palette-gradient',     	$base_url."/platform/css/core/colors/palette-gradient.css" );
+		$styles->add( 'ecjia-platform-clndr',   				$base_url."/platform/css/plugins/calendars/clndr.css" );
+		$styles->add( 'ecjia-platform-palette-climacon',    	$base_url."/platform/css/core/colors/palette-climacon.css" );
+		$styles->add( 'ecjia-platform-users',         		  	$base_url."/platform/css/pages/users.css" );
 	}
 
 
