@@ -35,7 +35,6 @@
         <div class="app-content content">
         	<div class="content-wrapper">
         		<div class="content-header row">
-        			<!-- #BeginLibraryItem "/library/common_sidebar.lbi" --><!-- #EndLibraryItem -->
         		</div>
         		<!-- #BeginLibraryItem "/library/common_sidebar.lbi" --><!-- #EndLibraryItem -->
 	            <div class="content-body">
