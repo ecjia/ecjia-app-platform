@@ -46,12 +46,28 @@
 //
 namespace Ecjia\App\Platform\Frameworks\Controller;
 
+use ecjia;
 use ecjia_base;
 use ecjia_template_fileloader;
+use ecjia_update_cache;
+use ecjia_admin_menu;
+use ecjia_view;
+use admin_nav_here;
+
 use RC_Loader;
 use RC_Lang;
 use RC_Config;
 use RC_Hook;
+use RC_Session;
+use RC_Cookie;
+use RC_Script;
+use RC_Style;
+use RC_App;
+use RC_Api;
+use Smarty;
+
+use Ecjia\App\Platform\Frameworks\Component\Screen;
+use Ecjia\App\Platform\Frameworks\Component\Loader;
 
 //定义在后台
 define('IN_PLATFORM', true);
@@ -85,11 +101,11 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 		}
 
 		// Catch plugins that include admin-header.php before admin.php completes.
-		if ( empty( ecjia_platform_screen::$current_screen ) ) {
-		    ecjia_merchant_screen::set_current_screen();
+		if ( empty( Screen::$current_screen ) ) {
+		    Screen::set_current_screen();
 		}
 
-		RC_Hook::add_action('platform_print_main_header', array(ecjia_merchant_screen::$current_screen, 'render_screen_meta'));
+		RC_Hook::add_action('platform_print_main_header', array(Screen::$current_screen, 'render_screen_meta'));
 
 		$this->public_route = array(
 // 		    'staff/privilege/login',
@@ -123,7 +139,7 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 		if (!$this->_check_login()) {
 		    RC_Session::destroy();
 		    if (is_pjax()) {
-		        ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('系统提示')));
+		        Screen::$current_screen->add_nav_here(new admin_nav_here(__('系统提示')));
 		        return $this->showmessage(RC_Lang::get('system::system.priv_error'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => array(array('text' => __('重新登录'), 'href' => RC_Uri::url('staff/privilege/login')))));
 		    } elseif (is_ajax()) {
 		        return $this->showmessage(RC_Lang::get('system::system.priv_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -140,54 +156,17 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 
 		$rc_script = RC_Script::instance();
 		$rc_style = RC_Style::instance();
-		ecjia_merchant_loader::default_scripts($rc_script);
-		ecjia_merchant_loader::default_styles($rc_style);
+		Loader::default_scripts($rc_script);
+		Loader::default_styles($rc_style);
 
 		$this->load_cachekey();
 
 		$this->load_default_script_style();
-		$staff_avatar = RC_DB::table('staff_user')->where('user_id', RC_Session::get('staff_id'))->pluck('avatar');
 		
-		$this->assign('ecjia_staff_logo', $staff_avatar);
 		$this->assign('ecjia_merchant_cptitle', RC_Session::get('store_name'));
 		$this->assign('ecjia_merchant_cpname', RC_Session::get('store_name'));
 		$this->assign('ecjia_main_static_url', $this->get_main_static_url());
 		$this->assign('ecjia_system_static_url', RC_Uri::system_static_url() . '/');
-		
-		//头部左侧通知
-		$count = RC_DB::table('notifications')->where('notifiable_id', $_SESSION['staff_id'])->whereNull('read_at')->count();
-		$list = RC_DB::table('notifications')->where('notifiable_id', $_SESSION['staff_id'])->whereNull('read_at')->get();
-		if (!empty($list)) {
-			foreach ($list as $k => $v) {
-				if (!empty($v['data'])) {
-					$content = json_decode($v['data'], true);
-					$list[$k]['content'] = $content['body'];
-				}
-			}
-		}
-		$this->assign('ecjia_merchant_notice_count', $count);
-		$this->assign('ecjia_merchant_notice_list', $list);
-		
-		//底部右侧网店信息
-		$shopinfo_list = RC_DB::table('article')
-			->select('article_id', 'title')
-	    	->where('cat_id', 0)
-	    	->where('article_type', 'shop_info')
-	    	->orderby('article_id', 'asc')
-	    	->get();
-		$this->assign('ecjia_merchant_shopinfo_list', $shopinfo_list);
-		
-		//店铺导航背景图
-		$background_url = RC_DB::table('merchants_config')->where('store_id', $_SESSION['store_id'])->where('code', 'shop_nav_background')->pluck('value');
-		$disk = RC_Filesystem::disk();
-		if (!empty($background_url) && $disk->exists(RC_Upload::upload_path($background_url))) {
-			$background_url = RC_Upload::upload_url($background_url);
-		}
-		$this->assign('background_url', $background_url);
-		
-		//左侧qq链接中的site
-		$http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
-		$this->assign('http_host', $http_host);
 		
 		RC_Hook::do_action('ecjia_merchant_finish_launching');
 	}
