@@ -111,6 +111,7 @@ class ecjia_platform_loader {
 		$styles->remove('bootstrap');
 		$styles->remove('bootstrap-reset');
 
+		$styles->add( 'ecjia-platform-googleapis',           $base_url."/platform/css/googleapis.css" );
 		$styles->add( 'ecjia-platform-vendors',           $base_url."/platform/css/vendors.css" );
 		$styles->add( 'ecjia-platform-jquery-jvectormap', $base_url."/platform/vendors/css/charts/jquery-jvectormap-2.0.3.css" );
 		$styles->add( 'ecjia-platform-morris',		      $base_url."/platform/vendors/css/charts/morris.css" );

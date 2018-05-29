@@ -454,7 +454,7 @@ abstract class ecjia_platform extends ecjia_base implements ecjia_template_filel
 
 	public final function load_default_script_style() {
 		// 加载样式
-	    // Bootstrap framework
+		RC_Style::enqueue_style('ecjia-platform-googleapis');
 	    RC_Style::enqueue_style('ecjia-platform-vendors');
 	    RC_Style::enqueue_style('ecjia-platform-jquery-jvectormap');
 	    RC_Style::enqueue_style('ecjia-platform-morris');
