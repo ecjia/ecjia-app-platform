@@ -6,8 +6,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-	
-	
 	<title>{block name="title"}{if $ur_here}{$ur_here}{/if}{if $ecjia_platform_cptitle} - {$ecjia_platform_cptitle}{/if}{/block}</title>
 	<meta name="description" content="{ecjia::config('')}" />
 	<meta name="keywords" content="{ecjia::config('')}" />
@@ -30,24 +28,26 @@
         <!-- {block name="common_header"} -->
         <!-- #BeginLibraryItem "/library/common_header.lbi" --><!-- #EndLibraryItem -->
         <!-- {/block} -->
-
+        
         <!-- start:main -->
         <div class="app-content content">
         	<div class="content-wrapper">
         		<div class="content-header row">
+        			<!-- start:breadcrumb -->
+	                <!-- {ecjia:hook id=platform_print_main_header} -->
+	                <!-- end:breadcrumb -->
         		</div>
         		<!-- #BeginLibraryItem "/library/common_sidebar.lbi" --><!-- #EndLibraryItem -->
 	            <div class="content-body">
-	                <!-- start:breadcrumb -->
-	                <!-- {ecjia:hook id=platform_print_main_header} -->
-	                <!-- end:breadcrumb -->
-	                <!-- {block name="home-content"} --><!-- {/block} -->
+	                <!-- {block name="home-content"} -->
+	                
+	                <!-- {/block} -->
 	                <!-- {ecjia:hook id=platform_print_main_bottom} -->
 	            </div>
             </div>
         </div>
         <!-- end:main -->
-
+        
         <!-- {block name="common_footer"} -->
         <!-- #BeginLibraryItem "/library/common_footer.lbi" --><!-- #EndLibraryItem -->
         <!-- {/block} -->
