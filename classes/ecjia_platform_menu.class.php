@@ -49,7 +49,7 @@ use RC_Object;
 defined('IN_ECJIA') or exit('No permission resources.');
 
 /**
- * ECJia 商家后台菜单管理
+ * ECJia 公众平台后台菜单管理
  * @author royalwang
  */
 class ecjia_platform_menu extends RC_Object {
@@ -59,9 +59,9 @@ class ecjia_platform_menu extends RC_Object {
     public function __construct()
     {
         if (defined('RC_SITE')) {
-            $this->cacheKey = 'merchant_menus' . constant('RC_SITE');
+            $this->cacheKey = 'platform_menus' . constant('RC_SITE');
         } else {
-            $this->cacheKey = 'merchant_menus';
+            $this->cacheKey = 'platform_menus';
         }
     }
 
@@ -94,7 +94,7 @@ class ecjia_platform_menu extends RC_Object {
 
     /**
      * 后台菜单 （key => value）
-     * key: merchant	商家
+     * key: platform	公众平台
      * @var array
      */
     public final function admin_menu() {
@@ -155,7 +155,7 @@ class ecjia_platform_menu extends RC_Object {
      * 清除后台菜单缓存
      */
     public function clean_admin_menu_cache() {
-        RC_Cache::app_cache_delete($this->cacheKey, 'merchant');
+        RC_Cache::app_cache_delete($this->cacheKey, 'platform');
     }
 
     /**
@@ -163,16 +163,16 @@ class ecjia_platform_menu extends RC_Object {
      */
     protected function load_menu()
     {
-        $cache_menus = RC_Cache::app_cache_get($this->cacheKey, 'merchant');
+        $cache_menus = RC_Cache::app_cache_get($this->cacheKey, 'platform');
         if (! empty($cache_menus)) {
             return $cache_menus;
         }
          
         $apps = ecjia_app::installed_app_floders();
 
-        $menus['merchant'] = $this->_request_admin_menu($apps, 'merchant_menu');
+        $menus['platform'] = $this->_request_admin_menu($apps, 'platform_menu');
 
-        RC_Cache::app_cache_set($this->cacheKey, $menus, 'merchant');
+        RC_Cache::app_cache_set($this->cacheKey, $menus, 'platform');
 
         return $menus;
     }
