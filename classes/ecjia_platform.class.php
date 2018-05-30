@@ -454,6 +454,9 @@ abstract class ecjia_platform extends ecjia_base implements ecjia_template_filel
 
 	public final function load_default_script_style() {
 		// 加载样式
+		
+		RC_Style::enqueue_style('ecjia-platform-ui');
+		
 		RC_Style::enqueue_style('ecjia-platform-googleapis');
 	    RC_Style::enqueue_style('ecjia-platform-vendors');
 	    RC_Style::enqueue_style('ecjia-platform-jquery-jvectormap');
@@ -461,19 +464,20 @@ abstract class ecjia_platform extends ecjia_base implements ecjia_template_filel
 	    RC_Style::enqueue_style('ecjia-platform-unslider');
 	    RC_Style::enqueue_style('ecjia-platform-climacons');
 	    RC_Style::enqueue_style('ecjia-platform-app');
+	    
+	    RC_Style::enqueue_style('ecjia-platform-function');
+	    
 	    RC_Style::enqueue_style('ecjia-platform-vertical-content-menu');
 	    RC_Style::enqueue_style('ecjia-platform-palette-gradient');
 	    RC_Style::enqueue_style('ecjia-platform-clndr');
 	    RC_Style::enqueue_style('ecjia-platform-palette-climacon');
 	    RC_Style::enqueue_style('ecjia-platform-users');
 
-		// 加载脚本
-		// jquery
+		
+	    RC_Script::enqueue_script('ecjia');
+	    RC_Script::enqueue_script('jquery-pjax');
+
 		RC_Script::enqueue_script('ecjia-platform-vendors');
-
-		// jquery pjax
-		RC_Script::enqueue_script('jquery-pjax');
-
 		RC_Script::enqueue_script('ecjia-platform-jquery-sticky');
 		RC_Script::enqueue_script('ecjia-platform-headroom');
 		RC_Script::enqueue_script('ecjia-platform-jquery-knob');
@@ -494,8 +498,8 @@ abstract class ecjia_platform extends ecjia_base implements ecjia_template_filel
 		RC_Script::enqueue_script('ecjia-platform-breadcrumbs-with-stats');
 		RC_Script::enqueue_script('ecjia-platform-dashboard-analytics');
 
-		RC_Script::enqueue_script('ecjia-merchant');
-		RC_Script::enqueue_script('ecjia-merchant-ui');
+		RC_Script::enqueue_script('ecjia-platform');
+		RC_Script::enqueue_script('ecjia-platform-ui');
 
 // 		$admin_jslang = array(
 // 			'display_sidebar'	=> __('显示侧边栏'),

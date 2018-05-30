@@ -396,6 +396,6 @@
 		ecjia.platform_ui.re_select_all();
 	});
 	
-	$(ecjia.platform_ui.init).on('pjax.end', '.main_content', ecjia.platform_ui.init);
+	$(ecjia.platform_ui.init).on('pjax.end', '.content-body', ecjia.platform_ui.init);
 	
 })(ecjia, jQuery);

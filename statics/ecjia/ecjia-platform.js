@@ -5,9 +5,10 @@
 	ecjia.platform = {
 			
 		init : function() {
-	        $('html').addClass('loadding').find('.main_content').css('opacity',1);
+	        $('html').addClass('loadding').find('.content-body').css('opacity',1);
+	        
 	        setTimeout(function(){
-	        	$('html').removeClass('pjaxLoadding-busy loadding').find('.main_content').css('transition','all 0 ease 0');
+	        	$('html').removeClass('pjaxLoadding-busy loadding').find('.content-body').css('transition','all 0 ease 0');
 	        }, 500);
 
             /* 设置ajax提交默认项 */ 
@@ -20,11 +21,11 @@
 			ecjia.platform.alert_go();
 
 			/* to top */
-			$().UItoTop({inDelay:200,outDelay:200,scrollSpeed: 500});
+//			$().UItoTop({inDelay:200,outDelay:200,scrollSpeed: 500});
 
 			$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
 			
-			ecjia.platform.search();
+//			ecjia.platform.search();
 		},
 		
 		/* ecjia platform下，默认的option参数 */
@@ -90,20 +91,17 @@
 				state		: 'success',											/* state 信息状态 */
 				links		: false,												/* links 链接对象 */
 				close		: true,													/* close 是否可以关闭 */
-				$areaobj	: $('.breadcrumb') || $('.main_content'),				/* $areaobj 显示提示信息的地方 */
-				areaobj		: $('.breadcrumb') ? '.breadcrumb' : '.main_content',	/* areaobj 显示提示信息的地方的名称 */
+				$areaobj	: $('.breadcrumb') || $('.content-body'),				/* $areaobj 显示提示信息的地方 */
+				areaobj		: $('.breadcrumb') ? '.breadcrumb' : '.content-body',	/* areaobj 显示提示信息的地方的名称 */
 				pjaxurl		: '',													/* pjax刷新页面后显示message的时候传递的pjaxURL参数 */
 				close_self	: 5000,													/* 自动关闭提示内容 */
 			};
-
 			var options = $.extend({}, defaults, options);
-
 			var tmp = '<p>';
 
 			if (!options.message) {
 				options.message = (options.state == 'error') ? admin_lang.fail : admin_lang.success;
 			}
-
 			options.state = (options.state == 'error')? 'alert-danger': 'alert-success';
 
 			if (options.links) {
@@ -114,20 +112,14 @@
 				options.message = '<p>' + options.message + '</p>' + tmp;
 			}
 			var _close = options.close ? '<a class="close" data-dismiss="alert">×</a>' : '';
-
 			var alert_obj = $('<div class="staticalert alert alert-dismissable ' + options.state + ' ui_showmessage">' + _close + options.message + '</div>');
 			
 			options.close_self >= 1000 && !options.links && window.setTimeout(function() {alert_obj.remove();}, options.close_self);
-
 			options.pjaxurl &&  ecjia.pjax(options.pjaxurl,function() { $(options.areaobj).after(alert_obj); return; });
 
 			$('.ui_showmessage').find('.close').parent().remove();
 			options.$areaobj.after(alert_obj);
 			$('#toTop').trigger('click');
-
-				// var alert_obj = $('<div class="staticalert alert '+options.state+' ui_showmessage">' + _close + options.message + '</div>');
-				// var alert_obj = $('<div class="staticalert alert '+options.state+' ui_showmessage">' + _close + options.message + '</div>');
-				// $('#toTop').trigger('click');
 		},
 
 
@@ -201,31 +193,31 @@
 			}
 		},
 		
-		search : function () {
-			$('.search_query').quicksearch(
-				$('.search-nav li' ),
-				{
-					onAfter : function(){
-						if ($.trim($('.search_query').val()) == '') {
-							$('.search-nav').css('display','none');
-							$('.search-nav li').not('.search_query_none').removeClass('isShow').css('display','none');
-						} else {
-							$('.search-nav').css('display','');
-							$('.search-nav .isShow').length == 0 ? ($('.search_query').val() == '' ? $('.search_query_none').html('<a href="javascript:;">请先输入搜索信息</a>').show() : $('.search_query_none').html('<a href="javascript:;">未搜索到导航信息</a>').show()) : $('.search_query_none').hide();
-						}
-						return;
-					},
-					show: function () {
-						this.style.display = "";
-						$(this).addClass('isShow');
-					},
-					hide: function () {
-						this.style.display = "none";
-						$(this).removeClass('isShow');
-					},
-				}
-			);
-		}
+//		search : function () {
+//			$('.search_query').quicksearch(
+//				$('.search-nav li' ),
+//				{
+//					onAfter : function(){
+//						if ($.trim($('.search_query').val()) == '') {
+//							$('.search-nav').css('display','none');
+//							$('.search-nav li').not('.search_query_none').removeClass('isShow').css('display','none');
+//						} else {
+//							$('.search-nav').css('display','');
+//							$('.search-nav .isShow').length == 0 ? ($('.search_query').val() == '' ? $('.search_query_none').html('<a href="javascript:;">请先输入搜索信息</a>').show() : $('.search_query_none').html('<a href="javascript:;">未搜索到导航信息</a>').show()) : $('.search_query_none').hide();
+//						}
+//						return;
+//					},
+//					show: function () {
+//						this.style.display = "";
+//						$(this).addClass('isShow');
+//					},
+//					hide: function () {
+//						this.style.display = "none";
+//						$(this).removeClass('isShow');
+//					},
+//				}
+//			);
+//		}
 	};
 
     ecjia.pjaxloadding = function() {
@@ -236,7 +228,7 @@
 		/* PJAX基础配置项 */
 		ecjia.pjaxoption = {
 			timeout: 10000,
-			container: '.main_content', /* 内容替换的容器 */
+			container: '.content-body', /* 内容替换的容器 */
 			cache: false,  /* 是否使用缓存 */
 			storage: false,  /* 是否使用本地存储 */
 			titleSuffix: '' /* 标题后缀 */

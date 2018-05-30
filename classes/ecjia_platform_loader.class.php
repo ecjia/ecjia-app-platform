@@ -64,10 +64,12 @@ class ecjia_platform_loader {
 		$scripts->remove('jquery');
 		$scripts->remove('bootstrap');
 		
-		$scripts->add( 'bootstrap', 		        $base_url.'/platform/js/bootstrap.min.js' );
+// 		$scripts->add( 'bootstrap', 		        $base_url.'/platform/js/bootstrap.min.js' );
 		$scripts->add( 'jquery', 			        $base_url.'/platform/js/jquery-1.11.1.min.js' );
-		$scripts->add( 'ecjia-platform', 			$base_url.'/ecjia/ecjia-platform.js');
-		$scripts->add( 'ecjia-platform-ui',			$base_url.'/ecjia/ecjia-platform-ui.js');
+
+		$scripts->add( 'ecjia-p', 					RC_Uri::system_static_url().'/lib/ecjia-js/ecjia.js', array('jquery') );
+		$scripts->add( 'ecjia-platform', 			$base_url.'/ecjia/ecjia-platform.js', array('ecjia-p') );
+		$scripts->add( 'ecjia-platform-ui',			$base_url.'/ecjia/ecjia-platform-ui.js', array('ecjia-p') );
 		
 		$scripts->add( 'ecjia-platform-vendors', 	$base_url.'/platform/vendors/js/vendors.min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-jquery-sticky', 	$base_url.'/platform/vendors/js/ui/jquery.sticky.js', array(), false, 1 );
@@ -112,13 +114,16 @@ class ecjia_platform_loader {
 		$styles->remove('bootstrap');
 		$styles->remove('bootstrap-reset');
 
-		$styles->add( 'ecjia-platform-googleapis',           $base_url."/platform/css/googleapis.css" );
-		$styles->add( 'ecjia-platform-vendors',           $base_url."/platform/css/vendors.css" );
-		$styles->add( 'ecjia-platform-jquery-jvectormap', $base_url."/platform/vendors/css/charts/jquery-jvectormap-2.0.3.css" );
-		$styles->add( 'ecjia-platform-morris',		      $base_url."/platform/vendors/css/charts/morris.css" );
-		$styles->add( 'ecjia-platform-unslider',          $base_url."/platform/vendors/css/extensions/unslider.css" );
-		$styles->add( 'ecjia-platform-climacons',         $base_url."/platform/vendors/css/weather-icons/climacons.min.css" );
-		$styles->add( 'ecjia-platform-app',               $base_url."/platform/css/app.css" );
+		$styles->add( 'ecjia-platform-ui', 					$base_url."/platform/css/ecjia-platform.ui.css" );
+		$styles->add( 'ecjia-platform-googleapis',			$base_url."/platform/css/googleapis.css" );
+		$styles->add( 'ecjia-platform-vendors',           	$base_url."/platform/css/vendors.css" );
+		$styles->add( 'ecjia-platform-jquery-jvectormap', 	$base_url."/platform/vendors/css/charts/jquery-jvectormap-2.0.3.css" );
+		$styles->add( 'ecjia-platform-morris',		      	$base_url."/platform/vendors/css/charts/morris.css" );
+		$styles->add( 'ecjia-platform-unslider',          	$base_url."/platform/vendors/css/extensions/unslider.css" );
+		$styles->add( 'ecjia-platform-climacons',         	$base_url."/platform/vendors/css/weather-icons/climacons.min.css" );
+		$styles->add( 'ecjia-platform-app',               	$base_url."/platform/css/app.css" );
+		
+		$styles->add( 'ecjia-platform-function',      			$base_url."/platform/css/ecjia.function.css" );
 		
 		$styles->add( 'ecjia-platform-vertical-content-menu', 	$base_url."/platform/css/core/menu/menu-types/vertical-content-menu.css" );
 		$styles->add( 'ecjia-platform-palette-gradient',     	$base_url."/platform/css/core/colors/palette-gradient.css" );
