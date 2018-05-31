@@ -40,7 +40,6 @@
         		<!-- #BeginLibraryItem "/library/common_sidebar.lbi" --><!-- #EndLibraryItem -->
 	            <div class="content-body">
 	                <!-- {block name="home-content"} -->
-	                
 	                <!-- {/block} -->
 	                <!-- {ecjia:hook id=platform_print_main_bottom} -->
 	            </div>
@@ -67,7 +66,6 @@
 <!-- {else} -->
 	<!-- {block name="meta"} --><!-- {/block} -->
 	<!-- {ecjia:hook id=platform_pjax_head} -->
-	<!-- {ecjia:hook id=platform_print_main_header} -->
 	<!-- {block name="home-content"} --><!-- {/block} -->
 	<!-- {ecjia:hook id=platform_print_main_bottom} -->
 	<!-- {block name="footer"} --><!-- {/block} -->

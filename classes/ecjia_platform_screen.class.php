@@ -53,7 +53,7 @@ class ecjia_platform_screen extends ecjia_screen {
         // Time to render!
         if (!empty($this->_nav_here)) :
         ?>
-        <div class="content-header-left col-md-6 col-12 mb-2">
+        <div class="content-header-left col-12 mb-2">
 	        <h3 class="content-header-title"></h3>
 	        <div class="row breadcrumbs-top">
 		        <div class="breadcrumb-wrapper col-12">
