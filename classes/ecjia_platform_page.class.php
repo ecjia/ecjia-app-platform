@@ -80,13 +80,19 @@ EOF;
     	}
     	
     	return <<<EOF
-	    	<div class="page">
-				<div class="pull-left">
-					$page_desc
-				</div>
-				<div class="pull-right">
-	    			$code
-				</div>
+	    	<div class="card-body">
+                <div class="row">
+    				<div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="float-left my-1">
+        					$page_desc
+                        </div>
+    				</div>
+    				<div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="float-right">
+    	    			    $code
+                        </div>
+    				</div>
+                </div>
 			</div>
 EOF;
     }
@@ -132,19 +138,75 @@ EOF;
     	
     	switch ($style) {
     		case 1 :
-    			return $this->page_code("{$this->input()}<ul class='pagination'>{$this->first()}{$this->pre()}{$this->pres()}{$this->text_list()}{$this->nexts()}{$this->next()}{$this->end()}</ul>
-    			<ul class='pagination'>{$this->now_page()}{$this->pic_list()}</ul>{$this->select()}",'');
+    			return $this->page_code("<ul class='pagination justify-content-end'>{$this->first()}{$this->pre()}{$this->pres()}{$this->text_list()}{$this->nexts()}{$this->next()}{$this->end()}</ul>
+    			<ul class='pagination justify-content-end'>{$this->now_page()}{$this->pic_list()}</ul>{$this->select()}",'');
     		case 2 :
-    			return $this->page_code("{$this->input()}<ul class='pagination'>" . $this->first() . $this->pre() . $this->text_list() . $this->next() . $this->end() . '</ul>');
+    			return $this->page_code("<ul class='pagination justify-content-end'>" . $this->first() . $this->pre() . $this->text_list() . $this->next() . $this->end() . '</ul>');
     		case 3 :
-    			return $this->page_code("<ul class='pagination'>" . $this->first() . $this->pre() . $this->text_list() . $this->next() . $this->end() . '</ul>');
+    			return $this->page_code("<ul class='pagination justify-content-end'>" . $this->first() . $this->pre() . $this->text_list() . $this->next() . $this->end() . '</ul>');
     		case 4 :
-    			return $this->page_code("<ul class='pagination'>" . $this->pic_list() . "</ul>" . $this->select() . '</ul>');
+    			return $this->page_code("<ul class='pagination justify-content-end'>" . $this->pic_list() . "</ul>" . $this->select() . '</ul>');
 // 			case 6 : //白底灰色背景
 // 			    return $this->page_code("<ul class='pagination'>" . $this->first() . $this->pre() . $this->text_list() . $this->next() . $this->end() . '</ul>', null, $style);
     		default:
-    			return $this->page_code("<ul class='pagination'>" . $this->first() . $this->pre() . $this->text_list() . $this->next() . $this->end() . '</ul>');
+    			return $this->page_code("<ul class='pagination pagination-separate pagination-curved'>" . $this->first() . $this->pre() . $this->text_list() . $this->next() . $this->end() . '</ul>');
     	}
+    }
+    
+    /**
+     * 首页
+     * @return string
+     */
+    public function first() {
+    	$first = $this->desc ['first'];
+    	return $this->current_page - $this->page_row > 1 ? "<li class='page-item first'><a class='page-link data-pjax external_link' href='" . $this->get_url(1) . "'>{$first}</a></li>" : "";
+    }
+    
+    /**
+     * 上一页
+     * @return string
+     */
+    public function pre() {
+    	if ($this->current_page > 1 && $this->current_page <= $this->total_pages) {
+    		return "<li class='page-item prev'><a class='page-link data-pjax external_link' href='" . $this->get_url($this->current_page - 1) . "'>{$this->desc['pre']}</a></li>";
+    	}
+    	return "<li class='page-item prev disabled'><a class='page-link'>{$this->desc['pre']}</a><li>";
+    }
+    
+    /**
+    * 下一页
+    * @return string
+    */
+    public function next() {
+	    $next = $this->desc ['next'];
+	    if ($this->current_page < $this->total_pages) {
+	    return "<li class='page-item next'><a class='page-link data-pjax external_link' href='" . $this->get_url($this->current_page + 1) . "'>{$next}</a></li>";
+	    }
+	    return "<li class='page-item next disabled'><a class='page-link'>{$next}</a></li>";
+    }
+    
+    /**
+     * 末页
+     * @return string
+     */
+    public function end() {
+    	$end = $this->desc ['end'];
+    	return $this->current_page < $this->total_pages - $this->page_row ? "<li class='page-item last'><a class='page-link data-pjax external_link' href='" . $this->get_url($this->total_pages) . "'>{$end}</a></li>" : "";
+    }
+    
+    /**
+     * 文字页码列表
+     * @return string
+     */
+    public function text_list() {
+    	$arr = $this->page_list();
+    	$str = "";
+    	if (empty($arr))
+    		return "<li class='page-item disabled'><a class='page-link'>1</a></li>";
+    	foreach ($arr as $v) {
+    		$str .= empty($v ['url']) ? "<li class='page-item'><a class='page-link'>" . $v ['str'] . "</a></li>" : "<li><a class='page-link data-pjax external_link' href={$v['url']}>{$v['str']}</a></li>";
+    	}
+    	return $str;
     }
 }
 
