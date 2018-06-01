@@ -38,7 +38,7 @@
 	                <!-- end:breadcrumb -->
         		</div>
         		<!-- #BeginLibraryItem "/library/common_sidebar.lbi" --><!-- #EndLibraryItem -->
-	            <div class="content-body">
+	            <div class="content-body" id="content">
 	                <!-- {block name="home-content"} -->
 	                <!-- {/block} -->
 	                <!-- {ecjia:hook id=platform_print_main_bottom} -->

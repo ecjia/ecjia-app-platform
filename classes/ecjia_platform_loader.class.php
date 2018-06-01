@@ -64,12 +64,13 @@ class ecjia_platform_loader {
 		$scripts->remove('jquery');
 		$scripts->remove('bootstrap');
 		
-// 		$scripts->add( 'bootstrap', 		        $base_url.'/platform/js/bootstrap.min.js' );
-		$scripts->add( 'jquery', 			        $base_url.'/platform/js/jquery-1.11.1.min.js' );
+		$scripts->add( 'bootstrap', 		        $base_url.'/platform/js/core/libraries/bootstrap.min.js' );
+		$scripts->add( 'jquery', 			        $base_url.'/platform/js/core/libraries/jquery.min.js' );
 
-		$scripts->add( 'ecjia-p', 					RC_Uri::system_static_url().'/lib/ecjia-js/ecjia.js', array('jquery') );
-		$scripts->add( 'ecjia-platform', 			$base_url.'/ecjia/ecjia-platform.js', array('ecjia-p') );
-		$scripts->add( 'ecjia-platform-ui',			$base_url.'/ecjia/ecjia-platform-ui.js', array('ecjia-p') );
+		$scripts->add( 'ecjia-platform-jquery-pjax', $base_url.'/platform/js/jquery-pjax.js' );
+		
+		$scripts->add( 'ecjia-platform', 			$base_url.'/ecjia/ecjia-platform.js', array('jquery', 'ecjia') );
+		$scripts->add( 'ecjia-platform-ui',			$base_url.'/ecjia/ecjia-platform-ui.js', array('jquery', 'ecjia') );
 		
 		$scripts->add( 'ecjia-platform-vendors', 	$base_url.'/platform/vendors/js/vendors.min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-jquery-sticky', 	$base_url.'/platform/vendors/js/ui/jquery.sticky.js', array(), false, 1 );
@@ -90,6 +91,8 @@ class ecjia_platform_loader {
 		$scripts->add( 'ecjia-platform-customizer',					$base_url.'/platform/js/scripts/customizer.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-breadcrumbs-with-stats',    	$base_url.'/platform/js/scripts/ui/breadcrumbs-with-stats.js', array(), false, 1 );
 // 		$scripts->add( 'ecjia-platform-dashboard-analytics',    	$base_url.'/platform/js/scripts/pages/dashboard-analytics.js', array(), false, 1 );
+
+		$scripts->add( 'ecjia-platform-components-modal',    	$base_url.'/platform/js/scripts/modal/components-modal.js', array(), false, 1 );
 	}
 
 

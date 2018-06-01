@@ -229,9 +229,9 @@
 		ecjia.pjaxoption = {
 			timeout: 10000,
 			container: '.content-body', /* 内容替换的容器 */
-			cache: false,  /* 是否使用缓存 */
-			storage: false,  /* 是否使用本地存储 */
-			titleSuffix: '' /* 标题后缀 */
+			cache: false,  				/* 是否使用缓存 */
+			storage: false,  			/* 是否使用本地存储 */
+			titleSuffix: '' 			/* 标题后缀 */
 		};
 
 		/* ecjia.pjax */

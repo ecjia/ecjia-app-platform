@@ -473,11 +473,11 @@ abstract class ecjia_platform extends ecjia_base implements ecjia_template_filel
 	    RC_Style::enqueue_style('ecjia-platform-palette-climacon');
 	    RC_Style::enqueue_style('ecjia-platform-users');
 
-		
-	    RC_Script::enqueue_script('ecjia');
-	    RC_Script::enqueue_script('jquery-pjax');
+	    RC_Script::enqueue_script('jquery');
+	    RC_Script::enqueue_script('bootstrap');
+	    RC_Script::enqueue_script('ecjia-platform-jquery-pjax');
 
-		RC_Script::enqueue_script('ecjia-platform-vendors');
+	    RC_Script::enqueue_script('ecjia-platform-vendors');
 		RC_Script::enqueue_script('ecjia-platform-jquery-sticky');
 		RC_Script::enqueue_script('ecjia-platform-headroom');
 		RC_Script::enqueue_script('ecjia-platform-jquery-knob');
@@ -497,24 +497,25 @@ abstract class ecjia_platform extends ecjia_base implements ecjia_template_filel
 		RC_Script::enqueue_script('ecjia-platform-customizer');
 		RC_Script::enqueue_script('ecjia-platform-breadcrumbs-with-stats');
 		RC_Script::enqueue_script('ecjia-platform-dashboard-analytics');
+		RC_Script::enqueue_script('ecjia-platform-components-modal');
 
 		RC_Script::enqueue_script('ecjia-platform');
 		RC_Script::enqueue_script('ecjia-platform-ui');
 
-// 		$admin_jslang = array(
-// 			'display_sidebar'	=> __('显示侧边栏'),
-// 			'hide_sidebar'		=> __('隐藏侧边栏'),
-// 			'search_check'		=> __('请先输入搜索信息'),
-// 			'search_no_message'	=> __('未搜索到导航信息'),
-// 			'success'			=> __('操作成功'),
-// 			'fail'				=> __('操作失败'),
-// 			'confirm_jump'		=> __('是否确认跳转？'),
-// 			'ok'				=> __('确定'),
-// 			'cancel'			=> __('取消'),
-// 			'request_failed'	=> __('请求失败，错误编号：'),
-// 			'error_msg'			=> __('，错误信息：')
-// 		);
-// 		RC_Script::localize_script('ecjia-merchant', 'admin_lang', $admin_jslang );
+		$admin_jslang = array(
+			'display_sidebar'	=> __('显示侧边栏'),
+			'hide_sidebar'		=> __('隐藏侧边栏'),
+			'search_check'		=> __('请先输入搜索信息'),
+			'search_no_message'	=> __('未搜索到导航信息'),
+			'success'			=> __('操作成功'),
+			'fail'				=> __('操作失败'),
+			'confirm_jump'		=> __('是否确认跳转？'),
+			'ok'				=> __('确定'),
+			'cancel'			=> __('取消'),
+			'request_failed'	=> __('请求失败，错误编号：'),
+			'error_msg'			=> __('，错误信息：')
+		);
+		RC_Script::localize_script('ecjia-platform', 'admin_lang', $admin_jslang );
 	}
 
 
