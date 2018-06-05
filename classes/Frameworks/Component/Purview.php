@@ -49,6 +49,10 @@ namespace Ecjia\App\Platform\Frameworks\Component;
 use ecjia_purview;
 use RC_Api;
 
+/**
+ * @author royalwang
+ *
+ */
 class Purview extends ecjia_purview
 {
     

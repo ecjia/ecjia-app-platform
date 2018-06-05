@@ -59,7 +59,7 @@ use admin_menu;
  * ECJia 商家后台菜单管理
  * @author royalwang
  */
-class ecjia_platform_menu extends RC_Object 
+class Menu extends RC_Object 
 {
 
     protected $cacheKey;

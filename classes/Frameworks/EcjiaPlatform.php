@@ -44,7 +44,7 @@
 //
 //  ---------------------------------------------------------------------------------
 //
-namespace Ecjia\App\Platform\Frameworks\Controller;
+namespace Ecjia\App\Platform\Frameworks;
 
 use ecjia;
 use ecjia_base;
@@ -52,6 +52,9 @@ use ecjia_template_fileloader;
 use ecjia_update_cache;
 use ecjia_admin_menu;
 use ecjia_view;
+use ecjia_notification;
+use ecjia_config;
+use ecjia_app;
 use admin_nav_here;
 
 use RC_Loader;
@@ -64,15 +67,20 @@ use RC_Script;
 use RC_Style;
 use RC_App;
 use RC_Api;
+use RC_Package;
+use RC_Plugin;
+use RC_Uri;
+use RC_File;
 use Smarty;
 
 use Ecjia\App\Platform\Frameworks\Component\Screen;
 use Ecjia\App\Platform\Frameworks\Component\Loader;
+use Ecjia\App\Platform\Frameworks\Component\Menu;
 
 //定义在后台
 define('IN_PLATFORM', true);
 
-abstract class EcjiaPlatformController extends ecjia_base implements ecjia_template_fileloader {
+abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_fileloader {
 
 	private $public_route;
 
@@ -136,17 +144,17 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 		$this->public_route = RC_Hook::apply_filters('platform_access_public_route', $this->public_route);
 
 		// 判断用户是否登录
-		if (!$this->_check_login()) {
-		    RC_Session::destroy();
-		    if (is_pjax()) {
-		        Screen::$current_screen->add_nav_here(new admin_nav_here(__('系统提示')));
-		        return $this->showmessage(RC_Lang::get('system::system.priv_error'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => array(array('text' => __('重新登录'), 'href' => RC_Uri::url('staff/privilege/login')))));
-		    } elseif (is_ajax()) {
-		        return $this->showmessage(RC_Lang::get('system::system.priv_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-		    } else {
-		        return $this->redirect(RC_Uri::url('staff/privilege/login'));
-		    }
-		}
+// 		if (!$this->_check_login()) {
+// 		    RC_Session::destroy();
+// 		    if (is_pjax()) {
+// 		        Screen::$current_screen->add_nav_here(new admin_nav_here(__('系统提示')));
+// 		        return $this->showmessage(RC_Lang::get('system::system.priv_error'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => array(array('text' => __('重新登录'), 'href' => RC_Uri::url('staff/privilege/login')))));
+// 		    } elseif (is_ajax()) {
+// 		        return $this->showmessage(RC_Lang::get('system::system.priv_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+// 		    } else {
+// 		        return $this->redirect(RC_Uri::url('staff/privilege/login'));
+// 		    }
+// 		}
 
 		if (RC_Config::get('system.debug')) {
 			error_reporting(E_ALL);
@@ -163,22 +171,22 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 
 		$this->load_default_script_style();
 		
-		$this->assign('ecjia_merchant_cptitle', RC_Session::get('store_name'));
-		$this->assign('ecjia_merchant_cpname', RC_Session::get('store_name'));
+		$this->assign('ecjia_platform_cptitle', RC_Session::get('store_name'));
+		$this->assign('ecjia_platform_cpname', RC_Session::get('store_name'));
 		$this->assign('ecjia_main_static_url', $this->get_main_static_url());
 		$this->assign('ecjia_system_static_url', RC_Uri::system_static_url() . '/');
 		
-		RC_Hook::do_action('ecjia_merchant_finish_launching');
+		RC_Hook::do_action('ecjia_platform_finish_launching');
 	}
 
 	protected function session_start()
 	{
 	    RC_Hook::add_filter('royalcms_session_name', function ($sessin_name) {
-	        return RC_Config::get('session.session_merchant_name');
+	        return RC_Config::get('session.session_platform_name');
 	    });
 
         RC_Hook::add_filter('royalcms_session_id', function ($sessin_id) {
-            return RC_Hook::apply_filters('ecjia_merchant_session_id', '');
+            return RC_Hook::apply_filters('ecjia_platform_session_id', '');
         });
 
         RC_Session::start();
@@ -191,7 +199,7 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 	    if (!in_array($this->get_template_dir(), $view->getTemplateDir())) {
 	        $view->addTemplateDir($this->get_template_dir());
 	    }
-	    $view->setCompileDir(TEMPLATE_COMPILE_PATH . 'merchant' . DIRECTORY_SEPARATOR);
+	    $view->setCompileDir(TEMPLATE_COMPILE_PATH . 'platform' . DIRECTORY_SEPARATOR);
 
 	    if (RC_Config::get('system.debug')) {
 	        $view->caching = Smarty::CACHING_OFF;
@@ -207,20 +215,20 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 	}
 	
 	public function get_main_template_dir() {
-	    if (RC_Loader::exists_site_app('merchant')) {
-	        $dir = SITE_APP_PATH . 'merchant' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'merchant' . DIRECTORY_SEPARATOR;
+	    if (RC_Loader::exists_site_app('platform')) {
+	        $dir = SITE_APP_PATH . 'platform' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'platform' . DIRECTORY_SEPARATOR;
 	    } else {
-	        $dir = RC_APP_PATH . 'merchant' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'merchant' . DIRECTORY_SEPARATOR;
+	        $dir = RC_APP_PATH . 'platform' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'platform' . DIRECTORY_SEPARATOR;
 	    }
 	    
 	    return $dir;
 	}
 	
 	public function get_main_static_dir() {
-	    if (RC_Loader::exists_site_app('merchant')) {
-	        $dir = SITE_APP_PATH . 'merchant' . DIRECTORY_SEPARATOR . 'statics' . DIRECTORY_SEPARATOR;
+	    if (RC_Loader::exists_site_app('platform')) {
+	        $dir = SITE_APP_PATH . 'platform' . DIRECTORY_SEPARATOR . 'statics' . DIRECTORY_SEPARATOR;
 	    } else {
-	        $dir = RC_APP_PATH . 'merchant' . DIRECTORY_SEPARATOR . 'statics' . DIRECTORY_SEPARATOR;
+	        $dir = RC_APP_PATH . 'platform' . DIRECTORY_SEPARATOR . 'statics' . DIRECTORY_SEPARATOR;
 	    }
 	     
 	    return $dir;
@@ -237,9 +245,9 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 	public function get_template_dir()
 	{
         if (RC_Loader::exists_site_app(ROUTE_M)) {
-            $dir = SITE_APP_PATH . ROUTE_M . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'merchant' . DIRECTORY_SEPARATOR;
+            $dir = SITE_APP_PATH . ROUTE_M . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'platform' . DIRECTORY_SEPARATOR;
         } else {
-            $dir = RC_APP_PATH . ROUTE_M . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'merchant' . DIRECTORY_SEPARATOR;
+            $dir = RC_APP_PATH . ROUTE_M . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'platform' . DIRECTORY_SEPARATOR;
         }
 
         return $dir;
@@ -455,14 +463,14 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 	 * @return true/false
 	 */
 	public final function admin_priv($priv_str, $msg_type = ecjia::MSGTYPE_HTML , $msg_output = true) {
-		if (ecjia_merchant_menu::singleton()->admin_priv($priv_str)) {
+		if (Menu::singleton()->admin_priv($priv_str)) {
 		    return true;
 		} else {
 		    if ($msg_output) {
 		        if ($msg_type == ecjia::MSGTYPE_JSON && is_ajax() && !is_pjax()) {
 		            return $this->showmessage(__('对不起，您没有执行此项操作的权限！'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		        } else {
-		            ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('系统提示')));
+		            Screen::$current_screen->add_nav_here(new admin_nav_here(__('系统提示')));
 		            return $this->showmessage(__('对不起，您没有执行此项操作的权限！'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
 		        }
 		    } else {
@@ -472,96 +480,84 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 	}
 
 	public final function load_default_script_style() {
-		// 加载样式
-	    // Bootstrap framework
-	    RC_Style::enqueue_style('googleapis-fonts');
-	    RC_Style::enqueue_style('bootstrap');
-	    RC_Style::enqueue_style('bootstrap-reset');
-	    RC_Style::enqueue_style('ecjia-merchant-ui');
-
-	    RC_Style::enqueue_style('ecjia-mh-font-awesome');
-	    RC_Style::enqueue_style('ecjia-mh-owl-carousel');
-	    RC_Style::enqueue_style('ecjia-mh-owl-theme');
-	    RC_Style::enqueue_style('ecjia-mh-owl-transitions');
-	    RC_Style::enqueue_style('ecjia-mh-table-responsive');
-	    RC_Style::enqueue_style('ecjia-mh-jquery-easy-pie-chart');
-
-	    RC_Style::enqueue_style('ecjia-mh-function');
-	    RC_Style::enqueue_style('ecjia-mh-page');
-	    RC_Style::enqueue_style('ecjia-mh-chosen');
-
-		// 加载脚本
-		// jquery
-		RC_Script::enqueue_script('jquery');
-		RC_Script::enqueue_script('bootstrap');
-
-		// jquery pjax
-		RC_Script::enqueue_script('jquery-pjax');
-
-		// merchant js lib
-		RC_Script::enqueue_script('ecjia-mh-jquery-customSelect');
-		RC_Script::enqueue_script('ecjia-mh-jquery-dcjqaccordion');
-		RC_Script::enqueue_script('ecjia-mh-jquery-nicescroll');
-		RC_Script::enqueue_script('ecjia-mh-jquery-scrollTo');
-		RC_Script::enqueue_script('ecjia-mh-jquery-sparkline');
-		RC_Script::enqueue_script('ecjia-mh-jquery-stepy');
-		RC_Script::enqueue_script('ecjia-mh-jquery-tagsinput');
-		RC_Script::enqueue_script('ecjia-mh-jquery-validate');
-		RC_Script::enqueue_script('ecjia-mh-jquery-easy-pie-chart');
-		RC_Script::enqueue_script('ecjia-mh-jquery-actual');
-		RC_Script::enqueue_script('ecjia-mh-jquery-migrate');
-		RC_Script::enqueue_script('ecjia-mh-jquery-quicksearch');
-
-		RC_Script::enqueue_script('ecjia-mh-morris-script');
-		RC_Script::enqueue_script('ecjia-mh-owl-carousel');
-		RC_Script::enqueue_script('ecjia-mh-respond');
-		RC_Script::enqueue_script('ecjia-mh-slider');
-		RC_Script::enqueue_script('ecjia-mh-sparkline-chart');
-		RC_Script::enqueue_script('ecjia-mh-themes');
-		RC_Script::enqueue_script('ecjia-mh-xchart');
-		RC_Script::enqueue_script('ecjia-mh-chosen-jquery');
-		RC_Script::enqueue_script('ecjia-mh-chart');
-
-		// js cookie plugin
-		RC_Script::enqueue_script('jquery-cookie');
-		RC_Script::enqueue_script('js-json');
-		// scroll 处理触摸事件
-		RC_Script::enqueue_script('nicescroll');
-		// to top 右侧跳到顶部
-		RC_Script::enqueue_script('jquery-ui-totop');
-
-		RC_Script::enqueue_script('ecjia-merchant');
-		RC_Script::enqueue_script('ecjia-merchant-ui');
-
-		$admin_jslang = array(
-			'display_sidebar'	=> __('显示侧边栏'),
-			'hide_sidebar'		=> __('隐藏侧边栏'),
-			'search_check'		=> __('请先输入搜索信息'),
-			'search_no_message'	=> __('未搜索到导航信息'),
-			'success'			=> __('操作成功'),
-			'fail'				=> __('操作失败'),
-			'confirm_jump'		=> __('是否确认跳转？'),
-			'ok'				=> __('确定'),
-			'cancel'			=> __('取消'),
-			'request_failed'	=> __('请求失败，错误编号：'),
-			'error_msg'			=> __('，错误信息：')
-		);
-		RC_Script::localize_script('ecjia-merchant', 'admin_lang', $admin_jslang );
+	    // 加载样式
+	    
+	    RC_Style::enqueue_style('ecjia-platform-ui');
+	    
+	    // RC_Style::enqueue_style('ecjia-platform-googleapis');
+	    RC_Style::enqueue_style('ecjia-platform-vendors');
+	    RC_Style::enqueue_style('ecjia-platform-jquery-jvectormap');
+	    RC_Style::enqueue_style('ecjia-platform-morris');
+	    RC_Style::enqueue_style('ecjia-platform-unslider');
+	    RC_Style::enqueue_style('ecjia-platform-climacons');
+	    RC_Style::enqueue_style('ecjia-platform-app');
+	    
+	    RC_Style::enqueue_style('ecjia-platform-function');
+	    
+	    RC_Style::enqueue_style('ecjia-platform-vertical-content-menu');
+	    RC_Style::enqueue_style('ecjia-platform-palette-gradient');
+	    RC_Style::enqueue_style('ecjia-platform-clndr');
+	    RC_Style::enqueue_style('ecjia-platform-palette-climacon');
+	    RC_Style::enqueue_style('ecjia-platform-users');
+	    
+	    RC_Script::enqueue_script('jquery');
+	    RC_Script::enqueue_script('bootstrap');
+	    RC_Script::enqueue_script('ecjia-platform-jquery-pjax');
+	    
+	    RC_Script::enqueue_script('ecjia-platform-vendors');
+	    RC_Script::enqueue_script('ecjia-platform-jquery-sticky');
+	    RC_Script::enqueue_script('ecjia-platform-headroom');
+	    RC_Script::enqueue_script('ecjia-platform-jquery-knob');
+	    RC_Script::enqueue_script('ecjia-platform-knob');
+	    
+	    RC_Script::enqueue_script('ecjia-platform-raphael');
+	    RC_Script::enqueue_script('ecjia-platform-morris');
+	    
+	    RC_Script::enqueue_script('ecjia-platform-jquery-jvectormap');
+	    RC_Script::enqueue_script('ecjia-platform-jquery-jvectormap-world');
+	    RC_Script::enqueue_script('ecjia-platform-visitor-data');
+	    RC_Script::enqueue_script('ecjia-platform-chart');
+	    RC_Script::enqueue_script('ecjia-platform-jquery-sparkline');
+	    RC_Script::enqueue_script('ecjia-platform-unslider');
+	    RC_Script::enqueue_script('ecjia-platform-app-menu');
+	    RC_Script::enqueue_script('ecjia-platform-app');
+	    RC_Script::enqueue_script('ecjia-platform-customizer');
+	    RC_Script::enqueue_script('ecjia-platform-breadcrumbs-with-stats');
+	    RC_Script::enqueue_script('ecjia-platform-dashboard-analytics');
+	    RC_Script::enqueue_script('ecjia-platform-components-modal');
+	    
+	    RC_Script::enqueue_script('ecjia-platform');
+	    RC_Script::enqueue_script('ecjia-platform-ui');
+	    
+	    $admin_jslang = array(
+	        'display_sidebar'	=> __('显示侧边栏'),
+	        'hide_sidebar'		=> __('隐藏侧边栏'),
+	        'search_check'		=> __('请先输入搜索信息'),
+	        'search_no_message'	=> __('未搜索到导航信息'),
+	        'success'			=> __('操作成功'),
+	        'fail'				=> __('操作失败'),
+	        'confirm_jump'		=> __('是否确认跳转？'),
+	        'ok'				=> __('确定'),
+	        'cancel'			=> __('取消'),
+	        'request_failed'	=> __('请求失败，错误编号：'),
+	        'error_msg'			=> __('，错误信息：')
+	    );
+	    RC_Script::localize_script('ecjia-platform', 'admin_lang', $admin_jslang );
 	}
 
 
 	protected function load_hooks() {
-		RC_Hook::add_action('merchant_head', array('ecjia_merchant_loader', 'admin_enqueue_scripts'), 1 );
-		RC_Hook::add_action('merchant_print_scripts', array('ecjia_merchant_loader', 'print_head_scripts'), 20 );
-		RC_Hook::add_action('merchant_print_footer_scripts', array('ecjia_merchant_loader', '_admin_footer_scripts') );
-		RC_Hook::add_action('merchant_print_styles', array('ecjia_merchant_loader', 'print_admin_styles'), 20 );
-		RC_Hook::add_action('merchant_print_header_nav', array(__CLASS__, 'display_admin_header_nav'));
-		RC_Hook::add_action('merchant_sidebar_collapse_search', array(__CLASS__, 'display_admin_sidebar_nav_search'), 9);
-		RC_Hook::add_action('merchant_sidebar_collapse', array(__CLASS__, 'display_admin_sidebar_nav'), 9);
+		RC_Hook::add_action('platform_head', array('ecjia_platform_loader', 'admin_enqueue_scripts'), 1 );
+		RC_Hook::add_action('platform_print_scripts', array('ecjia_platform_loader', 'print_head_scripts'), 20 );
+		RC_Hook::add_action('platform_print_footer_scripts', array('ecjia_platform_loader', '_admin_footer_scripts') );
+		RC_Hook::add_action('platform_print_styles', array('ecjia_platform_loader', 'print_admin_styles'), 20 );
+		RC_Hook::add_action('platform_print_header_nav', array(__CLASS__, 'display_admin_header_nav'));
+		RC_Hook::add_action('platform_sidebar_collapse_search', array(__CLASS__, 'display_admin_sidebar_nav_search'), 9);
+		RC_Hook::add_action('platform_sidebar_collapse', array(__CLASS__, 'display_admin_sidebar_nav'), 9);
 		RC_Hook::add_filter('upload_default_random_filename', array('ecjia_utility', 'random_filename'));
-		RC_Hook::add_action('merchant_print_footer_scripts', array(ecjia_notification::make(), 'printScript') );
+		RC_Hook::add_action('platform_print_footer_scripts', array(ecjia_notification::make(), 'printScript') );
 
-		RC_Package::package('app::merchant')->loadClass('hooks.merchant_merchant', false);
+		RC_Package::package('app::platform')->loadClass('hooks.platform_platform', false);
 
 		$system_plugins = ecjia_config::instance()->get_addon_config('system_plugins', true);
 		if (is_array($system_plugins)) {
@@ -570,9 +566,9 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 		    }
 		}
 
-		$merchant_plugins = ecjia_config::instance()->get_addon_config('merchant_plugins', true);
-		if (is_array($merchant_plugins)) {
-		    foreach ($merchant_plugins as $plugin_file) {
+		$platform_plugins = ecjia_config::instance()->get_addon_config('platform_plugins', true);
+		if (is_array($platform_plugins)) {
+		    foreach ($platform_plugins as $plugin_file) {
 		        RC_Plugin::load_files($plugin_file);
 		    }
 		}
@@ -580,7 +576,7 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 		$apps = ecjia_app::installed_app_floders();
 		if (is_array($apps)) {
 			foreach ($apps as $app) {
-				RC_Package::package('app::'.$app)->loadClass('hooks.merchant_' . $app, false);
+				RC_Package::package('app::'.$app)->loadClass('hooks.platform_' . $app, false);
 			}
 		}
 	}
@@ -652,8 +648,8 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 
 
     public static function display_admin_header_nav() {
-        $menus = ecjia_merchant_menu::singleton()->admin_menu();
-        $screen = ecjia_merchant_screen::get_current_screen();
+        $menus = Menu::singleton()->admin_menu();
+        $screen = Screen::get_current_screen();
 
         echo '<ul class="nav navbar-nav">';
         foreach ($menus as $key => $group) {
@@ -712,8 +708,8 @@ abstract class EcjiaPlatformController extends ecjia_base implements ecjia_templ
 
 
     public static function display_admin_sidebar_nav_search() {
-        $menus = ecjia_merchant_menu::singleton()->admin_menu();
-        $screen = ecjia_merchant_screen::get_current_screen();
+        $menus = Menu::singleton()->admin_menu();
+        $screen = Screen::get_current_screen();
 
         foreach ($menus as $key => $group) {
             if ($group) {
