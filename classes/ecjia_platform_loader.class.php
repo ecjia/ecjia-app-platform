@@ -64,7 +64,7 @@ class ecjia_platform_loader {
 		$scripts->remove('jquery');
 		$scripts->remove('bootstrap');
 		
-		$scripts->add( 'bootstrap', 		        $base_url.'/platform/js/core/libraries/bootstrap.min.js' );
+// 		$scripts->add( 'bootstrap', 		        $base_url.'/platform/js/core/libraries/bootstrap.min.js' );
 		$scripts->add( 'jquery', 			        $base_url.'/platform/js/core/libraries/jquery.min.js' );
 
 		$scripts->add( 'ecjia-platform-jquery-pjax', $base_url.'/platform/js/jquery-pjax.js' );
