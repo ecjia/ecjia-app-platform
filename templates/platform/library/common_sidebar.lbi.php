@@ -1,8 +1,10 @@
 <?php defined('IN_ECJIA') or exit('No permission resources.');?>
+<!-- {ecjia:hook id=platform_print_sidebar_nav} -->
         <div class="main-menu menu-static menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
           <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-           	  <li class=" nav-item"><a href="index.html#"><i class="icon-layers"></i><span class="menu-title" data-i18n="nav.page_layouts.main">微信公众平台</span></a>
+           	  <li class=" nav-item">
+           	  	<a href="index.html#"><i class="icon-layers"></i><span class="menu-title" data-i18n="nav.page_layouts.main">微信公众平台</span></a>
                 <ul class="menu-content">
                   <li><a class="menu-item" href="{RC_Uri::url('wechat/platform_subscribe/init')}" data-i18n="nav.page_layouts.1_column">用户管理</a>
                   </li>
