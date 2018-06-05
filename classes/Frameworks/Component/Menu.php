@@ -46,7 +46,6 @@
 //
 namespace Ecjia\App\Platform\Frameworks\Component;
 
-use Royalcms\Component\Foundation\Royalcms;
 use RC_Object;
 use RC_Cache;
 use RC_Model;
@@ -67,38 +66,11 @@ class Menu extends RC_Object
     public function __construct()
     {
         if (defined('RC_SITE')) {
-            $this->cacheKey = 'merchant_menus' . constant('RC_SITE');
+            $this->cacheKey = 'platform_menus' . constant('RC_SITE');
         } else {
-            $this->cacheKey = 'merchant_menus';
+            $this->cacheKey = 'platform_menus';
         }
     }
-
-    /**
-     * 获取用户个人导航
-     */
-    public function admin_navlist() {
-        $admin_id = $_SESSION['staff_id'];
-        $shortcut = RC_Cache::userdata_cache_get('admin_navlist', $admin_id, true);
-        if (empty($shortcut)) {
-            $admin_navlist = RC_Model::model('admin_user_model')->get_nav_list();
-            $shortcut = array();
-            $i = 0;
-            foreach ($admin_navlist as $url => $name) {
-                $shortcut[] = ecjia_admin::make_admin_menu('shortcut_' . $i, $name, $url, $i);
-                $i++;
-            }
-
-            if (!empty($admin_navlist)) {
-                $shortcut[] = ecjia_admin::make_admin_menu('divider', '', '', 99);
-            }
-            $shortcut[] = ecjia_admin::make_admin_menu('shortcut_100', __('设置快捷菜单'), RC_Uri::url('@privilege/modif'), 100);
-
-            RC_Cache::userdata_cache_set('admin_navlist', $shortcut, $admin_id, true);
-        }
-
-        return $shortcut;
-    }
-
 
     /**
      * 后台菜单 （key => value）
@@ -148,6 +120,8 @@ class Menu extends RC_Object
      * @return true/false
      */
     public function admin_priv($priv_str) {
+        return true;
+        
         if ($_SESSION['action_list'] == 'all') {
             return true;
         }
@@ -163,7 +137,7 @@ class Menu extends RC_Object
      * 清除后台菜单缓存
      */
     public function clean_admin_menu_cache() {
-        RC_Cache::app_cache_delete($this->cacheKey, 'merchant');
+        RC_Cache::app_cache_delete($this->cacheKey, 'platform');
     }
 
     /**
@@ -171,16 +145,16 @@ class Menu extends RC_Object
      */
     protected function load_menu()
     {
-        $cache_menus = RC_Cache::app_cache_get($this->cacheKey, 'merchant');
+        $cache_menus = RC_Cache::app_cache_get($this->cacheKey, 'platform');
         if (! empty($cache_menus)) {
             return $cache_menus;
         }
          
         $apps = ecjia_app::installed_app_floders();
 
-        $menus['merchant'] = $this->_request_admin_menu($apps, 'merchant_menu');
+        $menus['platform'] = $this->_request_admin_menu($apps, 'platform_menu');
 
-        RC_Cache::app_cache_set($this->cacheKey, $menus, 'merchant');
+        RC_Cache::app_cache_set($this->cacheKey, $menus, 'platform');
 
         return $menus;
     }

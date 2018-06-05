@@ -56,6 +56,7 @@ use ecjia_notification;
 use ecjia_config;
 use ecjia_app;
 use admin_nav_here;
+use admin_menu;
 
 use RC_Loader;
 use RC_Lang;
@@ -553,7 +554,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		RC_Hook::add_action('platform_print_styles', array('ecjia_platform_loader', 'print_admin_styles'), 20 );
 		RC_Hook::add_action('platform_print_header_nav', array(__CLASS__, 'display_admin_header_nav'));
 		RC_Hook::add_action('platform_sidebar_collapse_search', array(__CLASS__, 'display_admin_sidebar_nav_search'), 9);
-		RC_Hook::add_action('platform_sidebar_collapse', array(__CLASS__, 'display_admin_sidebar_nav'), 9);
+		RC_Hook::add_action('platform_print_sidebar_nav', array(__CLASS__, 'display_admin_sidebar_nav'), 9);
 		RC_Hook::add_filter('upload_default_random_filename', array('ecjia_utility', 'random_filename'));
 		RC_Hook::add_action('platform_print_footer_scripts', array(ecjia_notification::make(), 'printScript') );
 
@@ -732,40 +733,47 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
     }
 
     public static function display_admin_sidebar_nav() {
-        $menus = ecjia_admin_menu::singleton()->admin_menu();
-
-        if (!empty($menus['apps'])) {
-            foreach ($menus['apps'] as $k => $menu) {
-                echo '<div class="accordion-group">';
-                echo '<div class="accordion-heading">';
-                echo '<a class="accordion-toggle" href="#collapse' . $k . '" data-parent="#side_accordion" data-toggle="collapse">';
-                echo '<i class="icon-folder-close"></i> ' . $menu->name;
-                echo '</a>';
-                echo '</div>';
-                if ($menu->has_submenus) {
-                    echo '<div class="accordion-body collapse" id="collapse' . $k . '">';
-                    echo '<div class="accordion-inner">';
-                    echo '<ul class="nav nav-list">';
-                    if ($menu->submenus) {
-                        foreach ($menu->submenus as $child) {
-                            if ($child->action == 'divider') {
-                                echo '<li class="divider"></li>';
-                            } elseif ($child->action == 'nav-header') {
-                                echo '<li class="nav-header">' . $child->name . '</li>';
-                            } else {
-                            	if(RC_Uri::current_url() === $child->link){
-                            		echo '<li class="active"><a href="' . $child->link . '">' . $child->name . '</a></li>';
-                            	}else {
-                            		echo '<li><a href="' . $child->link . '">' . $child->name . '</a></li>';
-                            	}
+        $menus = Menu::singleton()->admin_menu();
+        $screen = Screen::get_current_screen();
+//         _dump($menus,1);
+        if (!empty($menus)) {
+            foreach ($menus as $key => $group) {
+                if ($group) {
+                    
+                    echo '<div class="main-menu menu-static menu-light menu-accordion menu-shadow" data-scroll-to-active="true">' . PHP_EOL;
+                    echo '<div class="main-menu-content">' . PHP_EOL;
+                    echo '<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">' . PHP_EOL;
+                    foreach ($group as $k => $menu) {
+                        echo '<li class=" nav-item">' . PHP_EOL;
+                        echo '<a href="#"><i class="icon-layers"></i><span class="menu-title" data-i18n="nav.page_layouts.main">' .$menu->name. '</span></a>' . PHP_EOL;
+                        echo '<ul class="menu-content">' . PHP_EOL;
+                        if ($menu->has_submenus) {
+                            if ($menu->submenus) {
+                                foreach ($menu->submenus as $child) {
+                                    echo '<li>' . PHP_EOL;
+                                    echo '<a class="menu-item" href="' .$child->link. '" data-i18n="nav.page_layouts.1_column">' .$child->name. '</a>' . PHP_EOL;
+        //                             if ($child->action == 'divider') {
+        //                                 echo '<li class="divider"></li>';
+        //                             } elseif ($child->action == 'nav-header') {
+        //                                 echo '<li class="nav-header">' . $child->name . '</li>';
+        //                             } else {
+        //                             	if (RC_Uri::current_url() === $child->link) {
+        //                             		echo '<li class="active"><a href="' . $child->link . '">' . $child->name . '</a></li>';
+        //                             	}else {
+        //                             		echo '<li><a href="' . $child->link . '">' . $child->name . '</a></li>';
+        //                             	}
+        //                             }
+                                    echo '</li>' . PHP_EOL;
+                                }
                             }
                         }
+                        echo '</ul>' . PHP_EOL;
+                        echo '</li>' . PHP_EOL;
                     }
-                    echo '</ul>';
-                    echo '</div>';
-                    echo '</div>';
+                    echo '</ul>' . PHP_EOL;
+                    echo '</div>' . PHP_EOL;
+                    echo '</div>' . PHP_EOL;
                 }
-                echo '</div>';
             }
         }
     }
