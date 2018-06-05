@@ -46,7 +46,8 @@
 //
 defined('IN_ECJIA') or exit('No permission resources.');
 
-class dashboard extends ecjia_platform {
+class dashboard extends ecjia_platform 
+{
 	
     public function init() {
         
