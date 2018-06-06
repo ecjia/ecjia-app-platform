@@ -83,6 +83,8 @@ class admin_privilege extends ecjia_admin {
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('分派权限')));
 		
+		ecjia_screen::get_current_screen()->add_option('current_code', 'platform_privilege_menu');
+		
 		/* 获得该管理员的权限 */
 		$priv_row = $this->db_admin_user->field('user_name, action_list')->find('user_id = '.$_GET['id'].'');
 		$user_name = $priv_row['user_name'];
@@ -93,6 +95,7 @@ class admin_privilege extends ecjia_admin {
 			$link[] = array('text' => __('返回管理员列表'), 'href' => RC_Uri::url('@privilege/init'));
 			return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'),ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
+		
 
 		$priv_group = ecjia_purview::load_purview($priv_str);
 		
