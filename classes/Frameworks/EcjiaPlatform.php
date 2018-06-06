@@ -737,43 +737,79 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
         $screen = Screen::get_current_screen();
 //         _dump($menus,1);
         if (!empty($menus)) {
-            foreach ($menus as $key => $group) {
+            
+            echo '<div class="main-menu menu-static menu-light menu-accordion menu-shadow" data-scroll-to-active="true">' . PHP_EOL;
+            echo '<div class="main-menu-content">' . PHP_EOL;
+            echo '<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">' . PHP_EOL;
+            
+            foreach ($menus as $type => $group) {
                 if ($group) {
-                    
-                    echo '<div class="main-menu menu-static menu-light menu-accordion menu-shadow" data-scroll-to-active="true">' . PHP_EOL;
-                    echo '<div class="main-menu-content">' . PHP_EOL;
-                    echo '<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">' . PHP_EOL;
-                    foreach ($group as $k => $menu) {
-                        echo '<li class=" nav-item">' . PHP_EOL;
-                        echo '<a href="#"><i class="icon-layers"></i><span class="menu-title" data-i18n="nav.page_layouts.main">' .$menu->name. '</span></a>' . PHP_EOL;
-                        echo '<ul class="menu-content">' . PHP_EOL;
-                        if ($menu->has_submenus) {
-                            if ($menu->submenus) {
+                    foreach ($group as $key => $menu) {
+                        if ($menu->action == 'divider') {
+                            echo '<li class="divider">';
+                        } elseif ($menu->action == 'nav-header') {
+                            echo '<li class="navigation-header"><span>' . $menu->name . '</span>';
+                            echo '<i class="ft-more-horizontal ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="' . $menu->name . '"></i>';
+                        } else {
+                        
+                            echo '<li class="nav-item">' . PHP_EOL;
+                            echo '  <a href="#"><i class="icon-layers"></i>';
+                            echo '<span class="menu-title">' .$menu->name. '</span>';
+                            //echo '<span class="badge badge badge-info badge-pill float-right mr-2">5</span>';
+                            echo '</a>' . PHP_EOL;
+                            
+                            if ($menu->has_submenus && $menu->submenus) {
+                                echo '      <ul class="menu-content">' . PHP_EOL;
                                 foreach ($menu->submenus as $child) {
-                                    echo '<li>' . PHP_EOL;
-                                    echo '<a class="menu-item" href="' .$child->link. '" data-i18n="nav.page_layouts.1_column">' .$child->name. '</a>' . PHP_EOL;
-        //                             if ($child->action == 'divider') {
-        //                                 echo '<li class="divider"></li>';
-        //                             } elseif ($child->action == 'nav-header') {
-        //                                 echo '<li class="nav-header">' . $child->name . '</li>';
-        //                             } else {
-        //                             	if (RC_Uri::current_url() === $child->link) {
-        //                             		echo '<li class="active"><a href="' . $child->link . '">' . $child->name . '</a></li>';
-        //                             	}else {
-        //                             		echo '<li><a href="' . $child->link . '">' . $child->name . '</a></li>';
-        //                             	}
-        //                             }
+                                        
+                                    if ($child->action == 'divider') {
+                                        echo '<li class="divider">';
+                                    } elseif ($child->action == 'nav-header') {
+                                        echo '<li class="nav-header">' . $child->name;
+                                    } else {
+                                    	if (RC_Uri::current_url() === $child->link) {
+                                    		echo '<li class="active"><a class="menu-item" href="' . $child->link . '">' . $child->name . '</a>';
+                                    	} else {
+                                    		echo '<li><a class="menu-item" href="' . $child->link . '">' . $child->name . '</a>';
+                                    	}
+                                    }
+                                    
+                                    if ($child->has_submenus && $child->submenus) {
+                                        echo PHP_EOL;
+                                        echo '<ul class="menu-content">' . PHP_EOL;
+                                        
+                                        foreach ($child->submenus as $subchild) {
+                                            if ($subchild->action == 'divider') {
+                                                echo '<li class="divider">';
+                                            } elseif ($subchild->action == 'nav-header') {
+                                                echo '<li class="nav-header">' . $subchild->name;
+                                            } else {
+                                                if (RC_Uri::current_url() === $subchild->link) {
+                                                    echo '<li class="active"><a class="menu-item" href="' . $subchild->link . '">' . $subchild->name . '</a>';
+                                                } else {
+                                                    echo '<li><a class="menu-item" href="' . $subchild->link . '">' . $subchild->name . '</a>';
+                                                }
+                                            }
+                                            echo '</li>' . PHP_EOL;
+                                        }
+                                        
+                                        echo '</ul>' . PHP_EOL;
+                                    }
+                                    
                                     echo '</li>' . PHP_EOL;
                                 }
+                                echo '</ul>' . PHP_EOL;
                             }
+                            
+                            echo '</li>' . PHP_EOL;
                         }
-                        echo '</ul>' . PHP_EOL;
-                        echo '</li>' . PHP_EOL;
                     }
-                    echo '</ul>' . PHP_EOL;
-                    echo '</div>' . PHP_EOL;
-                    echo '</div>' . PHP_EOL;
+                    
                 }
+                
+                echo '</ul>' . PHP_EOL;
+                echo '</div>' . PHP_EOL;
+                echo '</div>' . PHP_EOL;
             }
         }
     }
