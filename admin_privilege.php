@@ -86,27 +86,27 @@ class admin_privilege extends ecjia_admin {
 		ecjia_screen::get_current_screen()->add_option('current_code', 'platform_privilege_menu');
 		
 		/* 获得该管理员的权限 */
-		$priv_row = $this->db_admin_user->field('user_name, action_list')->find('user_id = '.$_GET['id'].'');
-		$user_name = $priv_row['user_name'];
-		$priv_str = $priv_row['action_list'];
+// 		$priv_row = $this->db_admin_user->field('user_name, action_list')->find('user_id = '.$_GET['id'].'');
+// 		$user_name = $priv_row['user_name'];
+// 		$priv_str = $priv_row['action_list'];
 	
-		/* 如果被编辑的管理员拥有了all这个权限，将不能编辑 */
-		if ($priv_str == 'all') {
-			$link[] = array('text' => __('返回管理员列表'), 'href' => RC_Uri::url('@privilege/init'));
-			return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'),ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-		}
+// 		/* 如果被编辑的管理员拥有了all这个权限，将不能编辑 */
+// 		if ($priv_str == 'all') {
+// 			$link[] = array('text' => __('返回管理员列表'), 'href' => RC_Uri::url('@privilege/init'));
+// 			return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'),ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+// 		}
 		
 
-		$priv_group = ecjia_purview::load_purview($priv_str);
+// 		$priv_group = ecjia_purview::load_purview($priv_str);
 		
 		/* 赋值 */
-		$this->assign('ur_here',		sprintf(__('分派权限 [ %s ] '), $user_name));
+		$this->assign('ur_here',		sprintf(__('分派公众平台权限 [ %s ] '), $user_name));
 		$this->assign('action_link',	array('href'=>RC_Uri::url('@privilege/init'), 'text' => __('管理员列表')));
 		$this->assign('priv_group',		$priv_group);
 		$this->assign('user_id',		$_GET['id']);
 		
 		/* 显示页面 */
-		$this->assign('form_action',	RC_Uri::url('@privilege/update_allot'));
+		$this->assign('form_action',	RC_Uri::url('platform/privilege/update_allot'));
 		
 		$this->display('privilege_allot.dwt');
 	}
