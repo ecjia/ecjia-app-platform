@@ -56,26 +56,34 @@ class Screen extends ecjia_screen {
         // Time to render!
         if (!empty($this->_nav_here)) :
         ?>
-        
-        <ol class="breadcrumb">
-            <li><a href="<?php echo RC_Uri::url('merchant/dashboard/init');?>">管理主页</a></li>
-            <?php
-			foreach ($this->_nav_here as $nav_here) :
-			    if (end($this->_nav_here) === $nav_here) {
-                    $last_css = ' class="active"';
-                }
-				if ($nav_here->get_link()) :
-            ?>
-			<li<?php echo $last_css;?>><a href="<?php echo $nav_here->get_link();?>"><?php echo $nav_here->get_label();?></a></li>
-            <?php else : ?>
-            <li<?php echo $last_css;?>><?php echo $nav_here->get_label();?></li>
-            <?php
-		       endif;
-		   endforeach;
-			?>
-        </ol>
-        
-        <?php 
+        <div class="content-header-left col-12 mb-2">
+	        <h3 class="content-header-title"></h3>
+	        <div class="row breadcrumbs-top">
+		        <div class="breadcrumb-wrapper col-12">
+			        <ol class="breadcrumb">
+				        <li class="breadcrumb-item"><a href="<?php echo RC_Uri::url('platform/dashboard/init');?>">管理主页</a>
+				        </li>
+						<?php
+						foreach ($this->_nav_here as $nav_here) :
+						    if (end($this->_nav_here) === $nav_here) {
+			                    $last_css = ' class="breadcrumb-item active"';
+			                } else {
+			                	$last_css = ' class="breadcrumb-item"';
+			                }
+							if ($nav_here->get_link()) :
+			            ?>
+						<li<?php echo $last_css;?>><a href="<?php echo $nav_here->get_link();?>"><?php echo $nav_here->get_label();?></a></li>
+			            <?php else : ?>
+			            <li<?php echo $last_css;?>><?php echo $nav_here->get_label();?></li>
+			            <?php
+					       endif;
+					   endforeach;
+						?>
+			        </ol>
+		        </div>
+	        </div>
+        </div>
+        <?php
         endif;
         
         $this->render_screen_admin_notice();
