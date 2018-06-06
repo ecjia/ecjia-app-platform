@@ -744,6 +744,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
             
             foreach ($menus as $type => $group) {
                 if ($group) {
+                    // 一级菜单支持
                     foreach ($group as $key => $menu) {
                         if ($menu->action == 'divider') {
                             echo '<li class="divider">';
@@ -758,6 +759,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
                             //echo '<span class="badge badge badge-info badge-pill float-right mr-2">5</span>';
                             echo '</a>' . PHP_EOL;
                             
+                            // 二级菜单支持
                             if ($menu->has_submenus && $menu->submenus) {
                                 echo '      <ul class="menu-content">' . PHP_EOL;
                                 foreach ($menu->submenus as $child) {
@@ -774,6 +776,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
                                     	}
                                     }
                                     
+                                    // 三级菜单支持
                                     if ($child->has_submenus && $child->submenus) {
                                         echo PHP_EOL;
                                         echo '<ul class="menu-content">' . PHP_EOL;
@@ -790,6 +793,31 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
                                                     echo '<li><a class="menu-item" href="' . $subchild->link . '">' . $subchild->name . '</a>';
                                                 }
                                             }
+                                            
+                                            // 四级菜单支持
+                                            if ($subchild->has_submenus && $subchild->submenus) {
+                                                echo PHP_EOL;
+                                                echo '<ul class="menu-content">' . PHP_EOL;
+                                                
+                                                foreach ($subchild->submenus as $fourchild) {
+                                                    if ($fourchild->action == 'divider') {
+                                                        echo '<li class="divider">';
+                                                    } elseif ($fourchild->action == 'nav-header') {
+                                                        echo '<li class="nav-header">' . $fourchild->name;
+                                                    } else {
+                                                        if (RC_Uri::current_url() === $fourchild->link) {
+                                                            echo '<li class="active"><a class="menu-item" href="' . $fourchild->link . '">' . $fourchild->name . '</a>';
+                                                        } else {
+                                                            echo '<li><a class="menu-item" href="' . $fourchild->link . '">' . $fourchild->name . '</a>';
+                                                        }
+                                                    }
+                                                    
+                                                    echo '</li>' . PHP_EOL;
+                                                }
+                                                
+                                                echo '</ul>' . PHP_EOL;
+                                            }
+                                            
                                             echo '</li>' . PHP_EOL;
                                         }
                                         
@@ -807,8 +835,8 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
                     
                 }
                 
-                echo '</ul>' . PHP_EOL;
-                echo '</div>' . PHP_EOL;
+                echo '      </ul>' . PHP_EOL;
+                echo '  </div>' . PHP_EOL;
                 echo '</div>' . PHP_EOL;
             }
         }
