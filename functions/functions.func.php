@@ -57,15 +57,8 @@ defined('IN_ECJIA') or exit('No permission resources.');
 // RC_Hook::add_action('class_ecjia_platform_page',        function () {RC_Package::package('app::platform')->loadClass('ecjia_platform_page', false);});
 // RC_Hook::add_action('class_ecjia_platform_purview',     function () {RC_Package::package('app::platform')->loadClass('ecjia_platform_purview', false);});
 
-
-$loader = \Royalcms\Component\Foundation\AliasLoader::getInstance();
-$loader->alias('ecjia_platform', 'Ecjia\App\Platform\Frameworks\EcjiaPlatform');
-$loader->alias('ecjia_platform_controller', 'Ecjia\App\Platform\Frameworks\Controller\DefaultPlatformController');
-$loader->alias('ecjia_platform_menu', 'Ecjia\App\Platform\Frameworks\Component\Menu');
-$loader->alias('ecjia_platform_screen', 'Ecjia\App\Platform\Frameworks\Component\Screen');
-$loader->alias('ecjia_platform_loader', 'Ecjia\App\Platform\Frameworks\Component\Loader');
-$loader->alias('ecjia_platform_page', 'Ecjia\App\Platform\Frameworks\Component\Page');
-$loader->alias('ecjia_platform_purview', 'Ecjia\App\Platform\Frameworks\Component\Purview');
+//类别名设置
+with(new Ecjia\App\Platform\AliasManage())->aliasLoader();
 
 
 // end
