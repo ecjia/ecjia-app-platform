@@ -58,7 +58,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
 // RC_Hook::add_action('class_ecjia_platform_purview',     function () {RC_Package::package('app::platform')->loadClass('ecjia_platform_purview', false);});
 
 //类别名设置
-with(new Ecjia\App\Platform\AliasManage())->aliasLoader();
+with(new Ecjia\App\Platform\Frameworks\AliasManage())->aliasLoader();
 
 
 // end
