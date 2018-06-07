@@ -75,38 +75,39 @@ class admin_privilege extends ecjia_admin {
 	/**
 	 * 为管理员分配权限
 	 */
-	public function allot() {
+	public function allot() 
+	{
 		$this->admin_priv('allot_priv');
-		if ($_SESSION['admin_id'] == $_GET['id']) {
+		
+		$userid = $this->request->query('id');
+		if ($_SESSION['admin_id'] == $userid) {
 			$this->admin_priv('all');
 		}
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('分派权限')));
-		
 		ecjia_screen::get_current_screen()->add_option('current_code', 'platform_privilege_menu');
 		
 		/* 获得该管理员的权限 */
-// 		$priv_row = $this->db_admin_user->field('user_name, action_list')->find('user_id = '.$_GET['id'].'');
-// 		$user_name = $priv_row['user_name'];
-// 		$priv_str = $priv_row['action_list'];
-	
-// 		/* 如果被编辑的管理员拥有了all这个权限，将不能编辑 */
-// 		if ($priv_str == 'all') {
-// 			$link[] = array('text' => __('返回管理员列表'), 'href' => RC_Uri::url('@privilege/init'));
-// 			return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'),ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-// 		}
-		
+		$user = with(new Ecjia\App\Platform\Frameworks\Users\AdminUser($userid));
+		$user_name = $user->getUserName();
+		$priv_str = $user->getPlatformActionList();
 
-// 		$priv_group = ecjia_purview::load_purview($priv_str);
+		/* 如果被编辑的管理员拥有了all这个权限，将不能编辑 */
+		if ($priv_str == 'all') {
+			$link[] = array('text' => __('返回管理员列表'), 'href' => RC_Uri::url('@privilege/init'));
+			return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+		}
+		
+		$priv_group = ecjia_platform_purview::load_purview($priv_str);
 		
 		/* 赋值 */
 		$this->assign('ur_here',		sprintf(__('分派公众平台权限 [ %s ] '), $user_name));
-		$this->assign('action_link',	array('href'=>RC_Uri::url('@privilege/init'), 'text' => __('管理员列表')));
+		$this->assign('action_link',	array('href' => RC_Uri::url('@privilege/init'), 'text' => __('管理员列表')));
 		$this->assign('priv_group',		$priv_group);
-		$this->assign('user_id',		$_GET['id']);
+		$this->assign('user_id',		$userid);
 		
 		/* 显示页面 */
-		$this->assign('form_action',	RC_Uri::url('platform/privilege/update_allot'));
+		$this->assign('form_action',	RC_Uri::url('platform/admin_privilege/update_allot'));
 		
 		$this->display('privilege_allot.dwt');
 	}
@@ -114,34 +115,29 @@ class admin_privilege extends ecjia_admin {
 	/**
 	 * 更新管理员的权限
 	 */
-	public function update_allot() {
+	public function update_allot() 
+	{
 		$this->admin_priv('admin_manage');
+		
+		$userid = $this->request->input('id');
 		/* 取得当前管理员用户名 */
-		$admin_name = $this->db_admin_user->field('user_name')->find('user_id = '.$_POST['id'].'');
+		$user = new Ecjia\App\Platform\Frameworks\Users\AdminUser($userid);
+		$user_name = $user->getUserName();
 		
 		/* 更新管理员的权限 */
 		$act_list = join(',', $_POST['action_code']);
-		$data = array(
-				'action_list'	=> $act_list,
-				'role_id'		=> '',
-		);
-		$this->db_admin_user->where(array('user_id' => $_POST['id']))->update($data);
-		
-		/* 动态更新管理员的SESSION */
-		if ($_SESSION['admin_id'] == $_POST['id']) {
-			$_SESSION['action_list'] = $act_list;
-		}
+
+		$user->setPlatformActionList($act_list);
 		
 		/* 记录管理员操作 */
-		ecjia_admin::admin_log(addslashes($admin_name['user_name']), 'edit', 'privilege');
+		ecjia_admin::admin_log(addslashes($user_name), 'edit', 'privilege');
 		/* 提示信息 */
 		$link[] = array(
 			'text'	=> __('返回管理员列表'), 
 			'href'	=> RC_Uri::url('@privilege/init')
 		);
-		return $this->showmessage(sprintf(__('编辑 %s 操作成功！'), $admin_name['user_name']), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('link'	=> $link));
+		return $this->showmessage(sprintf(__('编辑 %s 操作成功！'), $user_name), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('link' => $link));
 	}
-	
 	
 }
 
