@@ -51,11 +51,11 @@
  * 功能(function)中的(color)颜色区域
  */
 .ecjiafc-red, .ecjiafc-red:hover, .ecjiafc-red:after, .fa-times,
-table .fontello-icon-cancel, table .fontello-icon-trash,
+table .fontello-icon-cancel, table .fontello-icon-trash, table .ft-trash-2,
 .error_color{color:#c62626;}
 
 .ecjiafc-999, .ecjiafc-999:hover, .ecjiafc-999:after {color:#999;}
-.ecjiafc-blue, .ecjiafc-blue:hover, .ecjiafc-blue:after, .ok_color, .fa-check{color:#08c;}/* #72ACE3 */
+.ecjiafc-blue, .ecjiafc-blue:hover, .ecjiafc-blue:after, .ok_color, .fa-check, .ft-edit{color:#08c;}/* #72ACE3 */
 .ecjiafc-white, .ecjiafc-white:hover, .ecjiafc-white:after{color:#fff};
 .dft_color{color:#000;}
 .stop_color{color:#666;}
