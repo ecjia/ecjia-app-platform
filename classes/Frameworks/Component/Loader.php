@@ -98,6 +98,10 @@ class Loader {
 		// 		$scripts->add( 'ecjia-platform-dashboard-analytics',    	$base_url.'/platform/js/scripts/pages/dashboard-analytics.js', array(), false, 1 );
 		
 		$scripts->add( 'ecjia-platform-components-modal',    	    $base_url.'/platform/js/scripts/modal/components-modal.js', array(), false, 1 );
+		
+		$scripts->add( 'ecjia-platform-jquery-migrate',   			$base_url.'/platform/js/jquery-migrate.min.js', array('jquery'), false, 1 );
+		
+		$scripts->add( 'ecjia-platform-bootstrap-fileupload-js',	$base_url.'/platform/lib/bootstrap-fileupload/bootstrap-fileupload.js', array(), false, 1 );
 	}
 
 
@@ -138,6 +142,8 @@ class Loader {
 		$styles->add( 'ecjia-platform-clndr',   				$base_url."/platform/css/plugins/calendars/clndr.css" );
 		$styles->add( 'ecjia-platform-palette-climacon',    	$base_url."/platform/css/core/colors/palette-climacon.css" );
 		$styles->add( 'ecjia-platform-users',         		  	$base_url."/platform/css/pages/users.css" );
+		
+		$styles->add( 'ecjia-platform-bootstrap-fileupload-css',	$base_url.'/platform/lib/bootstrap-fileupload/bootstrap-fileupload.css');
 	}
 
 
