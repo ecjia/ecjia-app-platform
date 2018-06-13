@@ -145,17 +145,17 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		$this->public_route = RC_Hook::apply_filters('platform_access_public_route', $this->public_route);
 
 		// 判断用户是否登录
-// 		if (!$this->_check_login()) {
-// 		    RC_Session::destroy();
-// 		    if (is_pjax()) {
-// 		        Screen::$current_screen->add_nav_here(new admin_nav_here(__('系统提示')));
-// 		        return $this->showmessage(RC_Lang::get('system::system.priv_error'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => array(array('text' => __('重新登录'), 'href' => RC_Uri::url('staff/privilege/login')))));
-// 		    } elseif (is_ajax()) {
-// 		        return $this->showmessage(RC_Lang::get('system::system.priv_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-// 		    } else {
-// 		        return $this->redirect(RC_Uri::url('staff/privilege/login'));
-// 		    }
-// 		}
+		if (!$this->_check_login()) {
+		    RC_Session::destroy();
+		    if (is_pjax()) {
+		        Screen::$current_screen->add_nav_here(new admin_nav_here(__('系统提示')));
+		        return $this->showmessage(RC_Lang::get('system::system.priv_error'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => array(array('text' => __('重新登录'), 'href' => RC_Uri::url('staff/privilege/login')))));
+		    } elseif (is_ajax()) {
+		        return $this->showmessage(RC_Lang::get('system::system.priv_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+		    } else {
+		        return $this->redirect(RC_Uri::url('@privilege/login'));
+		    }
+		}
 
 		if (RC_Config::get('system.debug')) {
 			error_reporting(E_ALL);
