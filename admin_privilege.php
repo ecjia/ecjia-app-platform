@@ -88,7 +88,7 @@ class admin_privilege extends ecjia_admin {
 		ecjia_screen::get_current_screen()->add_option('current_code', 'platform_privilege_menu');
 		
 		/* 获得该管理员的权限 */
-		$user = new Ecjia\App\Platform\Frameworks\Users\AdminUser($userid);
+		$user = new Ecjia\System\Admins\Users\AdminUser($userid, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
 		$user_name = $user->getUserName();
 		$priv_str = $user->getActionList();
 
@@ -121,7 +121,7 @@ class admin_privilege extends ecjia_admin {
 		
 		$userid = $this->request->input('id');
 		/* 取得当前管理员用户名 */
-		$user = new Ecjia\App\Platform\Frameworks\Users\AdminUser($userid);
+		$user = new Ecjia\System\Admins\Users\AdminUser($userid, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
 		$user_name = $user->getUserName();
 		
 		/* 更新管理员的权限 */
