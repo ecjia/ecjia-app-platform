@@ -418,15 +418,15 @@ class mh_platform extends ecjia_merchant {
 	{
 	    $id = $this->request->input('id');
 	    
-	    $uuid = RC_DB::table('platform_account')->where('shop_id', $_SESSION['store_id'])->where('id', $id)->pluck('uuid');
+	    $uuid = RC_DB::table('platform_account')->where('shop_id', session('store_id'))->where('id', $id)->pluck('uuid');
 	    if (empty($uuid)) {
 	        return $this->showmessage(__('该公众号不存在', 'app-platform'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
 	    }
 	    
 	    $authcode_array = [
 	        'uuid'         => $uuid,
-	        'user_id'      => session('admin_id'),
-	        'user_type'    => 'admin',
+	        'user_id'      => session('staff_id'),
+	        'user_type'    => 'merchant',
 	        'time'         => RC_Time::gmtime(),
 	    ];
 	    

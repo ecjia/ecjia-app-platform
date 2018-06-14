@@ -113,7 +113,26 @@ class privilege extends ecjia_platform {
                     //商家登录
                     else if ($user_type == 'merchant') {
                         // @todo
+                        $user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($user_id, '\Ecjia\App\Merchant\Frameworks\Users\StaffUserDefaultAllotPurview');
                         
+                        if ($user->getActionList()) {
+                            
+                            $_SESSION = array();
+                            //平台登录
+                            $store_id = 0;
+                            $user_name = $user->getUserName();
+                            $action_list = $user->getActionList();
+                            $last_time = $user->getLastLogin();
+                            $email = $user->getEmail();
+                            
+                            $this->admin_session($uuid, $store_id, $user_id, $user_type, $user_name, $action_list, $last_time, $email);
+                            
+                            return $this->redirect(RC_Uri::url('platform/dashboard/init'));
+                        }
+                        //没有权限判断提示
+                        else {
+                            $this->assign('error_message', '抱歉！该用户没有分配公众平台登录权限。');
+                        }
                         
                     }
 	                
