@@ -88,25 +88,58 @@ class privilege extends ecjia_platform {
 	            if (intval($time_gap) < 30) {
 	                
 	                if ($user_type == 'admin') {
-	                    $user = new Ecjia\App\Platform\Frameworks\Users\AdminUser($user_id);
+	                    $user = new Ecjia\System\Admins\Users\AdminUser($user_id, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
 	                    
-	                    if ($user->getPlatformActionList()) {
+	                    if ($user->getActionList()) {
 	                        
+	                        $_SESSION = array();
+	                        //平台登录
+	                        $store_id = 0;
+	                        $user_name = $user->getUserName();
+	                        $action_list = $user->getActionList();
+	                        $last_time = $user->getLastLogin();
+	                        $email = $user->getEmail();
+	                        
+	                        $this->admin_session($uuid, $store_id, $user_id, $user_type, $user_name, $action_list, $last_time, $email);
+	                        
+	                        return $this->redirect(RC_Uri::url('platform/dashboard/init'));
+	                    }
+	                    //没有权限判断提示
+	                    else {
+	                        $this->assign('error_message', '抱歉！该用户没有分配公众平台登录权限。');
 	                    }
 	                    
 	                }
+                    //商家登录
+                    else if ($user_type == 'merchant') {
+                        // @todo
+                        
+                        
+                    }
 	                
+	            } 
+	            //请求超时，错误提示
+	            else {
+	                $this->assign('error_message', '抱歉！请求超时。');
 	            }
 	            
-	            
-	            
-	            
 	        }
-	        
+	        //参数不全，错误提示
+	        else {
+	            $this->assign('error_message', '传参出错。');
+	        }
+	    }
+	    //参数authcode接收失败，错误提示
+	    else {
+	        $this->assign('error_message', '抱歉！数据丢失，登录失败。');
 	    }
 	    
+	    $this->assign('shop_title', '公众平台登录');
+// 	    $this->assign('shop_title_link', RC_Uri::url('staff/privilege/login'));
+	    
+	    RC_Session::destroy();
+	    $this->display('platform_auto_login_error.dwt');
 	}
-	
 	
 }
 
