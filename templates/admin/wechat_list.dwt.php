@@ -93,7 +93,10 @@
 				        <i class="{if $val.status eq 1}fontello-icon-ok{else}fontello-icon-cancel{/if} cursor_pointer" data-trigger="toggleState" data-url="{RC_Uri::url('platform/admin/toggle_show')}" data-id="{$val.id}" ></i>
 					</td>
 					<td><span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('platform/admin/edit_sort')}" data-name="sort" data-pk="{$val.id}"  data-title="{lang key='platform::platform.edit_plat_sort'}">{$val.sort}</span></td>
-					<td>{$val.add_time}</td>
+					<td>
+						{$val.add_time}<br>
+						<a class="data-pjax" href='{RC_Uri::url("platform/admin/autologin","id={$val.id}")}' title="进入管理">进入管理</a>
+					</td>
 				</tr>
 				<!--  {foreachelse} -->
 				<tr><td class="no-records" colspan="8">{lang key='system::system.no_records'}</td></tr>

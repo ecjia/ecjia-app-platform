@@ -632,6 +632,15 @@ class admin extends ecjia_admin {
 		$key = 'ecjia'.$key;
 		return $this->showmessage('生成token成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('token' => $key));
 	}
+
+	public function autologin() {
+		$this->admin_priv('platform_config_manage', ecjia::MSGTYPE_JSON);
+		
+		$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+
+		// $url = str_replace("index.php", "sites/platform/index.php", RC_Uri::url('platform/privilege/autologin')) . '&authcode=' . $authcode;
+		// return $this->redirect($url);
+	}
 	
 	/**
 	 * 公众号列表
