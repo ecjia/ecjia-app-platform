@@ -56,13 +56,13 @@ class platform_platform_hooks {
     
     public static function ecjia_platform_dashboard_contact() {
         ecjia_merchant::$controller->display(
-		    RC_Package::package('app::platform')->loadTemplate('merchant/library/widget_platform_dashboard_contact.lbi', true)
+		    RC_Package::package('app::platform')->loadTemplate('platform/library/widget_platform_dashboard_contact.lbi', true)
 		);
     }
 
 }
 
 RC_Hook::add_filter( 'ecjia_builtin_app_bundles', array('platform_platform_hooks', 'ecjia_builtin_app_bundles') );
-RC_Hook::add_filter( 'platform_dashboard_right4', array('platform_platform_hooks', 'ecjia_platform_dashboard_contact'), 2 );
+// RC_Hook::add_filter( 'platform_dashboard_right4', array('platform_platform_hooks', 'ecjia_platform_dashboard_contact'), 2 );
 
 // end
