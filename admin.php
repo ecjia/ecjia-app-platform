@@ -417,6 +417,29 @@ class admin extends ecjia_admin {
 		}
 	}
 	
+	
+	public function autologin()
+	{
+	    $id = $this->request->input('id');
+	    
+	    $uuid = RC_DB::table('platform_account')->where('id', $id)->pluck('uuid');
+	    if (empty($uuid)) {
+	        return $this->showmessage(__('该公众号不存在', 'app-platform'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
+	    }
+	    
+	    $authcode_array = [
+	        'uuid'         => $uuid,
+	        'user_id'      => session('admin_id'),
+	        'user_type'    => 'admin',
+	        'time'         => RC_Time::gmtime(),
+	    ];
+	    
+	    $authcode_str = http_build_query($authcode_array);
+	    $authcode     = RC_Crypt::encrypt($authcode_str);
+	    $url          = str_replace("index.php", "sites/platform/index.php", RC_Uri::url('platform/privilege/autologin')) . '&authcode=' . $authcode;
+	    return $this->redirect($url);
+	}
+	
 	/**
 	 * 查看公众号扩展
 	 */
