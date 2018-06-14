@@ -90,7 +90,7 @@ class admin_privilege extends ecjia_admin {
 		/* 获得该管理员的权限 */
 		$user = new Ecjia\App\Platform\Frameworks\Users\AdminUser($userid);
 		$user_name = $user->getUserName();
-		$priv_str = $user->getPlatformActionList();
+		$priv_str = $user->getActionList();
 
 		/* 如果被编辑的管理员拥有了all这个权限，将不能编辑 */
 		if ($priv_str == 'all') {
@@ -127,7 +127,7 @@ class admin_privilege extends ecjia_admin {
 		/* 更新管理员的权限 */
 		$act_list = join(',', $_POST['action_code']);
 
-		$user->setPlatformActionList($act_list);
+		$user->setActionList($act_list);
 		
 		/* 记录管理员操作 */
 		ecjia_admin::admin_log(addslashes($user_name), 'edit', 'privilege');
