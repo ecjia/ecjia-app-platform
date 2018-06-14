@@ -72,6 +72,7 @@ use RC_Package;
 use RC_Plugin;
 use RC_Uri;
 use RC_File;
+use RC_Ip;
 use Smarty;
 
 use Ecjia\App\Platform\Frameworks\Component\Screen;
