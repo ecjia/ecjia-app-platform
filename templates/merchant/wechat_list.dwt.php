@@ -85,8 +85,8 @@
 								<td class="hide-edit-area">
 									{$val.name}<br>
 									<div class="edit-list">
-										<a target="__blank" href='{RC_Uri::url("platform/mh_platform/autologin","id={$val.id}")}' title="进入管理">进入管理</a>&nbsp;|&nbsp;
-								      	<a class="data-pjax" href='{RC_Uri::url("platform/mh_platform/edit", "id={$val.id}")}' title="{lang key='system::system.edit'}">{lang key='platform::platform.edit'}</a>&nbsp;|&nbsp;
+										<a target="__blank" href='{RC_Uri::url("platform/mh_platform/autologin","id={$val.id}")}' title="进入管理">进入管理</a> &nbsp;|&nbsp;
+								      	<a class="data-pjax" href='{RC_Uri::url("platform/mh_platform/edit", "id={$val.id}")}' title="{lang key='system::system.edit'}">{lang key='platform::platform.edit'}</a> &nbsp;|&nbsp;
 								     	<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="{t}您确定要删除公众号[{$val.name}]吗？{/t}" href='{RC_Uri::url("platform/mh_platform/remove","id={$val.id}")}' title="{lang key='platform::platform.delete'}">{lang key='platform::platform.delete'}</a>
 							     	</div>
 								</td>
