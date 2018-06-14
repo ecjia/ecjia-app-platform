@@ -55,5 +55,8 @@ class platform_merchant_hooks {
     }
 }
 
+//类别名设置
+with(new Ecjia\App\Platform\Frameworks\AliasManage())->aliasLoader();
+
 RC_Hook::add_filter( 'merchant_merchant_menu_api', array('platform_merchant_hooks', 'platform_merchant_menu_api') );
 // end
