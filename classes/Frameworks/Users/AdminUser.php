@@ -2,7 +2,7 @@
 
 namespace Ecjia\App\Platform\Frameworks\Users;
 
-use Ecjia\App\Platform\Frameworks\Contracts\UserInterface;
+use Ecjia\System\Frameworks\Contracts\UserInterface;
 use Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview;
 use Royalcms\Component\Repository\Repositories\AbstractRepository;
 
@@ -19,13 +19,21 @@ class AdminUser extends AbstractRepository implements UserInterface
      */
     protected $purview;
     
-    public function __construct($userid)
+    public function __construct($userid, $purviewClass = null)
     {
         parent::__construct();
         
         $this->user = $this->find($userid);
         
-        $this->purview = new AdminUserAllotPurview($userid);
+        if (is_string($purviewClass) && class_exists($purviewClass)) {
+            $this->purview = new $purviewClass($userid);
+        }
+        elseif (is_callable($purviewClass)) {
+            $this->purview = $purviewClass($userid);
+        }
+        elseif (is_null($purviewClass)) {
+            $this->purview = new AdminUserAllotPurview($userid);
+        }
     }
     
     /**
@@ -81,14 +89,6 @@ class AdminUser extends AbstractRepository implements UserInterface
      */
     public function getActionList()
     {
-        return $this->user->action_list;
-    }
-    
-    /**
-     * 获取用户公众平台权限列表
-     */
-    public function getPlatformActionList()
-    {
         return $this->purview->get();
     }
     
@@ -97,7 +97,7 @@ class AdminUser extends AbstractRepository implements UserInterface
      * @param string $purview
      * @return boolean
      */
-    public function setPlatformActionList($purview)
+    public function setActionList($purview)
     {
         return $this->purview->save($purview);
     }
