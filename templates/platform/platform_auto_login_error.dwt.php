@@ -1,4 +1,4 @@
-<!-- {extends file="ecjia-merchant.dwt.php"} -->
+<!-- {extends file="ecjia-platform.dwt.php"} -->
 
 <!-- {block name="title"} -->公众平台登录<!-- {/block} -->
 
