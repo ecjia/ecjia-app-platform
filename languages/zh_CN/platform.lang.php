@@ -143,7 +143,7 @@ return array(
     'lable_sort'             => '排序：',
     'sort'                   => '排序',
     'open'                   => '开启',
-    'close'                  => '取消',
+    'close'                  => '关闭',
     'confirm'                => '确定',
     'update'                 => '更新',
     'remove'                 => '移除',
