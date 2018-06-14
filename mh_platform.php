@@ -206,6 +206,7 @@ class mh_platform extends ecjia_merchant {
 			'add_time'	=>	RC_Time::gmtime(),
 			'sort'		=>	intval($_POST['sort']),
 			'status'	=>	intval($_POST['status']),
+			'shop_id'	=>  $_SESSION['store_id']
 		);
 		$id = $this->db_platform_account->insert($data);
 		
@@ -235,7 +236,7 @@ class mh_platform extends ecjia_merchant {
 			'<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号#.E7.BC.96.E8.BE.91.E5.85.AC.E4.BC.97.E5.8F.B7" target="_blank">'.RC_Lang::get('platform::platform.edit_pub_help').'</a>') . '</p>'
 		);
 		
-		$wechat = $this->db_platform_account->find(array('id' => intval($_GET['id'])));
+		$wechat = $this->db_platform_account->where('shop_id', $_SESSION['store_id'])->find(array('id' => intval($_GET['id'])));
 		if (!empty($wechat['logo'])) {
 			$wechat['logo'] = RC_Upload::upload_url($wechat['logo']);
 		}
@@ -282,7 +283,7 @@ class mh_platform extends ecjia_merchant {
 		}
 		
 		//获取旧的logo
-		$old_logo = $this->db_platform_account->where(array('id' => $id))->get_field('logo');
+		$old_logo = $this->db_platform_account->where('shop_id', $_SESSION['store_id'])->where(array('id' => $id))->get_field('logo');
 		
 		if ((isset($_FILES['platform_logo']['error']) && $_FILES['platform_logo']['error'] == 0) || (!isset($_FILES['platform_logo']['error']) && isset($_FILES['platform_logo']['tmp_name'] ) &&$_FILES['platform_logo']['tmp_name'] != 'none')) {
 			$upload = RC_Upload::uploader('image', array('save_path' => 'data/platform', 'auto_sub_dirs' => false));
@@ -312,7 +313,7 @@ class mh_platform extends ecjia_merchant {
 			'sort'		=>	intval($_POST['sort']),
 			'status'	=>	intval($_POST['status']),
 		);
-		$this->db_platform_account->where(array('id' => $id))->update($data);
+		$this->db_platform_account->where('shop_id', $_SESSION['store_id'])->where(array('id' => $id))->update($data);
 		
 		ecjia_merchant::admin_log($_POST['name'], 'edit', 'wechat');
 		return $this->showmessage(RC_Lang::get('platform::platform.edit_pub_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/mh_platform/edit', array('id' => $id))));
@@ -326,12 +327,12 @@ class mh_platform extends ecjia_merchant {
 		$this->admin_priv('platform_config_delete', ecjia::MSGTYPE_JSON);
 		
 		$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-		$info = $this->db_platform_account->where(array('id' => $id))->field('name, logo')->find();
+		$info = $this->db_platform_account->where('shop_id', $_SESSION['store_id'])->where(array('id' => $id))->field('name, logo')->find();
 		if (!empty($info['logo'])){
 			$disk = RC_Filesystem::disk();
 			$disk->delete(RC_Upload::upload_path() . $info['logo']);
 		}
-		$success = $this->db_platform_account->where(array('id' => $id))->delete();
+		$success = $this->db_platform_account->where('shop_id', $_SESSION['store_id'])->where(array('id' => $id))->delete();
 		//删除公众号扩展及扩展命令
 		$this->db_platform_config->where(array('account_id' => $id))->delete();
 		$this->db_command->where(array('account_id' => $id))->delete();
@@ -352,13 +353,13 @@ class mh_platform extends ecjia_merchant {
 		$this->admin_priv('platform_config_update', ecjia::MSGTYPE_JSON);
 		
 		$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-		$info = $this->db_platform_account->where(array('id' => $id))->field('name,logo')->find();
+		$info = $this->db_platform_account->where('shop_id', $_SESSION['store_id'])->where(array('id' => $id))->field('name, logo')->find();
 		if (!empty($info['logo'])){
 			$disk = RC_Filesystem::disk();
 			$disk->delete(RC_Upload::upload_path() . $info['logo']);
 		}
 		$data = array('logo' => '');
-		$update = $this->db_platform_account->where(array('id' => $id))->update($data);
+		$update = $this->db_platform_account->where('shop_id', $_SESSION['store_id'])->where(array('id' => $id))->update($data);
 		
 		ecjia_merchant::admin_log(RC_Lang::get('platform::platform.public_name_is').$info['name'], 'remove', 'platform_logo');
 		
@@ -377,8 +378,8 @@ class mh_platform extends ecjia_merchant {
 		
 		$id	 = intval($_POST['id']);
 		$val = intval($_POST['val']);
-		$this->db_platform_account->where(array('id' => $id))->update(array('status' => $val));
-		$name = $this->db_platform_account->where(array('id' => $id))->get_field('name');
+		$this->db_platform_account->where('shop_id', $_SESSION['store_id'])->where(array('id' => $id))->update(array('status' => $val));
+		$name = $this->db_platform_account->where('shop_id', $_SESSION['store_id'])->where(array('id' => $id))->get_field('name');
 		if ($val == 1) {
 			ecjia_merchant::admin_log($name, 'use', 'wechat');
 		} else {
@@ -401,7 +402,7 @@ class mh_platform extends ecjia_merchant {
 			if (!is_numeric($sort)) {
 				return $this->showmessage(RC_Lang::get('platform::platform.import_num'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			} else {
-				if ($this->db_platform_account->where(array('id' => $id))->update(array('sort' => $sort))) {
+				if ($this->db_platform_account->where('shop_id', $_SESSION['store_id'])->where(array('id' => $id))->update(array('sort' => $sort))) {
 					return $this->showmessage(RC_Lang::get('platform::platform.editsort_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('platform/mh_platform/init')));
 				} else {
 					return $this->showmessage(RC_Lang::get('platform::platform.editsort_failed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -417,7 +418,7 @@ class mh_platform extends ecjia_merchant {
 	{
 	    $id = $this->request->input('id');
 	    
-	    $uuid = RC_DB::table('platform_account')->where('id', $id)->pluck('uuid');
+	    $uuid = RC_DB::table('platform_account')->where('shop_id', $_SESSION['store_id'])->where('id', $id)->pluck('uuid');
 	    if (empty($uuid)) {
 	        return $this->showmessage(__('该公众号不存在', 'app-platform'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
 	    }
@@ -634,11 +635,11 @@ class mh_platform extends ecjia_merchant {
 		$idArr	= explode(',', $_POST['id']);
 		$count	= count($idArr);
 		
-		$info = $this->db_platform_account->in(array('id' => $idArr))->field('name')->select();
+		$info = $this->db_platform_account->where('shop_id', $_SESSION['store_id'])->in(array('id' => $idArr))->field('name')->select();
 		foreach ($info as $v) {
 			ecjia_merchant::admin_log($v['name'], 'batch_remove', 'wechat');
 		}
-		$this->db_platform_account->where(array('id' => $idArr))->delete();
+		$this->db_platform_account->where('shop_id', $_SESSION['store_id'])->where(array('id' => $idArr))->delete();
 		return $this->showmessage(RC_Lang::get('platform::platform.deleted')."[ ".$count." ]".RC_Lang::get('platform::platform.record_account'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/mh_platform/init')));
 	}
 	
@@ -665,6 +666,7 @@ class mh_platform extends ecjia_merchant {
 			$where[]= "name LIKE '%" . mysql_like_quote($filter['keywords']) . "%'";
 		}
 		
+		$where['shop_id'] = $_SESSION['store_id'];
 		$where['platform'] = array('neq' => 'weapp');
 		
 		$platform = !empty($_GET['platform']) ? $_GET['platform'] : '';
@@ -672,9 +674,9 @@ class mh_platform extends ecjia_merchant {
 			$where['platform'] = $platform;
 		}
 	
-		$count = $db_platform_account->where($where)->count ();
+		$count = $db_platform_account->where($where)->count();
 		$filter['record_count'] = $count;
-		$page = new ecjia_page($count, 10, 5);
+		$page = new ecjia_merchant_page($count, 10, 5);
 	
 		$arr = array();
 		$data = $db_platform_account->where($where)->order (array('sort' => 'asc', 'add_time' => 'desc'))->limit($page->limit())->select();
