@@ -95,7 +95,7 @@
 					<td><span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('platform/admin/edit_sort')}" data-name="sort" data-pk="{$val.id}"  data-title="{lang key='platform::platform.edit_plat_sort'}">{$val.sort}</span></td>
 					<td>
 						{$val.add_time}<br>
-						<a class="data-pjax" href='{RC_Uri::url("platform/privilege/autologin","id={$val.id}")}' title="进入管理">进入管理</a>
+						<a target="__blank" href='{RC_Uri::url("platform/admin/autologin","id={$val.id}")}' title="进入管理">进入管理</a>
 					</td>
 				</tr>
 				<!--  {foreachelse} -->
