@@ -119,7 +119,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		$this->public_route = array(
 // 		    'staff/privilege/login',
 // 		    'staff/privilege/signin',
-// 			'staff/privilege/autologin',
+			'platform/privilege/autologin',
 // 		    'staff/get_password/forget_pwd',
 // 		    'staff/get_password/reset_pwd_mail',
 // 		    'staff/get_password/reset_pwd_form',
@@ -299,44 +299,9 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		}
 
 		/* 验证管理员身份 */
-		if (isset($_SESSION['staff_id']) && intval($_SESSION['staff_id']) > 0) {
+		if (session('session_user_id') > 0 && 
+		    (session('session_user_type') == 'admin' || session('session_user_type') == 'merchant')) {
 		    return true;
-		}
-		/* session 不存在，检查cookie */
-		$staff_id = RC_Cookie::get('ECJAP[staff_id]');
-		$staff_pass = RC_Cookie::get('ECJAP[staff_pass]');
-
-		if (!empty($staff_id) && !empty($staff_pass)) {
-			// 找到了cookie, 验证cookie信息
-			$row = RC_DB::TABLE('staff_user')->where('user_id', intval($staff_id))->select('user_id', 'name', 'password', 'action_list', 'last_login')->get();
-			if (!empty($row)) {
-				// 检查密码是否正确
-				if (md5($row['password'] . ecjia::config('hash_code')) == $staff_pass) {
-					!isset($row['last_login']) && $row['last_login'] = '';
-					$this->admin_session($row['user_id'], $row['name'], $row['action_list'], $row['last_login']);
-
-					// 更新最后登录时间和IP
-					$data = array(
-						'last_login' => RC_Time::gmtime(),
-						'last_ip'    => RC_Ip::client_ip()
-					);
-					RC_DB::table('staff_user')->where('user_id', $_SESSION['staff_id'])->update($data);
-					return true;
-				} else {
-					RC_Cookie::delete('ECJAP[staff_id]');
-					RC_Cookie::delete('ECJAP[staff_pass]');
-					return false;
-				}
-			} else {
-				// 没有找到这个记录
-				RC_Cookie::delete('ECJAP[staff_id]');
-				RC_Cookie::delete('ECJAP[staff_pass]');
-				return false;
-			}
-		} else {
-			unset($staff_id);
-			unset($staff_pass);
-			return false;
 		}
 	}
 
