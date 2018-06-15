@@ -425,7 +425,7 @@ class merchant extends ecjia_merchant {
 	    
 	    //公众平台的超管权限同商家店长的权限
 	    if (session('action_list') == all) {
-	        $user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser(session('admin_id'), session('store_id'), '\Ecjia\App\Merchant\Frameworks\Users\StaffUserDefaultAllotPurview');
+	        $user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser(session('staff_id'), session('store_id'), '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');
 	        if ($user->getActionList() != 'all') {
 	            $user->setActionList('all');
 	        }

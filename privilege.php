@@ -114,13 +114,13 @@ class privilege extends ecjia_platform {
                     else if ($user_type == 'merchant') {
                         $platformAccount = new Ecjia\App\Platform\Frameworks\Platform\Account($uuid);
                         // @todo
-                        $user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($user_id, $platformAccount->getStoreId(), '\Ecjia\App\Merchant\Frameworks\Users\StaffUserDefaultAllotPurview');
+                        $user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($user_id, $platformAccount->getStoreId(), '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');
                         
                         if ($user->getActionList()) {
                             
                             $_SESSION = array();
                             //平台登录
-                            $store_id = 0;
+                            $store_id = $platformAccount->getStoreId();
                             $user_name = $user->getUserName();
                             $action_list = $user->getActionList();
                             $last_time = $user->getLastLogin();

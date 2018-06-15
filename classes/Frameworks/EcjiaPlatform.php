@@ -92,6 +92,12 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 	 * @var \Ecjia\App\Platform\Frameworks\Platform\Account $platformAccount
 	 */
 	protected $platformAccount;
+	
+	/**
+	 * 
+	 * @var \Ecjia\System\Frameworks\Contracts\UserInterface
+	 */
+	protected $currentUser;
 
 	public function __construct() {
 		parent::__construct();
@@ -174,6 +180,14 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		
 		if (session('uuid')) {
 		    $this->platformAccount = new Account(session('uuid'));
+		}
+		
+		if (session('session_user_id') && session('session_user_type')) {
+		    if (session('session_user_type') == 'admin') {
+		        $this->currentUser = new \Ecjia\System\Admins\Users\AdminUser(session('session_user_id'), '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
+		    } else if (session('session_user_type') == 'merchant') {
+		        $this->currentUser = new \Ecjia\App\Merchant\Frameworks\Users\StaffUser(session('session_user_id'), $this->platformAccount->getStoreId(), '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');
+		    }
 		}
 
 		$rc_script = RC_Script::instance();
