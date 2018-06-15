@@ -98,7 +98,7 @@ class admin_privilege extends ecjia_admin {
 			return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		
-		$priv_group = ecjia_platform_purview::load_purview($priv_str);
+		$priv_group = \Ecjia\App\Platform\Frameworks\Component\Purview::load_purview($priv_str);
 		
 		/* 赋值 */
 		$this->assign('ur_here',		sprintf(__('分派公众平台权限 [ %s ] '), $user_name));

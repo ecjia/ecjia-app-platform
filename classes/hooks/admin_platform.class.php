@@ -51,8 +51,5 @@ class admin_platform_hooks {
 
 }
 
-//类别名设置
-with(new Ecjia\App\Platform\Frameworks\AliasManage())->aliasLoader();
-
 
 // end
