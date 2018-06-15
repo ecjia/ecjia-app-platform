@@ -495,6 +495,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 	    RC_Script::enqueue_script('ecjia-platform-dashboard-analytics');
 	    RC_Script::enqueue_script('ecjia-platform-components-modal');
 	    RC_Script::enqueue_script('ecjia-platform-jquery-migrate');
+	    RC_Script::enqueue_script('ecjia-platform-jquery-quicksearch');
 	    
 	    RC_Script::enqueue_script('ecjia-platform');
 	    RC_Script::enqueue_script('ecjia-platform-ui');
