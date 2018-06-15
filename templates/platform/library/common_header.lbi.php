@@ -217,10 +217,16 @@
                   <li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center" href="javascript:void(0)">Read all messages</a></li>
                 </ul>
               </li>
-              <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="icons-simple-line-icons.html#" data-toggle="dropdown"><span class="avatar avatar-online"><img src="../../../content/apps/platform/statics/platform/images/portrait/small/avatar-s-1.png" alt="avatar"><i></i></span><span class="user-name">John Doe</span></a>
-                <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="ft-user"></i> Edit Profile</a><a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="ft-mail"></i> My Inbox</a><a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="ft-check-square"></i> Task</a><a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="ft-message-square"></i> Chats</a>
-                  <div class="dropdown-divider"></div><a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="ft-power"></i> Logout</a>
-                </div>
+              <li class="dropdown dropdown-user nav-item">
+              	<a class="dropdown-toggle nav-link dropdown-user-link" href="icons-simple-line-icons.html#" data-toggle="dropdown">
+              		<span class="avatar avatar-online"><img src="../../../content/apps/platform/statics/platform/images/portrait/small/avatar-s-1.png" alt="avatar"><i></i></span>
+              		<span class="user-name">{$current_user->getUserName()}</span>
+              	</a>
+                <div class="dropdown-menu dropdown-menu-right">
+                	<a class="dropdown-item" href="{$current_user->getLogoutUrl()}"><i class="ft-user"></i> 个人设置</a>
+                  	<div class="dropdown-divider"></div>
+                  	<a class="dropdown-item" href="{$current_user->getProfileSettingUrl()}"><i class="ft-power"></i> 退出</a>
+            	</div>
               </li>
             </ul>
           </div>
