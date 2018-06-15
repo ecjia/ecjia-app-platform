@@ -114,8 +114,8 @@ class platform_command extends ecjia_platform {
 		
 		$this->assign('ur_here', RC_Lang::get('platform::platform.command_list'));
 		$this->assign('back_link', array('text' =>RC_Lang::get('platform::platform.public_extend'), 'href' => RC_Uri::url('platform/platform_extend/init', array('id' => $account_id))));
-		$this->assign('search_action', RC_Uri::url('platform/admin_command/init', array('code' => $code, 'account_id' => $account_id)));
-		$this->assign('form_action', RC_Uri::url('platform/admin_command/insert', array('code' => $code, 'account_id' => $account_id, 'cmd_id' => $cmd_id)));
+		$this->assign('search_action', RC_Uri::url('platform/platform_command/init', array('code' => $code, 'account_id' => $account_id)));
+		$this->assign('form_action', RC_Uri::url('platform/platform_command/insert', array('code' => $code, 'account_id' => $account_id, 'cmd_id' => $cmd_id)));
 	
 		$ext_name = $this->db_extend->where(array('ext_code' => $code))->get_field('ext_name');
 	
@@ -182,7 +182,7 @@ class platform_command extends ecjia_platform {
 			$ext_name = $this->db_extend->where(array('ext_code' => $v['ext_code']))->get_field('ext_name');
 			ecjia_admin::admin_log(RC_Lang::get('platform::platform.public_name_is').$name.'，'.RC_Lang::get('platform::platform.extend_name_is').$ext_name.'，'.RC_Lang::get('platform::platform.keyword_is').$v['cmd_word'], 'add', 'platform_extend_command');
 		}
-		return $this->showmessage(RC_Lang::get('platform::platform.add_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin_command/init', array('code' => $code, 'account_id' => $account_id))));
+		return $this->showmessage(RC_Lang::get('platform::platform.add_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_command/init', array('code' => $code, 'account_id' => $account_id))));
 	}
 	
 	/**
@@ -218,7 +218,7 @@ class platform_command extends ecjia_platform {
 		//记录日志
 		ecjia_admin::admin_log(RC_Lang::get('platform::platform.public_name_is').$info['name'].'，'.RC_Lang::get('platform::platform.extend_name_is').$info['ext_name'].'，'.RC_Lang::get('platform::platform.keyword_is').$cmd_word, 'edit', 'platform_extend_command');
 		
-		return $this->showmessage(RC_Lang::get('platform::platform.edit_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin_command/init', array('code' => $code, 'account_id' => $account_id))));
+		return $this->showmessage(RC_Lang::get('platform::platform.edit_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_command/init', array('code' => $code, 'account_id' => $account_id))));
 	}
 	
 	/**
@@ -241,48 +241,6 @@ class platform_command extends ecjia_platform {
 			return $this->showmessage(RC_Lang::get('platform::platform.remove_failed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
-	
-	/**
-	 * 扩展下的命令列表
-	 */
-	public function extend_command() {
-		$this->admin_priv('platform_command_manage');
-		
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.function_extend'), RC_Uri::url('platform/admin_plugin/init')));
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.command_list')));
-		ecjia_screen::get_current_screen()->add_help_tab(array(
-			'id'		=> 'overview',
-			'title'		=> RC_Lang::get('platform::platform.summarize'),
-			'content'	=>
-			'<p>' . RC_Lang::get('platform::platform.welcome_command') . '</p>'
-		));
-		ecjia_screen::get_current_screen()->set_help_sidebar(
-			'<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
-			'<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:功能扩展#.E6.9F.A5.E7.9C.8B.E5.91.BD.E4.BB.A4" target="_blank">'.RC_Lang::get('platform::platform.extend_commandlist_help').'</a>') . '</p>'
-		);
-		
-		$id 	= !empty($_GET['id']) 	? $_GET['id'] 			: 0;
-		$code 	= !empty($_GET['code']) ? trim($_GET['code']) 	: '';
-	
-		$this->assign('ur_here', RC_Lang::get('platform::platform.command_list'));
-		$this->assign('back_link', array('text' =>RC_Lang::get('platform::platform.function_extend'), 'href' => RC_Uri::url('platform/admin_plugin/init')));
-		$this->assign('search_action', RC_Uri::url('platform/admin_command/extend_command', array('code' => $code)));
-	
-		$ext_name = $this->db_extend->where(array('ext_code' => $code))->get_field('ext_name');
-		$this->assign('code', $code);
-		$this->assign('ext_name', $ext_name);
-	
-		$ext_type_list = array('wechat', 'weibo', 'alipay');
-		$this->assign('type_list', $ext_type_list);
-	
-		$this->assign('id', $id);
-		$modules = $this->get_command_list();
-		$this->assign('modules', $modules);
-		
-		$this->assign_lang();
-		$this->display('extend_command_list.dwt');
-	}
-	
 	
 	/**
 	 * 公众号扩展下的命令列表

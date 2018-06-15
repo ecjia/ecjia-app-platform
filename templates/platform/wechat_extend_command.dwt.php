@@ -107,10 +107,10 @@
 							<!-- {/foreach} -->
 						</tbody>
 					</table>
+					<!-- {$modules.page} -->	
+					<div class="m_b20"><a href="javascript:;" onclick="addrow(this,0)" class="addtr">{lang key='platform::platform.add_again'}</a></div>
+					<button class="btn btn-light m_b20 add-command-btn" type="submit">{lang key='platform::platform.addition'}</button>
 				</form>
-				<!-- {$modules.page} -->	
-				<div class="m_b20"><a href="javascript:;" onclick="addrow(this,0)" class="addtr">{lang key='platform::platform.add_again'}</a></div>
-				<button class="btn btn-light m_b20 add-command-btn" type="submit">{lang key='platform::platform.addition'}</button>
             </div>
         </div>
     </div>

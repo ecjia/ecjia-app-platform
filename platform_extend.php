@@ -119,7 +119,7 @@ class platform_extend extends ecjia_platform {
 		$this->assign('form_action', RC_Uri::url('platform/platform_extend/wechat_extend_insert'));
 		$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 		
-		$id = 2;//test
+		$id = $this->platformAccount->getAccountID();
 		$count = $this->db_platform_config->where(array('account_id' => $id))->count();
 		$page = new ecjia_platform_page($count, 10, 5);
 
