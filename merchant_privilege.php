@@ -86,20 +86,26 @@ class merchant_privilege extends ecjia_merchant {
 		$user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($userid, session('store_id'), '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');
 		$user_name = $user->getUserName();
 		$priv_str = $user->getActionList();
+		$group_id = $user->getRoleId();
+		
+		$return_href = RC_Uri::url('staff/merchant/init');
+		if (!empty($group_id)) {
+			$return_href = RC_Uri::url('staff/merchant/init', array('group_id' => $group_id));
+		}
+		$this->assign('action_link', array('href' => $return_href, 'text' => '账户列表'));
 		
 		/* 如果被编辑的管理员拥有了all这个权限，将不能编辑 */
 		if ($priv_str == 'all') {
-			$link[] = array('text' => __('账户列表'), 'href' => RC_Uri::url('staff/merchant/init'));
-			return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			$link[] = array('text' => __('返回账户列表'), 'href' => $return_href);
+        	return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => $link));
 		}
 		
 		$priv_group = \Ecjia\App\Platform\Frameworks\Component\Purview::load_purview($priv_str);
 		
 		/* 赋值 */
-		$this->assign('ur_here',		sprintf(__('分派公众平台权限 [ %s ] '), $user_name));
-		$this->assign('action_link',	array('href' => RC_Uri::url('staff/merchant/init'), 'text' => __('账户列表')));
-		$this->assign('priv_group',		$priv_group);
-		$this->assign('user_id',		$userid);
+		$this->assign('ur_here', sprintf(__('分派公众平台权限 [ %s ] '), $user_name));
+		$this->assign('priv_group', $priv_group);
+		$this->assign('user_id', $userid);
 		
 		/* 显示页面 */
 		$this->assign('form_action',	RC_Uri::url('platform/merchant_privilege/update_allot'));
@@ -128,12 +134,7 @@ class merchant_privilege extends ecjia_merchant {
 		
 		/* 记录管理员操作 */
 		ecjia_admin::admin_log(addslashes($user_name), 'edit', 'privilege');
-		/* 提示信息 */
-		$link[] = array(
-			'text'	=> __('返回管理员列表'), 
-			'href'	=> RC_Uri::url('@privilege/init')
-		);
-		return $this->showmessage(sprintf(__('编辑 %s 操作成功！'), $user_name), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('link' => $link));
+		return $this->showmessage(sprintf(__('编辑 %s 操作成功！'), $user_name), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 	
 }

@@ -95,7 +95,7 @@ class admin_privilege extends ecjia_admin {
 		/* 如果被编辑的管理员拥有了all这个权限，将不能编辑 */
 		if ($priv_str == 'all') {
 			$link[] = array('text' => __('返回管理员列表'), 'href' => RC_Uri::url('@privilege/init'));
-			return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => $link));
 		}
 		
 		$priv_group = \Ecjia\App\Platform\Frameworks\Component\Purview::load_purview($priv_str);
