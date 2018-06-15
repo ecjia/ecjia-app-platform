@@ -78,6 +78,7 @@ use Smarty;
 use Ecjia\App\Platform\Frameworks\Component\Screen;
 use Ecjia\App\Platform\Frameworks\Component\Loader;
 use Ecjia\App\Platform\Frameworks\Component\Menu;
+use Ecjia\App\Platform\Frameworks\Platform\Account;
 
 //定义在后台
 define('IN_PLATFORM', true);
@@ -85,6 +86,12 @@ define('IN_PLATFORM', true);
 abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_fileloader {
 
 	private $public_route;
+	
+	/**
+	 * 
+	 * @var \Ecjia\App\Platform\Frameworks\Platform\Account $platformAccount
+	 */
+	protected $platformAccount;
 
 	public function __construct() {
 		parent::__construct();
@@ -162,6 +169,11 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 			error_reporting(E_ALL);
 		} else {
 			error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
+		}
+		
+		
+		if (session('uuid')) {
+		    $this->platformAccount = new Account(session('uuid'));
 		}
 
 		$rc_script = RC_Script::instance();
