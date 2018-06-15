@@ -223,9 +223,9 @@
               		<span class="user-name">{$current_user->getUserName()}</span>
               	</a>
                 <div class="dropdown-menu dropdown-menu-right">
-                	<a class="dropdown-item" href="{$current_user->getLogoutUrl()}"><i class="ft-user"></i> 个人设置</a>
+                	<a class="dropdown-item" href="{$current_user->getProfileSettingUrl()}"><i class="ft-user"></i> 个人设置</a>
                   	<div class="dropdown-divider"></div>
-                  	<a class="dropdown-item" href="{$current_user->getProfileSettingUrl()}"><i class="ft-power"></i> 退出</a>
+                  	<a class="dropdown-item" href="{url path='platform/privilege/logout'}"><i class="ft-power"></i> 退出</a>
             	</div>
               </li>
             </ul>

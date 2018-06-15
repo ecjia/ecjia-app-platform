@@ -161,6 +161,16 @@ class privilege extends ecjia_platform {
 	    $this->display('platform_auto_login_error.dwt');
 	}
 	
+	
+	/**
+	 * 退出
+	 */
+	public function logout() {
+	    RC_Session::destroy();
+	    
+	    return $this->redirect($this->currentUser->getLogoutUrl());
+	}
+	
 }
 
 // end
