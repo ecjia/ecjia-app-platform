@@ -684,7 +684,8 @@ class admin extends ecjia_admin {
 		if (!empty($platform)) {
 			$where['platform'] = $platform;
 		}
-	
+		$where['shop_id'] = array('eq' => 0);
+
 		$count = $db_platform_account->where($where)->count ();
 		$filter['record_count'] = $count;
 		$page = new ecjia_page($count, 10, 5);
