@@ -673,7 +673,7 @@ class admin extends ecjia_admin {
 		$filter = array();
 		$filter['keywords'] = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
 		
-		$where = '';
+		$where = array();
 		if ($filter['keywords']) {
 			$where[]= "name LIKE '%" . mysql_like_quote($filter['keywords']) . "%'";
 		}
