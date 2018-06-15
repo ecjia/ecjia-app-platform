@@ -112,8 +112,9 @@ class privilege extends ecjia_platform {
 	                }
                     //商家登录
                     else if ($user_type == 'merchant') {
+                        $platformAccount = new Ecjia\App\Platform\Frameworks\Platform\Account($uuid);
                         // @todo
-                        $user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($user_id, '\Ecjia\App\Merchant\Frameworks\Users\StaffUserDefaultAllotPurview');
+                        $user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($user_id, $platformAccount->getStoreId(), '\Ecjia\App\Merchant\Frameworks\Users\StaffUserDefaultAllotPurview');
                         
                         if ($user->getActionList()) {
                             
