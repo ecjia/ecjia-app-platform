@@ -724,13 +724,14 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
                         } else {
                         
                             echo '<li class="nav-item">' . PHP_EOL;
-                            echo '  <a href="#"><i class="icon-layers"></i>';
-                            echo '<span class="menu-title">' .$menu->name. '</span>';
-                            //echo '<span class="badge badge badge-info badge-pill float-right mr-2">5</span>';
-                            echo '</a>' . PHP_EOL;
                             
                             // 二级菜单支持
                             if ($menu->has_submenus && $menu->submenus) {
+                                echo '<a href="#"><i class="icon-layers"></i>';
+                                echo '<span class="menu-title">' .$menu->name. '</span>';
+                                //echo '<span class="badge badge badge-info badge-pill float-right mr-2">5</span>';
+                                echo '</a>' . PHP_EOL;
+                                
                                 echo '      <ul class="menu-content">' . PHP_EOL;
                                 foreach ($menu->submenus as $child) {
                                         
@@ -797,6 +798,13 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
                                     echo '</li>' . PHP_EOL;
                                 }
                                 echo '</ul>' . PHP_EOL;
+                            } 
+                            //一级菜单没有子菜单处理
+                            else {
+                                echo '<a href="' . $menu->link . '"><i class="icon-layers"></i>';
+                                echo '<span class="menu-title">' .$menu->name. '</span>';
+                                //echo '<span class="badge badge badge-info badge-pill float-right mr-2">5</span>';
+                                echo '</a>' . PHP_EOL;
                             }
                             
                             echo '</li>' . PHP_EOL;
