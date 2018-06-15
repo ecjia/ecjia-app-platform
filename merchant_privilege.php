@@ -83,7 +83,7 @@ class merchant_privilege extends ecjia_merchant {
 		ecjia_screen::get_current_screen()->add_option('current_code', 'platform_privilege_menu');
 		
 		/* 获得该管理员的权限 */
-		$user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($userid, '\Ecjia\App\Merchant\Frameworks\Users\StaffUserDefaultAllotPurview');
+		$user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($userid, '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');
 		$user_name = $user->getUserName();
 		$priv_str = $user->getActionList();
 		
@@ -118,7 +118,7 @@ class merchant_privilege extends ecjia_merchant {
 		
 		$userid = $this->request->input('user_id');
 		/* 取得当前管理员用户名 */
-		$user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($userid, '\Ecjia\App\Merchant\Frameworks\Users\StaffUserDefaultAllotPurview');
+		$user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($userid, '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');
 		$user_name = $user->getUserName();
 		
 		/* 更新管理员的权限 */
