@@ -260,7 +260,7 @@ class platform_command extends ecjia_platform {
 		if ($keywords) {
 			$where['c.cmd_word'] = array('like' => '%'.$keywords.'%');
 		}
-// 		$where['a.shop_id'] = 0;
+		$where['a.shop_id'] = $this->platformAccount->getStoreId();
 		$count = $db_command_view->join(array('platfrom_command', 'platform_account'))->where($where)->count();
 		$page = new ecjia_platform_page($count, 15, 5);
 		
@@ -291,7 +291,7 @@ class platform_command extends ecjia_platform {
 		if ($keywords) {
 			$where['c.cmd_word'] = array('like' => '%'.$keywords.'%');
 		}
-// 		$where['a.shop_id'] = 0;
+		$where['a.shop_id'] = $this->platformAccount->getStoreId();
 		$count = $db_command_view->join(array('platform_account', 'platform_command'))->where($where)->count();
 		$page = new ecjia_platform_page($count, 15, 5);
 	
