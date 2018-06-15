@@ -73,7 +73,7 @@ class merchant_privilege extends ecjia_merchant {
 	{
 		$this->admin_priv('allot_priv');
 		
-		$userid = $this->request->query('id');
+		$userid = $this->request->query('user_id');
 		if ($_SESSION['admin_id'] == $userid) {
 			$this->admin_priv('all');
 		}
