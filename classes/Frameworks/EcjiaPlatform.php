@@ -188,6 +188,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		    } else if (session('session_user_type') == 'merchant') {
 		        $this->currentUser = new \Ecjia\App\Merchant\Frameworks\Users\StaffUser(session('session_user_id'), $this->platformAccount->getStoreId(), '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');
 		    }
+		    $this->assign('current_user', $this->currentUser);
 		}
 
 		$rc_script = RC_Script::instance();
