@@ -423,6 +423,14 @@ class merchant extends ecjia_merchant {
 	        return $this->showmessage(__('该公众号不存在', 'app-platform'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
 	    }
 	    
+	    //公众平台的超管权限同商家店长的权限
+	    if (session('action_list') == all) {
+	        $user = new Ecjia\System\Admins\Users\AdminUser(session('admin_id'), '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
+	        if ($user->getActionList() != 'all') {
+	            $user->setActionList('all');
+	        }
+	    }
+	    
 	    $authcode_array = [
 	        'uuid'         => $uuid,
 	        'user_id'      => session('staff_id'),
