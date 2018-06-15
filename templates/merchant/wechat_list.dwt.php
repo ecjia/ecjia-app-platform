@@ -30,11 +30,11 @@
 				<div class="btn-group f_l">
 					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i> {lang key='goods::goods.batch_handle'} <span class="caret"></span></button>
 					<ul class="dropdown-menu">
-						<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="platform/mh_platform/batch_remove"}'  data-msg="{lang key='platform::platform.sure_want_do'}" data-noSelectMsg="{lang key='platform::platform.delete_selected_plat'}" data-name="id" href="javascript:;"><i class="fa fa-trash-o"></i> {lang key='platform::platform.platform_del'}</a></li>
+						<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="platform/merchant/batch_remove"}'  data-msg="{lang key='platform::platform.sure_want_do'}" data-noSelectMsg="{lang key='platform::platform.delete_selected_plat'}" data-name="id" href="javascript:;"><i class="fa fa-trash-o"></i> {lang key='platform::platform.platform_del'}</a></li>
 		           	</ul>
 				</div>
 				
-				<form class="form-inline f_l m_l5" action="{RC_Uri::url('platform/mh_platform/init')}{if $smarty.get.type}&type={$smarty.get.type}{/if}" method="post" name="filter_form">
+				<form class="form-inline f_l m_l5" action="{RC_Uri::url('platform/merchant/init')}{if $smarty.get.type}&type={$smarty.get.type}{/if}" method="post" name="filter_form">
 					<div class="screen f_l">
 						<div class="form-group">
 							<select class="w130 form-control" name="platform" id="select_type">
@@ -85,9 +85,9 @@
 								<td class="hide-edit-area">
 									{$val.name}<br>
 									<div class="edit-list">
-										<a target="__blank" href='{RC_Uri::url("platform/mh_platform/autologin","id={$val.id}")}' title="进入管理">进入管理</a> &nbsp;|&nbsp;
-								      	<a class="data-pjax" href='{RC_Uri::url("platform/mh_platform/edit", "id={$val.id}")}' title="{lang key='system::system.edit'}">{lang key='platform::platform.edit'}</a> &nbsp;|&nbsp;
-								     	<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="{t}您确定要删除公众号[{$val.name}]吗？{/t}" href='{RC_Uri::url("platform/mh_platform/remove","id={$val.id}")}' title="{lang key='platform::platform.delete'}">{lang key='platform::platform.delete'}</a>
+										<a target="__blank" href='{RC_Uri::url("platform/merchant/autologin","id={$val.id}")}' title="进入管理">进入管理</a> &nbsp;|&nbsp;
+								      	<a class="data-pjax" href='{RC_Uri::url("platform/merchant/edit", "id={$val.id}")}' title="{lang key='system::system.edit'}">{lang key='platform::platform.edit'}</a> &nbsp;|&nbsp;
+								     	<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="{t}您确定要删除公众号[{$val.name}]吗？{/t}" href='{RC_Uri::url("platform/merchant/remove","id={$val.id}")}' title="{lang key='platform::platform.delete'}">{lang key='platform::platform.delete'}</a>
 							     	</div>
 								</td>
 								<td>
@@ -107,9 +107,9 @@
 									{/if}
 								</td>
 								<td>
-							        <i class="fa {if $val.status eq 1}fa-check{else}fa-times{/if} cursor_pointer" data-trigger="toggleState" data-url="{RC_Uri::url('platform/mh_platform/toggle_show')}" data-id="{$val.id}" ></i>
+							        <i class="fa {if $val.status eq 1}fa-check{else}fa-times{/if} cursor_pointer" data-trigger="toggleState" data-url="{RC_Uri::url('platform/merchant/toggle_show')}" data-id="{$val.id}" ></i>
 								</td>
-								<td><span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('platform/mh_platform/edit_sort')}" data-name="sort" data-pk="{$val.id}"  data-title="{lang key='platform::platform.edit_plat_sort'}">{$val.sort}</span></td>
+								<td><span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('platform/merchant/edit_sort')}" data-name="sort" data-pk="{$val.id}"  data-title="{lang key='platform::platform.edit_plat_sort'}">{$val.sort}</span></td>
 								<td>
 									{$val.add_time}
 								</td>

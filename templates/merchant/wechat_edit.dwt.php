@@ -95,7 +95,7 @@
 		                                        <span class="fileupload-exists"> 修改</span>
 		                                        <input type="file" class="default" name="platform_logo" />
 		                                    </span>
-		                                    <a class="btn btn-danger btn-sm fileupload-exists" {if $wechat.logo}data-toggle="ajax_remove"{else}data-dismiss="fileupload"{/if} href='{url path="platform/mh_platform/remove_logo" args="id={$wechat.id}"}' >删除</a>
+		                                    <a class="btn btn-danger btn-sm fileupload-exists" {if $wechat.logo}data-toggle="ajax_remove"{else}data-dismiss="fileupload"{/if} href='{url path="platform/merchant/remove_logo" args="id={$wechat.id}"}' >删除</a>
 		                                </div>
 		                            </div>
 		                        </div>
@@ -106,7 +106,7 @@
 										<input class="generate_token form-control" type="text" name="token" id="token" value="{$wechat.token}" />
 										<span class="help-block">自定义的Token值，或者点击生成Token创建一个，复制到微信公众平台配置中</span>
 									</div>
-									<a class="toggle_view btn btn-primary filter-btn" href='{url path="platform/mh_platform/generate_token"}'  data-val="allow" >生成Token</a>
+									<a class="toggle_view btn btn-primary filter-btn" href='{url path="platform/merchant/generate_token"}'  data-val="allow" >生成Token</a>
 									<span class="input-must">{lang key='system::system.require_field'}</span>
 								</div>
 								
