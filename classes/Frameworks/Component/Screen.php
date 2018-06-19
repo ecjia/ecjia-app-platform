@@ -57,7 +57,7 @@ class Screen extends ecjia_screen {
         if (!empty($this->_nav_here)) :
         ?>
         <div class="content-header-left col-12 mb-2">
-	        <h3 class="content-header-title"></h3>
+	        <h3 class="content-header-title"><?php echo $this->subject;?></h3>
 	        <div class="row breadcrumbs-top">
 		        <div class="breadcrumb-wrapper col-12">
 			        <ol class="breadcrumb">
