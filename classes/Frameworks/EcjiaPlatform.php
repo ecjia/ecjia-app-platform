@@ -94,6 +94,11 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 	protected $platformAccount;
 	
 	/**
+	 * @var \Ecjia\System\Frameworks\Contracts\ShopInterface
+	 */
+	protected $currentStore;
+	
+	/**
 	 * 
 	 * @var \Ecjia\System\Frameworks\Contracts\UserInterface
 	 */
@@ -180,6 +185,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		
 		if (session('uuid')) {
 		    $this->platformAccount = new Account(session('uuid'));
+		    $this->assign('platformAccount', $this->platformAccount);
 		}
 		
 		if (session('session_user_id') && session('session_user_type')) {
@@ -188,7 +194,16 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		    } else if (session('session_user_type') == 'merchant') {
 		        $this->currentUser = new \Ecjia\App\Merchant\Frameworks\Users\StaffUser(session('session_user_id'), $this->platformAccount->getStoreId(), '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');
 		    }
-		    $this->assign('current_user', $this->currentUser);
+		    $this->assign('currentUser', $this->currentUser);
+		}
+		
+		if (session('store_id') == $this->platformAccount->getStoreId()) {
+		    if (session('session_user_type') == 'admin') {
+		        $this->currentStore = new \Ecjia\System\Admins\Stores\AdminShop(session('store_id'));
+		    } else if (session('session_user_type') == 'merchant') {
+		        $this->currentStore = new \Ecjia\App\Merchant\Frameworks\Stores\MerchantShop(session('store_id'));
+		    }
+		    $this->assign('currentStore', $this->currentStore);
 		}
 
 		$rc_script = RC_Script::instance();
@@ -264,7 +279,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 	}
 	
 	public function get_main_static_url() {
-	    return dirname(RC_App::app_dir_url(__FILE__)) . '/statics/';
+	    return dirname(dirname(RC_App::app_dir_url(__FILE__))) . '/statics/';
 	}
 	
 	/**
