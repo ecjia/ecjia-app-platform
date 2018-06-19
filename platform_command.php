@@ -74,7 +74,7 @@ class platform_command extends ecjia_platform {
 		$this->admin_priv('platform_command_manage');
 	
 		$cmd_id = !empty($_GET['cmd_id']) ? $_GET['cmd_id'] : 0;
-		$account_id = !empty($_GET['account_id']) ? $_GET['account_id'] : 0;
+		$account_id = $this->platformAccount->getAccountID();
 		$code = !empty($_GET['code']) ? trim($_GET['code']) : '';
 	
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.public_extend'), RC_Uri::url('platform/platform_extend/init', array('id' => $account_id))));
@@ -91,9 +91,9 @@ class platform_command extends ecjia_platform {
 		);
 		
 		$this->assign('ur_here', RC_Lang::get('platform::platform.command_list'));
-		$this->assign('back_link', array('text' =>RC_Lang::get('platform::platform.public_extend'), 'href' => RC_Uri::url('platform/platform_extend/init', array('id' => $account_id))));
-		$this->assign('search_action', RC_Uri::url('platform/platform_command/init', array('code' => $code, 'account_id' => $account_id)));
-		$this->assign('form_action', RC_Uri::url('platform/platform_command/insert', array('code' => $code, 'account_id' => $account_id, 'cmd_id' => $cmd_id)));
+		$this->assign('back_link', array('text' =>RC_Lang::get('platform::platform.public_extend'), 'href' => RC_Uri::url('platform/platform_extend/init')));
+		$this->assign('search_action', RC_Uri::url('platform/platform_command/init', array('code' => $code)));
+		$this->assign('form_action', RC_Uri::url('platform/platform_command/insert', array('code' => $code, 'cmd_id' => $cmd_id)));
 	
 		$ext_name = RC_DB::table('platform_extend')->where('ext_code', $code)->pluck('ext_name');
 	
@@ -116,7 +116,7 @@ class platform_command extends ecjia_platform {
 		$this->admin_priv('platform_command_add', ecjia::MSGTYPE_JSON);
 	
 		$code = !empty($_GET['code']) ? trim($_GET['code']) : '';
-		$account_id = !empty($_GET['account_id']) ? intval($_GET['account_id']) : 0;
+		$account_id = $this->platformAccount->getAccountID();
 		$platform = RC_DB::table('platform_account')->where('id', $account_id)->pluck('platform');
 		
 		if (!empty($_POST)) {
@@ -164,7 +164,7 @@ class platform_command extends ecjia_platform {
 			
 			ecjia_admin::admin_log(RC_Lang::get('platform::platform.public_name_is').$name.'，'.RC_Lang::get('platform::platform.extend_name_is').$ext_name.'，'.RC_Lang::get('platform::platform.keyword_is').$v['cmd_word'], 'add', 'platform_extend_command');
 		}
-		return $this->showmessage(RC_Lang::get('platform::platform.add_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_command/init', array('code' => $code, 'account_id' => $account_id))));
+		return $this->showmessage(RC_Lang::get('platform::platform.add_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_command/init', array('code' => $code))));
 	}
 	
 	/**
@@ -177,7 +177,7 @@ class platform_command extends ecjia_platform {
 		$sub_code 	= !empty($_POST['sub_code']) 	? trim($_POST['sub_code']) 	: '';
 		$cmd_id 	= !empty($_GET['cmd_id']) 		? $_GET['cmd_id'] 			: 0;
 		$code 		= !empty($_GET['code']) 		? $_GET['code'] 			: '';
-		$account_id = !empty($_GET['account_id']) 	? $_GET['account_id'] 		: '';
+		$account_id = $this->platformAccount->getAccountID();
 	
 		if (empty($cmd_word)) {
 			return $this->showmessage(RC_Lang::get('platform::platform.keyword_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -194,7 +194,7 @@ class platform_command extends ecjia_platform {
 			'cmd_word'	=> $cmd_word,
 			'sub_code'	=> $sub_code
 		);
-		RC_DB::table('platform_command')->where('cmd_id', $cmd_id)->update($data);
+		RC_DB::table('platform_command')->where('account_id', $account_id)->where('cmd_id', $cmd_id)->update($data);
 	
 		$info = RC_DB::table('platform_config as c')
 			->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'))
@@ -207,7 +207,7 @@ class platform_command extends ecjia_platform {
 		//记录日志
 		ecjia_admin::admin_log(RC_Lang::get('platform::platform.public_name_is').$info['name'].'，'.RC_Lang::get('platform::platform.extend_name_is').$info['ext_name'].'，'.RC_Lang::get('platform::platform.keyword_is').$cmd_word, 'edit', 'platform_extend_command');
 		
-		return $this->showmessage(RC_Lang::get('platform::platform.edit_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_command/init', array('code' => $code, 'account_id' => $account_id))));
+		return $this->showmessage(RC_Lang::get('platform::platform.edit_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_command/init', array('code' => $code))));
 	}
 	
 	/**
@@ -217,7 +217,9 @@ class platform_command extends ecjia_platform {
 		$this->admin_priv('platform_command_delete', ecjia::MSGTYPE_JSON);
 	
 		$cmd_id = intval($_GET['cmd_id']);
-		$data = RC_DB::table('platform_command')->where('cmd_id', $cmd_id)->first();
+		$account_id = $this->platformAccount->getAccountID();
+		
+		$data = RC_DB::table('platform_command')->where('account_id', $account_id)->where('cmd_id', $cmd_id)->first();
 		
 		$info = RC_DB::table('platform_config as c')
 			->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'))
@@ -227,7 +229,7 @@ class platform_command extends ecjia_platform {
 			->where(RC_DB::raw('e.ext_code'), $data['ext_code'])
 			->first();
 		
-		$delete = RC_DB::table('platform_command')->where('cmd_id', $cmd_id)->delete();
+		$delete = RC_DB::table('platform_command')->where('account_id', $account_id)->where('cmd_id', $cmd_id)->delete();
 		
 		//记录日志
 		ecjia_admin::admin_log(RC_Lang::get('platform::platform.public_name_is').$info['name'].'，'.RC_Lang::get('platform::platform.extend_name_is').$info['ext_name'].'，'.RC_Lang::get('platform::platform.keyword_is').$data['cmd_word'], 'remove', 'platform_extend_command');
@@ -250,7 +252,7 @@ class platform_command extends ecjia_platform {
 		$keywords = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
 	
 		$code = !empty($_GET['code']) ? trim($_GET['code']) : '';
-		$account_id = !empty($_GET['account_id']) ? intval($_GET['account_id']) : 0;
+		$account_id = $this->platformAccount->getAccountID();
 		
 		$db_command_view->where(RC_DB::raw('c.ext_code'), $code)->where(RC_DB::raw('c.account_id'), $account_id);
 	

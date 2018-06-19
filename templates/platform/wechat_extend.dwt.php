@@ -39,8 +39,8 @@
 									<td class="hide-edit-area">
 										{$module.ext_code}
 										<div class="edit-list">
-											<a class="data-pjax" href='{RC_Uri::url("platform/platform_command/init", "code={$module.ext_code}&account_id={$module.account_id}")}' title="{lang key='platform::platform.help_command'}">{lang key='platform::platform.help_command'}</a>&nbsp;|&nbsp;
-											<a class="data-pjax" href='{RC_Uri::url("platform/platform_extend/wechat_extend_edit", "code={$module.ext_code}&id={$module.account_id}")}' title="{lang key='platform::platform.edit_deploy'}">{lang key='platform::platform.edit_deploy'}</a>&nbsp;|&nbsp;
+											<a class="data-pjax" href='{RC_Uri::url("platform/platform_command/init", "code={$module.ext_code}")}' title="{lang key='platform::platform.help_command'}">{lang key='platform::platform.help_command'}</a>&nbsp;|&nbsp;
+											<a class="data-pjax" href='{RC_Uri::url("platform/platform_extend/wechat_extend_edit", "code={$module.ext_code}")}' title="{lang key='platform::platform.edit_deploy'}">{lang key='platform::platform.edit_deploy'}</a>&nbsp;|&nbsp;
 											<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="{t}您确定要删除该公众号下的扩展[{$module.ext_name}]吗？{/t}" href='{RC_Uri::url("platform/platform_extend/wechat_extend_remove", "code={$module.ext_code}&id={$module.account_id}")}' title="{lang key='platform::platform.delete'}">{lang key='platform::platform.delete'}</a>
 										</div>
 									</td>

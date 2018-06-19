@@ -524,7 +524,7 @@ class admin extends ecjia_admin {
 		$this->db_platform_config->batch_insert($data);
 			
 		foreach ($data as $k => $v) {
-			$info = $this->dbview_platform_config->join(array('platform_extend', 'platform_account'))->where(array('c.account_id' => $id))->field('a.name, e.ext_name')->find();
+			$info = $this->dbview_platform_config->join(array('platform_extend', 'platform_account'))->where(array('c.account_id' => $id))->where(array('e.ext_code' => $v['ext_code']))->field('a.name, e.ext_name')->find();
 			ecjia_admin::admin_log(RC_Lang::get('platform::platform.extend_name_is').$info['ext_name'].'，'.RC_Lang::get('platform::platform.public_name_is').$info['name'], 'batch_insert', 'wechat_extend');
 		}
 		if ($id) {

@@ -86,14 +86,14 @@
 								<td><input class="w180 form-control" type="text" name="cmd_word" value="{$module.cmd_word}"></td>
 								<td><input class="w180 form-control" type="text" name="sub_code" value="{$module.sub_code}"></td>
 								<td>
-									<a class="cursor_pointer" data-toggle="edit_toggle" data-href='{RC_Uri::url("platform/platform_command/update", "code={$code}&account_id={$module.account_id}&cmd_id={$module.cmd_id}")}' title="{lang key='system::system.edit'}"><i class="command_icon fa fa-check l_h30"></i></a>
-									<a class="data-pjax" href='{RC_Uri::url("platform/platform_command/init", "code={$code}&account_id={$module.account_id}")}' title="{lang key='platform::platform.close'}"><i class="command_icon fa fa-times l_h30"></i></a>
+									<a class="cursor_pointer" data-toggle="edit_toggle" data-href='{RC_Uri::url("platform/platform_command/update", "code={$code}&cmd_id={$module.cmd_id}")}' title="{lang key='system::system.edit'}"><i class="command_icon fa fa-check l_h30"></i></a>
+									<a class="data-pjax" href='{RC_Uri::url("platform/platform_command/init", "code={$code}")}' title="{lang key='platform::platform.close'}"><i class="command_icon fa fa-times l_h30"></i></a>
 								</td>
 								<!-- {else} -->
 								<td>{$module.cmd_word}</td>
 								<td>{$module.sub_code}</td>
 								<td>
-									<a class="cursor_pointer" data-toggle="edit_toggle" data-href='{RC_Uri::url("platform/platform_command/init", "code={$code}&account_id={$module.account_id}&cmd_id={$module.cmd_id}")}' title="{lang key='system::system.edit'}"><i class="command_icon ft-edit"></i></a>
+									<a class="cursor_pointer" data-toggle="edit_toggle" data-href='{RC_Uri::url("platform/platform_command/init", "code={$code}&cmd_id={$module.cmd_id}")}' title="{lang key='system::system.edit'}"><i class="command_icon ft-edit"></i></a>
 									<a class="ajaxremove" data-toggle="ajaxremove" data-msg="{lang key='platform::platform.sure_del_command'}" href='{RC_Uri::url("platform/platform_command/remove", "cmd_id={$module.cmd_id}")}' title="{lang key='platform::platform.remove'}"><i class="command_icon ft-trash-2"></i></a>
 								</td>
 								<!-- {/if} -->
