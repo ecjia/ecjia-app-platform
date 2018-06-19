@@ -5,9 +5,10 @@
       		<ul class="nav navbar-nav flex-row">
         		<li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
         		<li class="nav-item">
-        			<a class="navbar-brand" href="index.html">
-        			<img class="brand-logo" alt="robust admin logo" src="../../../content/apps/platform/statics/platform/images/logo/logo-dark-sm.png">
-            		<h3 class="brand-text">ECJia公众平台</h3>
+        			<a class="navbar-brand" href="{url path='platform/dashboard/init'}">
+        			<h3 class="brand-text">{$currentStore->getStoreName()}</h3>
+        			<img class="brand-logo" alt="robust admin logo" src="{$ecjia_main_static_url}platform/images/logo/logo-dark-sm.png">
+            		<h3 class="brand-text">{$platformAccount->getAccountName()}</h3>
             		</a>
         		</li>
         		<li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="fa fa-ellipsis-v"></i></a></li>
@@ -37,11 +38,11 @@
                     <!-- {include file="library/common_header_messages.lbi.php"} -->
           			<li class="dropdown dropdown-user nav-item">
           				<a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-          					<span class="avatar avatar-online"><img src="{$current_user->getAvatarUrl()}" alt="{{$current_user->getUserName()}}"><i></i></span>
-          					<span class="user-name">{$current_user->getUserName()}</span>
+          					<span class="avatar avatar-online"><img src="{$currentUser->getAvatarUrl()}" alt="{$currentUser->getUserName()}"><i></i></span>
+          					<span class="user-name">{$currentUser->getUserName()}</span>
           				</a>
                         <div class="dropdown-menu dropdown-menu-right">
-                        	<a class="dropdown-item" href="{$current_user->getProfileSettingUrl()}"><i class="ft-user"></i> 个人设置</a>
+                        	<a class="dropdown-item" href="{$currentUser->getProfileSettingUrl()}"><i class="ft-user"></i> 个人设置</a>
                           	<div class="dropdown-divider"></div>
                           	<a class="dropdown-item" href="{url path='platform/privilege/logout'}"><i class="ft-power"></i> 退出</a>
                     	</div>
