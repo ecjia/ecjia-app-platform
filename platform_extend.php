@@ -50,48 +50,22 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * ECJIA平台、公众号配置
  */
 class platform_extend extends ecjia_platform {
-	private $db_platform_account;
-	private $db_extend;
-	private $db_platform_config;
-	private $dbview_platform_config;
-	private $db_command;
-	private $db_oauth;
-	
 	public function __construct() {
 		parent::__construct();
 		
 		RC_Lang::load('platform');
 		Ecjia\App\Platform\Helper::assign_adminlog_content();
 		
-		$this->db_platform_account = RC_Loader::load_app_model('platform_account_model');
-		$this->db_platform_config = RC_Loader::load_app_model('platform_config_model');
-		$this->db_extend = RC_Loader::load_app_model('platform_extend_model');
-		$this->dbview_platform_config = RC_Loader::load_app_model('platform_config_viewmodel');
-		$this->db_command = RC_Loader::load_app_model('platform_command_model');
-		$this->db_oauth = RC_Loader::load_app_model('wechat_oauth_model', 'wechat');
-		
 		RC_Loader::load_app_class('platform_factory', null, false);
 		/* 加载全局 js/css */
 		RC_Script::enqueue_script('jquery-validate');
 		RC_Script::enqueue_script('jquery-form');
 		RC_Script::enqueue_script('smoke');
-// 		RC_Style::enqueue_style('chosen');
-// 		RC_Style::enqueue_style('uniform-aristo');
-// 		RC_Script::enqueue_script('jquery-uniform');
-// 		RC_Script::enqueue_script('jquery-chosen');
 		RC_Script::enqueue_script('bootstrap-placeholder');
 		
-// 		RC_Script::enqueue_script('bootstrap-editable.min', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/js/bootstrap-editable.min.js'));
-// 		RC_Style::enqueue_style('bootstrap-editable', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
-// 		RC_Style::enqueue_style('goods-colorpicker-style', RC_Uri::admin_url('statics/lib/colorpicker/css/colorpicker.css'));
-// 		RC_Script::enqueue_script('goods-colorpicker-script', RC_Uri::admin_url('statics/lib/colorpicker/bootstrap-colorpicker.js'), array());
-		
 		RC_Script::enqueue_script('platform', RC_App::apps_url('statics/platform-js/platform.js', __FILE__), array(), false, true);
-// 		RC_Script::enqueue_script('generate_token', RC_App::apps_url('statics/js/generate_token.js', __FILE__), array(), false, true);
 		RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
 		RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
-		
-// 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_list'), RC_Uri::url('platform/platform_extend/init')));
 	}
 
 	/**
@@ -311,7 +285,7 @@ class platform_extend extends ecjia_platform {
 		foreach ($info as $v) {
 			ecjia_admin::admin_log($v['name'], 'batch_remove', 'wechat');
 		}
-		$this->db_platform_account->where(array('id' => $idArr))->delete();
+		RC_DB::table('platform_account')->whereIn('id', $idArr)->delete();
 		return $this->showmessage(RC_Lang::get('platform::platform.deleted')."[ ".$count." ]".RC_Lang::get('platform::platform.record_account'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_extend/init')));
 	}
 	
@@ -349,7 +323,7 @@ class platform_extend extends ecjia_platform {
 		$page = new ecjia_platform_page($count, 10, 5);
 	
 		$arr = array();
-		$data = $db_platform_account->orderBy('sort', 'asc')->where('add_time', 'desc')->take(10)->skip($page->start_id-1)->get();
+		$data = $db_platform_account->orderBy('sort', 'asc')->orderBy('add_time', 'desc')->take(10)->skip($page->start_id-1)->get();
 		if (isset($data)) {
 			foreach ($data as $rows) {
 				$rows['add_time'] = RC_Time::local_date(ecjia::config('time_format'), $rows['add_time']);
