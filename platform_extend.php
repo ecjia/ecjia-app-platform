@@ -68,6 +68,8 @@ class platform_extend extends ecjia_platform {
 		
 		RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
 		RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
+		
+		ecjia_platform_screen::get_current_screen()->set_subject('插件管理');
 	}
 
 	/**
