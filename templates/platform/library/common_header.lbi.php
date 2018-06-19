@@ -52,70 +52,7 @@
                       </li>
                     </ul>
                   </li>
-                  <li class="col-md-3">
-                    <h6 class="dropdown-menu-header text-uppercase"><i class="fa fa-list"></i> Accordion</h6>
-                    <div id="accordionWrap" role="tablist" aria-multiselectable="true">
-                      <div class="card border-0 box-shadow-0 collapse-icon accordion-icon-rotate">
-                        <div class="card-header p-0 pb-2 border-0" id="headingOne" role="tab"><a data-toggle="collapse" data-parent="#accordionWrap" href="icons-simple-line-icons.html#accordionOne" aria-expanded="true" aria-controls="accordionOne">Accordion Item #1</a></div>
-                        <div class="card-collapse collapse show" id="accordionOne" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true">
-                          <div class="card-content">
-                            <p class="accordion-text text-small-3">Caramels dessert chocolate cake pastry jujubes bonbon. Jelly wafer jelly beans. Caramels chocolate cake liquorice cake wafer jelly beans croissant apple pie.</p>
-                          </div>
-                        </div>
-                        <div class="card-header p-0 pb-2 border-0" id="headingTwo" role="tab"><a class="collapsed" data-toggle="collapse" data-parent="#accordionWrap" href="icons-simple-line-icons.html#accordionTwo" aria-expanded="false" aria-controls="accordionTwo">Accordion Item #2</a></div>
-                        <div class="card-collapse collapse" id="accordionTwo" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false">
-                          <div class="card-content">
-                            <p class="accordion-text">Sugar plum bear claw oat cake chocolate jelly tiramisu dessert pie. Tiramisu macaroon muffin jelly marshmallow cake. Pastry oat cake chupa chups.</p>
-                          </div>
-                        </div>
-                        <div class="card-header p-0 pb-2 border-0" id="headingThree" role="tab"><a class="collapsed" data-toggle="collapse" data-parent="#accordionWrap" href="icons-simple-line-icons.html#accordionThree" aria-expanded="false" aria-controls="accordionThree">Accordion Item #3</a></div>
-                        <div class="card-collapse collapse" id="accordionThree" role="tabpanel" aria-labelledby="headingThree" aria-expanded="false">
-                          <div class="card-content">
-                            <p class="accordion-text">Candy cupcake sugar plum oat cake wafer marzipan jujubes lollipop macaroon. Cake dragée jujubes donut chocolate bar chocolate cake cupcake chocolate topping.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="col-md-4">
-                    <h6 class="dropdown-menu-header text-uppercase mb-1"><i class="fa fa-envelope"></i> Contact Us</h6>
-                    <form class="form form-horizontal">
-                      <div class="form-body">
-                        <div class="form-group row">
-                          <label class="col-sm-3 form-control-label" for="inputName1">Name</label>
-                          <div class="col-sm-9">
-                            <div class="position-relative has-icon-left">
-                              <input class="form-control" type="text" id="inputName1" placeholder="John Doe">
-                              <div class="form-control-position pl-1"><i class="fa fa-user"></i></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <label class="col-sm-3 form-control-label" for="inputEmail1">Email</label>
-                          <div class="col-sm-9">
-                            <div class="position-relative has-icon-left">
-                              <input class="form-control" type="email" id="inputEmail1" placeholder="john@example.com">
-                              <div class="form-control-position pl-1"><i class="fa fa-envelope"></i></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <label class="col-sm-3 form-control-label" for="inputMessage1">Message</label>
-                          <div class="col-sm-9">
-                            <div class="position-relative has-icon-left">
-                              <textarea class="form-control" id="inputMessage1" rows="2" placeholder="Simple Textarea"></textarea>
-                              <div class="form-control-position pl-1"><i class="fa fa-comments"></i></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-12 mb-1">
-                            <button class="btn btn-info float-right" type="button"><i class="fa fa-paper-plane"></i> Send          </button>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </li>
+
                 </ul>
               </li>
               <li class="nav-item d-none d-md-block"><a class="nav-link nav-link-expand" href="icons-simple-line-icons.html#"><i class="ficon ft-maximize"></i></a></li>
@@ -126,8 +63,11 @@
               </li>
             </ul>
             <ul class="nav navbar-nav float-right">         
-              <li class="dropdown dropdown-language nav-item"><a class="dropdown-toggle nav-link" id="dropdown-flag" href="icons-simple-line-icons.html#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="flag-icon flag-icon-gb"></i><span>English</span><span class="selected-language"></span></a>
-                <div class="dropdown-menu" aria-labelledby="dropdown-flag"><a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="flag-icon flag-icon-gb"></i> English</a><a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="flag-icon flag-icon-fr"></i> French</a><a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="flag-icon flag-icon-cn"></i> Chinese</a><a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="flag-icon flag-icon-de"></i> German</a></div>
+              <li class="dropdown dropdown-language nav-item">
+              	<a class="dropdown-toggle nav-link" id="dropdown-flag" href="icons-simple-line-icons.html#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="flag-icon flag-icon-cn"></i><span>简体中文</span><span class="selected-language"></span></a>
+                <div class="dropdown-menu" aria-labelledby="dropdown-flag">
+                	<a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="flag-icon flag-icon-cn"></i> 简体中文</a>
+                </div>
               </li>
               <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="icons-simple-line-icons.html#" data-toggle="dropdown"><i class="ficon ft-bell"></i><span class="badge badge-pill badge-default badge-danger badge-default badge-up">5</span></a>
                 <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
@@ -218,8 +158,8 @@
                 </ul>
               </li>
               <li class="dropdown dropdown-user nav-item">
-              	<a class="dropdown-toggle nav-link dropdown-user-link" href="icons-simple-line-icons.html#" data-toggle="dropdown">
-              		<span class="avatar avatar-online"><img src="../../../content/apps/platform/statics/platform/images/portrait/small/avatar-s-1.png" alt="avatar"><i></i></span>
+              	<a class="dropdown-toggle nav-link dropdown-user-link" href="{$current_user->getProfileSettingUrl()}#" data-toggle="dropdown">
+              		<span class="avatar avatar-online"><img src="{$current_user->getAvatarUrl()}" alt="{{$current_user->getUserName()}}"><i></i></span>
               		<span class="user-name">{$current_user->getUserName()}</span>
               	</a>
                 <div class="dropdown-menu dropdown-menu-right">
