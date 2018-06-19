@@ -12,7 +12,42 @@
 	<a class="close" data-dismiss="alert">×</a>
 	<strong>{lang key='platform::platform.lable_warm_prompt'}</strong> {lang key='platform::platform.click_plug_add'}
 </div>
-    
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+                <h4 class="card-title">
+                	{$ur_here}
+                </h4>
+            </div>
+	        <div class="col-md-12">
+				<div class="tab-content">
+					<div class="active">
+						<div class="row-fluid">
+							<!-- {foreach from=$arr.item item=module} -->
+								<div class="outline">
+									<a class="data-pjax"  href='{RC_Uri::url("platform/platform_extend/wechat_extend_edit", "code={$module.ext_code}")}' >
+										<div class="outline-left"><img src="{$img_url}setting_shop.png" /></div>
+										<div class="outline-right">
+											<p>{$module.ext_name}</p>
+											<span>{$module.ext_code}</span>
+										</div>
+									</a>
+									<span class="added">已添加</span>
+								</div>
+							<!-- {foreachelse} -->
+							<div class="no-records">{lang key='system::system.no_records'}</div>
+							<!-- {/foreach} -->
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--
 <form class="form-horizontal" method="post" action="{$form_action}" name="platform">    
 	<div class="row">
 	    <div class="col-12">
@@ -33,7 +68,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<!-- {foreach from=$arr.item item=module} -->
+								{foreach from=$arr.item item=module}
 								<tr>
 									<td>{$module.ext_name}</td>
 									<td class="hide-edit-area">
@@ -46,12 +81,12 @@
 									</td>
 									<td>{$module.command_list}</td>
 								</tr>
-								<!-- {foreachelse} -->
+								{foreachelse}
 								   <tr><td class="no-records" colspan="3">{lang key='system::system.no_records'}</td></tr>
-								<!-- {/foreach} -->
+								{/foreach}
 							</tbody>
 						</table>
-						<!-- {$arr.page} -->						
+						{$arr.page}					
 		            </div>
 		            
 		            <div class="sidebar-right col-md-3">
@@ -99,4 +134,5 @@
 	    </div>
 	</div>
 </form>
+-->
 <!-- {/block} -->

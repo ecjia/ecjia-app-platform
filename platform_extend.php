@@ -64,6 +64,8 @@ class platform_extend extends ecjia_platform {
 		RC_Script::enqueue_script('bootstrap-placeholder');
 		
 		RC_Script::enqueue_script('platform', RC_App::apps_url('statics/platform-js/platform.js', __FILE__), array(), false, true);
+		RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/platform-css/platform_extend.css', __FILE__));
+		
 		RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
 		RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
 	}
@@ -93,7 +95,7 @@ class platform_extend extends ecjia_platform {
 
 		$id = $this->platformAccount->getAccountID();
 		$count = RC_DB::table('platform_config')->where('account_id', $id)->count();
-		$page = new ecjia_platform_page($count, 10, 5);
+		$page = new ecjia_platform_page($count, 15, 5);
 
 		//已禁用的扩展不显示
 		$arr = RC_DB::table('platform_config as c')
@@ -103,7 +105,7 @@ class platform_extend extends ecjia_platform {
 			->where(RC_DB::raw('c.account_id'), $id)
 			->where(RC_DB::raw('e.enabled'), '!=', 0)
 			->orderBy(RC_DB::raw('e.ext_id'), 'desc')
-			->take(10)
+			->take(15)
 			->skip($page->start_id-1)
 			->get();
 		
@@ -116,8 +118,8 @@ class platform_extend extends ecjia_platform {
 			}
 		}
 		$list = array('item' => $arr, 'page' => $page->show(5), 'desc' => $page->page_desc());
-			
 		$this->assign('arr', $list);
+		$this->assign('img_url', RC_App::apps_url('statics/image/', __FILE__));
 		
 		$this->assign_lang();
 		$this->display('wechat_extend.dwt');
