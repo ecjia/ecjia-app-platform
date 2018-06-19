@@ -50,39 +50,17 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * 公众平台命令速查
  */
 class platform_command extends ecjia_platform {
-	private $command_viewdb;
-	private $db_platform_account;
-	private $db_extend;
-	private $db_platform_config;
-	private $dbview_platform_config;
-	private $db_command;
-	private $db_oauth;
-
 	public function __construct() {
 		parent::__construct();
 		
 		RC_Lang::load('platform');
 		Ecjia\App\Platform\Helper::assign_adminlog_content();
-		
-		$this->command_viewdb = RC_Loader::load_app_model('platform_command_viewmodel');
-		$this->db_platform_account = RC_Loader::load_app_model('platform_account_model');
-		$this->db_platform_config = RC_Loader::load_app_model('platform_config_model');
-		$this->db_extend = RC_Loader::load_app_model('platform_extend_model');
-		$this->dbview_platform_config = RC_Loader::load_app_model('platform_config_viewmodel');
-		$this->db_command = RC_Loader::load_app_model('platform_command_model');
-		$this->db_oauth = RC_Loader::load_app_model('wechat_oauth_model', 'wechat');
 
 		/* 加载全局 js/css */
 		RC_Script::enqueue_script('jquery-validate');
 		RC_Script::enqueue_script('jquery-form');
 		RC_Script::enqueue_script('smoke');
-// 		RC_Style::enqueue_style('chosen');
 		RC_Style::enqueue_style('uniform-aristo');
-// 		RC_Script::enqueue_script('jquery-uniform');
-// 		RC_Script::enqueue_script('jquery-chosen');
-		
-// 		RC_Script::enqueue_script('bootstrap-editable.min', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/js/bootstrap-editable.min.js') );
-// 		RC_Style::enqueue_style('bootstrap-editable', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
 		
 		RC_Script::enqueue_script('platform', RC_App::apps_url('statics/platform-js/platform.js', __FILE__), array(), false, true);
 		RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
@@ -117,7 +95,7 @@ class platform_command extends ecjia_platform {
 		$this->assign('search_action', RC_Uri::url('platform/platform_command/init', array('code' => $code, 'account_id' => $account_id)));
 		$this->assign('form_action', RC_Uri::url('platform/platform_command/insert', array('code' => $code, 'account_id' => $account_id, 'cmd_id' => $cmd_id)));
 	
-		$ext_name = $this->db_extend->where(array('ext_code' => $code))->get_field('ext_name');
+		$ext_name = RC_DB::table('platform_extend')->where('ext_code', $code)->pluck('ext_name');
 	
 		$this->assign('cmd_id', $cmd_id);
 		$this->assign('account_id', $account_id);
@@ -139,7 +117,8 @@ class platform_command extends ecjia_platform {
 	
 		$code = !empty($_GET['code']) ? trim($_GET['code']) : '';
 		$account_id = !empty($_GET['account_id']) ? intval($_GET['account_id']) : 0;
-		$platform = $this->db_platform_account->where(array('id' => $account_id))->get_field('platform');
+		$platform = RC_DB::table('platform_account')->where('id', $account_id)->pluck('platform');
+		
 		if (!empty($_POST)) {
 			foreach ($_POST as $key => $value) {
 				if ($key == 'newcmd_word') {
@@ -150,7 +129,8 @@ class platform_command extends ecjia_platform {
 							$data[$k]['cmd_word'] = $v;
 						}
 						//判断关键词是否重复
-						$count = $this->db_command->where(array('account_id' => $account_id, 'cmd_word' => $v))->count();
+						$count = RC_DB::table('platform_command')->where('account_id', $account_id)->where('cmd_word', $v)->count();
+						
 						if ($count != 0) {
 							return $this->showmessage(sprintf(RC_Lang::get('platform::platform.keywords_exist'), $v), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 						}
@@ -175,11 +155,13 @@ class platform_command extends ecjia_platform {
 				return $this->showmessage(RC_Lang::get('platform::platform.keyword_notrepeat'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			}
 		}
-		$this->db_command->batch_insert($data);
+		RC_DB::table('platform_command')->insert($data);
 	
-		$name = $this->db_platform_account->where(array('id' => $account_id))->get_field('name');
+		$name = RC_DB::table('platform_account')->where('id', $account_id)->pluck('name');
+		
 		foreach ($data as $v) {
-			$ext_name = $this->db_extend->where(array('ext_code' => $v['ext_code']))->get_field('ext_name');
+			$ext_name = RC_DB::table('platform_extend')->where('ext_code', $v['ext_code'])->pluck('ext_name');
+			
 			ecjia_admin::admin_log(RC_Lang::get('platform::platform.public_name_is').$name.'，'.RC_Lang::get('platform::platform.extend_name_is').$ext_name.'，'.RC_Lang::get('platform::platform.keyword_is').$v['cmd_word'], 'add', 'platform_extend_command');
 		}
 		return $this->showmessage(RC_Lang::get('platform::platform.add_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_command/init', array('code' => $code, 'account_id' => $account_id))));
@@ -202,8 +184,8 @@ class platform_command extends ecjia_platform {
 		}
 	
 		//检查改公众号下的扩展名称下是否有重复关键字
-		$count = $this->db_command->where(array('account_id' => $account_id, 'cmd_word' => $cmd_word, 'cmd_id' => array('neq' => $cmd_id)))->count();
-	
+		$count = RC_DB::table('platform_command')->where('account_id', $account_id)->where('cmd_word', $cmd_word)->where('cmd_id', '!=', $cmd_id)->count();
+		
 		if ($count != 0) {
 			return $this->showmessage(sprintf(RC_Lang::get('platform::platform.keywords_exist'), $cmd_word), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
@@ -212,9 +194,16 @@ class platform_command extends ecjia_platform {
 			'cmd_word'	=> $cmd_word,
 			'sub_code'	=> $sub_code
 		);
-		$this->db_command->where(array('cmd_id' => $cmd_id))->update($data);
+		RC_DB::table('platform_command')->where('cmd_id', $cmd_id)->update($data);
 	
-		$info = $this->dbview_platform_config->join(array('platform_extend', 'platform_account'))->field('e.ext_name, a.name')->where(array('a.id' => $account_id, 'e.ext_code' => $code))->find();
+		$info = RC_DB::table('platform_config as c')
+			->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'))
+			->leftJoin('platform_account as a', RC_DB::raw('a.id'), '=', RC_DB::raw('c.account_id'))
+			->select(RC_DB::raw('e.ext_name'), RC_DB::raw('a.name'))
+			->where(RC_DB::raw('a.id'), $account_id)
+			->where(RC_DB::raw('e.ext_code'), $code)
+			->first();
+			
 		//记录日志
 		ecjia_admin::admin_log(RC_Lang::get('platform::platform.public_name_is').$info['name'].'，'.RC_Lang::get('platform::platform.extend_name_is').$info['ext_name'].'，'.RC_Lang::get('platform::platform.keyword_is').$cmd_word, 'edit', 'platform_extend_command');
 		
@@ -228,10 +217,17 @@ class platform_command extends ecjia_platform {
 		$this->admin_priv('platform_command_delete', ecjia::MSGTYPE_JSON);
 	
 		$cmd_id = intval($_GET['cmd_id']);
-		$data = $this->db_command->find(array('cmd_id' => $cmd_id));
-		$info = $this->dbview_platform_config->join(array('platform_extend', 'platform_account'))->field('e.ext_name, a.name')->where(array('a.id' => $data['account_id'], 'e.ext_code' => $data['ext_code']))->find();
+		$data = RC_DB::table('platform_command')->where('cmd_id', $cmd_id)->first();
 		
-		$delete = $this->db_command->where(array('cmd_id' => $cmd_id))->delete();
+		$info = RC_DB::table('platform_config as c')
+			->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'))
+			->leftJoin('platform_account as a', RC_DB::raw('a.id'), '=', RC_DB::raw('c.account_id'))
+			->select(RC_DB::raw('e.ext_name'), RC_DB::raw('a.name'))
+			->where(RC_DB::raw('a.id'), $data['account_id'])
+			->where(RC_DB::raw('e.ext_code'), $data['ext_code'])
+			->first();
+		
+		$delete = RC_DB::table('platform_command')->where('cmd_id', $cmd_id)->delete();
 		
 		//记录日志
 		ecjia_admin::admin_log(RC_Lang::get('platform::platform.public_name_is').$info['name'].'，'.RC_Lang::get('platform::platform.extend_name_is').$info['ext_name'].'，'.RC_Lang::get('platform::platform.keyword_is').$data['cmd_word'], 'remove', 'platform_extend_command');
@@ -246,26 +242,30 @@ class platform_command extends ecjia_platform {
 	 * 公众号扩展下的命令列表
 	 */
 	private function command_list() {
-		$db_command_view = RC_Loader::load_app_model('platform_command_viewmodel');
+		$db_command_view = RC_DB::table('platform_command as c')
+			->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'))
+			->leftJoin('platform_account as a', RC_DB::raw('a.id'), '=', RC_DB::raw('c.account_id'));
 	
 		$type = !empty($_GET['platform']) ? $_GET['platform'] : '';
 		$keywords = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
 	
-		$where['c.ext_code'] = !empty($_GET['code']) ? trim($_GET['code']) : '';
-		$where['c.account_id'] = !empty($_GET['account_id']) ? intval($_GET['account_id']) : 0;
+		$code = !empty($_GET['code']) ? trim($_GET['code']) : '';
+		$account_id = !empty($_GET['account_id']) ? intval($_GET['account_id']) : 0;
+		
+		$db_command_view->where(RC_DB::raw('c.ext_code'), $code)->where(RC_DB::raw('c.account_id'), $account_id);
 	
 		if (!empty($type)) {
-			$where['c.platform'] = $type;
+			$db_command_view->where(RC_DB::raw('c.platform'), $type);
 		}
 		if ($keywords) {
-			$where['c.cmd_word'] = array('like' => '%'.$keywords.'%');
+			$db_command_view->where(RC_DB::raw('c.cmd_word'), 'like', '%'.$keywords.'%');
 		}
-		$where['a.shop_id'] = $this->platformAccount->getStoreId();
-		$count = $db_command_view->join(array('platfrom_command', 'platform_account'))->where($where)->count();
+		$store_id = $this->platformAccount->getStoreId();
+		$count = $db_command_view->where(RC_DB::raw('a.shop_id'), $store_id)->count();
 		$page = new ecjia_platform_page($count, 15, 5);
 		
 		$arr = array();
-		$data = $db_command_view->join(array('platfrom_command', 'platform_account'))->field('c.*')->where($where)->order('cmd_id ASC')->limit($page->limit())->select();
+		$data = $db_command_view->select(RC_DB::raw('c.*'))->orderBy(RC_DB::raw('c.cmd_id'), 'asc')->take(15)->skip($page->start_id - 1)->get();
 	
 		if (isset($data)) {
 			foreach ($data as $rows) {
@@ -279,24 +279,27 @@ class platform_command extends ecjia_platform {
 	 * 扩展下的命令列表
 	 */
 	private function get_command_list() {
-		$db_command_view= RC_Loader::load_app_model('platform_command_viewmodel');
+		$db_command_view = RC_DB::table('platform_command as c')
+			->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'))
+			->leftJoin('platform_account as a', RC_DB::raw('a.id'), '=', RC_DB::raw('c.account_id'));
 	
 		$type = !empty($_GET['platform']) ? $_GET['platform'] : '';
 		$keywords = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
 	
-		$where['c.ext_code'] = $_GET['code'];
+		$code = !empty($_GET['code']) ? trim($_GET['code']) : '';
+		$db_command_view->where(RC_DB::raw('c.ext_code'), $code);
+		
 		if (!empty($type)) {
-			$where['c.platform'] = $type;
+			$db_command_view->where(RC_DB::raw('c.platform'), $type);
 		}
 		if ($keywords) {
-			$where['c.cmd_word'] = array('like' => '%'.$keywords.'%');
+			$db_command_view->where(RC_DB::raw('c.cmd_word'), 'like', '%'.$keywords.'%');
 		}
-		$where['a.shop_id'] = $this->platformAccount->getStoreId();
-		$count = $db_command_view->join(array('platform_account', 'platform_command'))->where($where)->count();
+		$store_id = $this->platformAccount->getStoreId();
+		$count = $db_command_view->where(RC_DB::raw('a.shop_id'), $store_id)->count();
 		$page = new ecjia_platform_page($count, 15, 5);
 	
-		$arr = array();
-		$data = $db_command_view->join(array('platform_account', 'platform_command'))->field('c.*, a.name')->where($where)->order('cmd_id ASC')->limit($page->limit())->select();
+		$data = $db_command_view->select(RC_DB::raw('c.*'), RC_DB::raw('a.name'))->orderBy(RC_DB::raw('c.cmd_id'), 'asc')->take(15)->skip($page->start_id - 1)->get();
 		
 		return array('module' => $data, 'page' => $page->show(5), 'desc' => $page->page_desc());
 	}
