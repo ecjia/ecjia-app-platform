@@ -3,6 +3,7 @@
 namespace Ecjia\App\Platform\Frameworks\Platform;
 
 use Royalcms\Component\Repository\Repositories\AbstractRepository;
+use RC_Upload;
 
 class Account extends AbstractRepository
 {
@@ -55,7 +56,7 @@ class Account extends AbstractRepository
     
     public function getLogo()
     {
-        return $this->account->logo;
+        return RC_Upload::upload_url($this->account->logo);
     }
     
     public function getToken()
