@@ -95,7 +95,7 @@
 		                                        <span class="fileupload-exists"> 修改</span>
 		                                        <input type="file" class="default" name="platform_logo" />
 		                                    </span>
-		                                    <a class="btn btn-danger btn-sm fileupload-exists" {if $wechat.logo}data-toggle="ajax_remove"{else}data-dismiss="fileupload"{/if} href='{url path="platform/merchant/remove_logo" args="id={$wechat.id}"}' >删除</a>
+		                                    <a class="btn btn-danger btn-sm fileupload-exists" {if $wechat.logo}data-toggle="ajaxremove" data-msg="您确定要删除该logo吗？" {else}data-dismiss="fileupload"{/if} href='{url path="platform/merchant/remove_logo" args="id={$wechat.id}"}'>删除</a>
 		                                </div>
 		                            </div>
 		                        </div>

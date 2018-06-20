@@ -5516,3 +5516,58 @@ table tr th.sorting-desc{
 .merchant_shop_notice img {
 	width: 100% !important;
 }
+
+.mega-menu-carousel-example-content {
+	    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    height: 180px;
+}
+
+.mega-menu-carousel-content.left {
+	width: 30%;
+    display: flex;
+    align-items: center;
+}
+
+.mega-menu-carousel-row img {
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+}
+
+.mega-menu-carousel-row.left {
+	width: 30%;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    flex-direction: column;
+}
+
+.mega-menu-carousel-row.right {
+	width: 60%;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    flex-direction: column;
+}
+
+.mega-menu-carousel-content.right {
+	display: flex;
+    text-align: left;
+    flex-direction: column;
+    width: 70%;
+    height: 100%;
+}
+
+.mega-menu-carousel-content.right .item:first-child {
+	margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.mega-menu-carousel-content.right .item:nth-child(2) {
+	margin-bottom: 30px;
+}

@@ -186,6 +186,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		if (session('uuid')) {
 		    $this->platformAccount = new Account(session('uuid'));
 		    $this->assign('platformAccount', $this->platformAccount);
+		    $this->assign('external_access_url', RC_Uri::home_url().'/sites/platform/?uuid='.session('uuid'));
 		}
 		
 		if (session('session_user_id') && session('session_user_type')) {
