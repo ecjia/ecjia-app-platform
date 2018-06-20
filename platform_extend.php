@@ -79,7 +79,7 @@ class platform_extend extends ecjia_platform {
 		$this->admin_priv('platform_extend_manage');
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.public_extend')));
-		$this->assign('ur_here', RC_Lang::get('platform::platform.public_extend'));
+		$this->assign('ur_here', '插件库');
 
 		ecjia_screen::get_current_screen()->add_help_tab(array(
 			'id'		=> 'overview',
@@ -96,31 +96,46 @@ class platform_extend extends ecjia_platform {
 		$this->assign('form_action', RC_Uri::url('platform/platform_extend/wechat_extend_insert'));
 
 		$id = $this->platformAccount->getAccountID();
-		$count = RC_DB::table('platform_config')->where('account_id', $id)->count();
-		$page = new ecjia_platform_page($count, 15, 5);
+// 		$count = RC_DB::table('platform_config')->where('account_id', $id)->count();
+// 		$page = new ecjia_platform_page($count, 15, 5);
 
-		//已禁用的扩展不显示
-		$arr = RC_DB::table('platform_config as c')
-			->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'))
-			->leftJoin('platform_account as a', RC_DB::raw('a.id'), '=', RC_DB::raw('c.account_id'))
-			->select(RC_DB::raw('a.id'), RC_DB::raw('c.account_id'), RC_DB::raw('a.name'), RC_DB::raw('a.platform'), RC_DB::raw('e.ext_name'), RC_DB::raw('c.ext_code'), RC_DB::raw('a.type'), RC_DB::raw('e.ext_desc'))
-			->where(RC_DB::raw('c.account_id'), $id)
-			->where(RC_DB::raw('e.enabled'), '!=', 0)
-			->orderBy(RC_DB::raw('e.ext_id'), 'desc')
-			->take(15)
-			->skip($page->start_id-1)
-			->get();
+// 		//已禁用的扩展不显示
+// 		$arr = RC_DB::table('platform_config as c')
+// 			->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'))
+// 			->leftJoin('platform_account as a', RC_DB::raw('a.id'), '=', RC_DB::raw('c.account_id'))
+// 			->select(RC_DB::raw('a.id'), RC_DB::raw('c.account_id'), RC_DB::raw('a.name'), RC_DB::raw('a.platform'), RC_DB::raw('e.ext_name'), RC_DB::raw('c.ext_code'), RC_DB::raw('a.type'), RC_DB::raw('e.ext_desc'))
+// 			->where(RC_DB::raw('c.account_id'), $id)
+// 			->where(RC_DB::raw('e.enabled'), '!=', 0)
+// 			->orderBy(RC_DB::raw('e.ext_id'), 'desc')
+// 			->take(15)
+// 			->skip($page->start_id-1)
+// 			->get();
 		
+// 		if	(!empty($arr)) {
+// 			foreach ($arr as $k => $v) {
+// 				$command_list = RC_DB::table('platform_command')->where('account_id', $v['account_id'])->where('ext_code', $v['ext_code'])->lists('cmd_word');
+// 				if (!empty($command_list)) {
+// 					$arr[$k]['command_list'] = implode('; ', $command_list);
+// 				}
+// 			}
+// 		}
+		
+		$ext_code_list = RC_DB::table('platform_config')->where('account_id', $id)->lists('ext_code');
+		$count = RC_DB::table('platform_extend')->count();
+		$page = new ecjia_platform_page($count, 16, 5);
+		$arr = RC_DB::table('platform_extend')->where('enabled', 1)->orderBy('ext_id', 'desc')->take(16)->skip($page->start_id-1)->get();
 		if	(!empty($arr)) {
 			foreach ($arr as $k => $v) {
-				$command_list = RC_DB::table('platform_command')->where('account_id', $v['account_id'])->where('ext_code', $v['ext_code'])->lists('cmd_word');
-				if (!empty($command_list)) {
-					$arr[$k]['command_list'] = implode('; ', $command_list);
+				if (!empty($ext_code_list) && in_array($v['ext_code'], $ext_code_list)) {
+					$arr[$k]['added'] = 1;
+				} else {
+					$arr[$k]['added'] = 0;
 				}
 			}
 		}
 		$list = array('item' => $arr, 'page' => $page->show(5), 'desc' => $page->page_desc());
 		$this->assign('arr', $list);
+		
 		$this->assign('img_url', RC_App::apps_url('statics/image/', __FILE__));
 		
 		$this->assign_lang();
@@ -166,6 +181,31 @@ class platform_extend extends ecjia_platform {
 		} else {
 			return $this->showmessage(RC_Lang::get('platform::platform.add_pubext_failed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
+	}
+	
+	/**
+	 * 编辑扩展功能页面
+	 */
+	public function wechat_extend_view() {
+		$this->admin_priv('platform_extend_update');
+	
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.edit_pub_extend')));
+	
+		$id = $this->platformAccount->getAccountID();
+	
+		$this->assign('action_link', array('text' => '插件库', 'href' => RC_Uri::url('platform/platform_extend/init')));
+		$this->assign('form_action', RC_Uri::url('platform/platform_extend/wechat_extend_save'));
+		$this->assign('ur_here', '功能详情');
+	
+		$code = !empty($_GET['code']) ? trim($_GET['code']) : '';
+		$name = $this->platformAccount->getAccountName();
+	
+		$bd = RC_DB::table('platform_config')->where('ext_code', $code)->where('account_id', $id)->first();
+		$bd['ext_name'] = RC_DB::table('platform_extend')->where('ext_code', $code)->pluck('ext_name');
+		$this->assign('bd', $bd);
+		
+		$this->assign_lang();
+		$this->display('wechat_extend_view.dwt');
 	}
 	
 	/**

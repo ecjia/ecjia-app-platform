@@ -27,14 +27,16 @@
 						<div class="row-fluid">
 							<!-- {foreach from=$arr.item item=module} -->
 								<div class="outline">
-									<a class="data-pjax"  href='{RC_Uri::url("platform/platform_extend/wechat_extend_edit", "code={$module.ext_code}")}' >
+									<a class="data-pjax"  href='{RC_Uri::url("platform/platform_extend/wechat_extend_view", "code={$module.ext_code}")}' >
 										<div class="outline-left"><img src="{$img_url}setting_shop.png" /></div>
 										<div class="outline-right">
 											<p>{$module.ext_name}</p>
 											<span>{$module.ext_code}</span>
 										</div>
 									</a>
+									{if $module.added eq 1}
 									<span class="added">已添加</span>
+									{/if}
 								</div>
 							<!-- {foreachelse} -->
 							<div class="no-records">{lang key='system::system.no_records'}</div>

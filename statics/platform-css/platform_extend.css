@@ -46,3 +46,59 @@
     text-align: center;
 	margin-bottom: 20px;
 }
+
+.highlight_box.global {
+    margin: 0 30px 40px;
+    border-top-width: 0;
+}
+
+.highlight_box.icon_wrap {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    overflow: hidden;
+}
+
+.highlight_box {
+    position: relative;
+    padding: 9px 30px;
+    background-color: #f4f5f9;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.highlight_box .title {
+    font-weight: 400;
+    font-style: normal;
+}
+
+.highlight_box.icon_wrap .icon {
+    background: url(/mpres/zh_CN/htmledition/comm_htmledition/style/page/cardticket/card_apply_enter_z3a7b39.png) 0 -261px no-repeat;
+}
+
+.highlight_box.icon_wrap .icon_profile {
+    width: 48px;
+    height: 48px;
+}
+
+.highlight_box.icon_wrap .icon {
+    float: left;
+    margin-right: 15px;
+}
+
+.highlight_box .desc {
+    color: #8d8d8d;
+    overflow: hidden;
+}
+
+.highlight_box {
+    position: relative;
+    padding: 9px 30px;
+    background-color: #f4f5f9;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.intro dd {
+	color: #8d8d8d;
+	padding: 0 40px;
+}
