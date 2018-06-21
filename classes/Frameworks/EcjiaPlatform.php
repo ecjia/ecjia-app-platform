@@ -215,8 +215,8 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 
 		$this->load_default_script_style();
 		
-		$this->assign('ecjia_platform_cptitle', RC_Session::get('store_name'));
-		$this->assign('ecjia_platform_cpname', RC_Session::get('store_name'));
+		$this->assign('ecjia_platform_cptitle', sprintf("【%s】的%s", $this->currentStore->getStoreName(), $this->platformAccount->getAccountName()));
+// 		$this->assign('ecjia_platform_cpname', RC_Session::get('store_name'));
 		$this->assign('ecjia_main_static_url', $this->get_main_static_url());
 		$this->assign('ecjia_system_static_url', RC_Uri::system_static_url() . '/');
 		
