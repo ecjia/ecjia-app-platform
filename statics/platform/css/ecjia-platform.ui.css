@@ -5518,7 +5518,11 @@ table tr th.sorting-desc{
 }
 
 .mega-menu-carousel-example-content {
-	    display: flex;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
     justify-content: space-between;
     text-align: center;
     align-items: center;
@@ -5527,7 +5531,11 @@ table tr th.sorting-desc{
 
 .mega-menu-carousel-content.left {
 	width: 50%;
-    display: flex;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
     align-items: center;
 }
 
@@ -5540,7 +5548,11 @@ table tr th.sorting-desc{
 .mega-menu-carousel-row.left {
 	width: 30%;
     line-height: 30px;
-    display: flex;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
     align-items: center;
     text-align: left;
     flex-direction: column;
@@ -5549,13 +5561,21 @@ table tr th.sorting-desc{
 .mega-menu-carousel-row.right {
 	width: 60%;
     line-height: 30px;
-    display: flex;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
     align-items: center;
     text-align: left;
     flex-direction: column;
 }
 
 .mega-menu-carousel-content.right {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
 	display: flex;
     text-align: left;
     flex-direction: column;
@@ -5570,4 +5590,8 @@ table tr th.sorting-desc{
 
 .mega-menu-carousel-content.right .item:nth-child(2) {
 	margin-bottom: 30px;
+}
+
+.mega-menu-carousel-content.right .item:nth-child(3) {
+	text-align: right;
 }
