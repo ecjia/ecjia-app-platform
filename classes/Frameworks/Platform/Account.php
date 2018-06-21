@@ -148,10 +148,10 @@ class Account extends AbstractRepository
     public function getPlatformListUrl()
     {
         if ($this->getStoreId() > 0) {
-            return RC_Uri::url('platform/merchant/init');
+            return str_replace('sites/platform/index.php', 'sites/merchant/index.php', RC_Uri::url('platform/merchant/init'));
         }
         else {
-            return RC_Uri::url('platform/admin/init');
+            return str_replace('sites/platform/index.php', 'index.php', RC_Uri::url('platform/admin/init'));
         }
     }
     
@@ -161,10 +161,10 @@ class Account extends AbstractRepository
     public function getPlatformSettingUrl()
     {
         if ($this->getStoreId() > 0) {
-            return RC_Uri::url('platform/merchant/edit', ['id' => $this->getAccountID()]);
+            return str_replace('sites/platform/index.php', 'sites/merchant/index.php', RC_Uri::url('platform/merchant/edit', ['id' => $this->getAccountID()]));
         }
         else {
-            return RC_Uri::url('platform/admin/edit', ['id' => $this->getAccountID()]);
+            return str_replace('sites/platform/index.php', 'index.php', RC_Uri::url('platform/admin/edit', ['id' => $this->getAccountID()]));
         }
     }
     
