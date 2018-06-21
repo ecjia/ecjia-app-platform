@@ -4,7 +4,7 @@
     <ul class="mega-dropdown-menu dropdown-menu row">
 		<li class="col-md-12">
         	<h3 class="dropdown-menu-header text-uppercase mb-1">
-        		<img src="{$platformAccount->getLogo()}" alt="{$platformAccount->getAccountName()}" width="120" height="60"> 
+        		<img src="{$platformAccount->getLogo()}" alt="{$platformAccount->getAccountName()}" width="60" height="60"> 
         		{$platformAccount->getAccountName()}
         	</h3>
         	<div id="mega-menu-carousel-example" class="mega-menu-carousel-example-content">
