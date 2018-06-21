@@ -5595,3 +5595,8 @@ table tr th.sorting-desc{
 .mega-menu-carousel-content.right .item:nth-child(3) {
 	text-align: right;
 }
+
+.dropdown-notification .notification-text {
+	word-break: break-all;
+	white-space:pre-wrap;
+}
