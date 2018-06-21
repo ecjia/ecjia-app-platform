@@ -22,7 +22,13 @@
             <div class="card-body">
 				<div class="highlight_box global icon_wrap group" id="js_apply_btn">
 					{if !$bd.ext_config}<a class="btn btn-success btn-min-width f_r js_apply" href="javascript:;">开通</a>{/if}
-					<span class="icon icon_profile cardticket_ico"></span><h4 class="title">{$bd.ext_name}</h4><p class="desc" id="js_status">
+					<div class="fonticon-container">
+						<div class="fonticon-wrap">
+							<i class="ft-package"></i>
+						</div>
+					</div>
+					<h4 class="title">{$bd.ext_name}</h4>
+					<p class="desc" id="js_status">
 					{if !$bd.ext_config}<span>未开通</span>{else}该功能已通过申请，可正常使用{/if}
 					</p>
 				</div>
