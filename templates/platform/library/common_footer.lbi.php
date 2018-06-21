@@ -11,8 +11,3 @@
 {if ecjia::config('stats_code')}
 {stripslashes(ecjia::config('stats_code'))}
 {/if}
-
-<!-- end:footer -->
-<div class="container">
-<!-- {ecjia:hook id=platform_print_main_bottom} -->
-</div>
