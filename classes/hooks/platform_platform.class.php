@@ -49,19 +49,31 @@ defined('IN_ECJIA') or exit('No permission resources.');
 class platform_platform_hooks {
 
     public static function ecjia_builtin_app_bundles($apps) {
-        $merchant_apps = RC_Config::get('platform.apps');
-        return $merchant_apps;
+        $platform_apps = config('platform.apps');
+        return $platform_apps;
     }
     
     
     public static function ecjia_platform_dashboard_contact() {
-        ecjia_merchant::$controller->display(
+        ecjia_platform::$controller->display(
 		    RC_Package::package('app::platform')->loadTemplate('platform/library/widget_platform_dashboard_contact.lbi', true)
 		);
+    }
+    
+    public static function platform_dashboard_header_messages() {
+        
+        ecjia_platform::$controller->display('library/common_header_messages.lbi');
+    }
+    
+    public static function platform_dashboard_header_notifications() {
+        
+        ecjia_platform::$controller->display('library/common_header_notifications.lbi');
     }
 
 }
 
+RC_Hook::add_action( 'platform_dashboard_header_links', array('platform_platform_hooks', 'platform_dashboard_header_messages') );
+RC_Hook::add_action( 'platform_dashboard_header_links', array('platform_platform_hooks', 'platform_dashboard_header_notifications') );
 RC_Hook::add_filter( 'ecjia_builtin_app_bundles', array('platform_platform_hooks', 'ecjia_builtin_app_bundles') );
 // RC_Hook::add_filter( 'platform_dashboard_right4', array('platform_platform_hooks', 'ecjia_platform_dashboard_contact'), 2 );
 

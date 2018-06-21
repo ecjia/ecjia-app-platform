@@ -33,8 +33,7 @@
                         	<a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="flag-icon flag-icon-cn"></i> 简体中文</a>
                         </div>
           			</li>
-                    <!-- {include file="library/common_header_notifications.lbi.php"} -->
-                    <!-- {include file="library/common_header_messages.lbi.php"} -->
+          			<!-- {ecjia:hook id=platform_dashboard_header_links} -->
           			<li class="dropdown dropdown-user nav-item">
           				<a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
           					<span class="avatar avatar-online"><img src="{$currentUser->getAvatarUrl()}" alt="{$currentUser->getUserName()}"><i></i></span>
