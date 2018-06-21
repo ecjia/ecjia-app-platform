@@ -60,10 +60,7 @@ class platform_platform_hooks {
 		);
     }
     
-    public static function platform_dashboard_header_messages() {
-        
-        ecjia_platform::$controller->display('library/common_header_messages.lbi');
-    }
+    
     
     public static function platform_dashboard_header_notifications() {
         
@@ -72,7 +69,6 @@ class platform_platform_hooks {
 
 }
 
-RC_Hook::add_action( 'platform_dashboard_header_links', array('platform_platform_hooks', 'platform_dashboard_header_messages') );
 // RC_Hook::add_action( 'platform_dashboard_header_links', array('platform_platform_hooks', 'platform_dashboard_header_notifications') );
 RC_Hook::add_filter( 'ecjia_builtin_app_bundles', array('platform_platform_hooks', 'ecjia_builtin_app_bundles') );
 // RC_Hook::add_filter( 'platform_dashboard_right4', array('platform_platform_hooks', 'ecjia_platform_dashboard_contact'), 2 );
