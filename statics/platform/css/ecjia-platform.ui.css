@@ -5526,7 +5526,7 @@ table tr th.sorting-desc{
 }
 
 .mega-menu-carousel-content.left {
-	width: 30%;
+	width: 50%;
     display: flex;
     align-items: center;
 }
@@ -5559,7 +5559,7 @@ table tr th.sorting-desc{
 	display: flex;
     text-align: left;
     flex-direction: column;
-    width: 70%;
+    width: 50%;
     height: 100%;
 }
 
