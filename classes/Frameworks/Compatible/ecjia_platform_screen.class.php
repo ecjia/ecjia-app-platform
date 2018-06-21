@@ -46,15 +46,6 @@
 //
 defined('IN_ECJIA') or exit('No permission resources.');
 
-/**
- * ecjia商家后台默认控制器
- * @author royalwang
- */
-class ecjia_platform_controller extends ecjia_platform {
-    
-    public function __construct() {
-        parent::__construct();
-    }
-}
+class ecjia_platform_screen extends Ecjia\App\Platform\Frameworks\Component\Screen {}
 
 // end

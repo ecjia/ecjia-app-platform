@@ -1,4 +1,6 @@
 <?php
+use Ecjia\App\Platform\Frameworks\Component\Loader;
+
 //
 //    ______         ______           __         __         ______
 //   /\  ___\       /\  ___\         /\_\       /\_\       /\  __ \
@@ -46,64 +48,6 @@
 //
 defined('IN_ECJIA') or exit('No permission resources.');
 
-class ecjia_platform_screen extends ecjia_screen {
-    
-    public function render_screen_meta() {
-        
-        // Time to render!
-        if (!empty($this->_nav_here)) :
-        ?>
-        <div class="content-header-left col-12 mb-2">
-	        <h3 class="content-header-title"></h3>
-	        <div class="row breadcrumbs-top">
-		        <div class="breadcrumb-wrapper col-12">
-			        <ol class="breadcrumb">
-				        <li class="breadcrumb-item"><a href="<?php echo RC_Uri::url('platform/dashboard/init');?>">管理主页</a>
-				        </li>
-						<?php
-						foreach ($this->_nav_here as $nav_here) :
-						    if (end($this->_nav_here) === $nav_here) {
-			                    $last_css = ' class="breadcrumb-item active"';
-			                } else {
-			                	$last_css = ' class="breadcrumb-item"';
-			                }
-							if ($nav_here->get_link()) :
-			            ?>
-						<li<?php echo $last_css;?>><a href="<?php echo $nav_here->get_link();?>"><?php echo $nav_here->get_label();?></a></li>
-			            <?php else : ?>
-			            <li<?php echo $last_css;?>><?php echo $nav_here->get_label();?></li>
-			            <?php
-					       endif;
-					   endforeach;
-						?>
-			        </ol>
-		        </div>
-	        </div>
-        </div>
-        <?php
-        endif;
-        
-        $this->render_screen_admin_notice();
-    }
-    
-    public function render_screen_admin_notice()
-    {
-        if (!empty($this->_admin_notice)) :
-            foreach ($this->_admin_notice as $admin_notice) :
-                ?>
-                <div class="col-12">
-	                <div class="alert alert-dismissible mb-2<?php if ($admin_notice->get_type()) echo ' '.$admin_notice->get_type(); else echo ' alert-warning'; ?>">
-	                    <?php if ($admin_notice->get_allow_close()) :?>
-	                	<button type="button" class="close" data-dismiss="alert" aria-hidden="true"><span aria-hidden="true">×</span></button>
-	                	<?php endif;?>
-	                	<?php echo $admin_notice->get_content();?>
-	                </div>
-                </div>
-		       <?php
-		    endforeach;
-		endif;
-    }
-    
-}
+class ecjia_platform_loader extends Ecjia\App\Platform\Frameworks\Component\Loader {}
 
 // end
