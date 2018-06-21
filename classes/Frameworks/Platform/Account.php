@@ -4,6 +4,7 @@ namespace Ecjia\App\Platform\Frameworks\Platform;
 
 use Royalcms\Component\Repository\Repositories\AbstractRepository;
 use RC_Upload;
+use RC_Uri;
 
 class Account extends AbstractRepository
 {
@@ -39,9 +40,51 @@ class Account extends AbstractRepository
         return $this->account->platform;
     }
     
+    public function getPlatformName()
+    {
+        if ($this->getPlatform() == 'wechat') {
+            return '微信';
+        } 
+        else if ($this->getPlatform() == 'alipay') {
+            return '支付宝';
+        } 
+        else if ($this->getPlatform() == 'weapp') {
+            return '小程序';
+        }
+        else {
+            return '未知';
+        }
+    }
+    
     public function getType()
     {
         return $this->account->type;
+    }
+    
+    public function getTypeCode()
+    {
+        if ($this->getType() === 0) {
+            return 'unauthorized';
+        }
+        elseif ($this->getType() == 1) {
+            return 'subscribe';
+        }
+        elseif ($this->getType() == 2) {
+            return 'service';
+        }
+    }
+    
+    public function getTypeName()
+    {
+        if ($this->getType() === 0) {
+            return '未认证的公众号';
+        }
+        elseif ($this->getType() == 1) {
+            return '订阅号';
+        }
+        elseif ($this->getType() == 2) {
+            return '服务号';
+        }
     }
     
     public function getStoreId()
@@ -94,6 +137,36 @@ class Account extends AbstractRepository
         return $this->account->status;
     }
     
+    public function getApiUrl()
+    {
+        return RC_Uri::home_url().'/sites/platform/?uuid=' . $this->getUUID();
+    }
+    
+    /**
+     * 公众平台列表URL，支持平台和商家
+     */
+    public function getPlatformListUrl()
+    {
+        if ($this->getStoreId() > 0) {
+            return RC_Uri::url('platform/merchant/init');
+        }
+        else {
+            return RC_Uri::url('platform/admin/init');
+        }
+    }
+    
+    /**
+     * 公众平台信息设置URL，支持平台和商家
+     */
+    public function getPlatformSettingUrl()
+    {
+        if ($this->getStoreId() > 0) {
+            return RC_Uri::url('platform/merchant/edit', ['id' => $this->getAccountID()]);
+        }
+        else {
+            return RC_Uri::url('platform/admin/edit', ['id' => $this->getAccountID()]);
+        }
+    }
     
 }
 
