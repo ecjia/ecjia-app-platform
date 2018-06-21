@@ -7,3 +7,12 @@
 		<span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">当前正在访问【{$currentStore->getStoreName()}】的{$platformAccount->getAccountName()} <i class="ft-eye pink"></i></span>
 	</p>
 </footer>
+
+{if ecjia::config('stats_code')}
+{stripslashes(ecjia::config('stats_code'))}
+{/if}
+
+<!-- end:footer -->
+<div class="container">
+<!-- {ecjia:hook id=platform_print_main_bottom} -->
+</div>
