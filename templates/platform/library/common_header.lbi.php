@@ -6,7 +6,6 @@
         		<li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
         		<li class="nav-item">
         			<a class="navbar-brand" href="{url path='platform/dashboard/init'}">
-        			<h3 class="brand-text">{$currentStore->getStoreName()}</h3>
         			<img class="brand-logo" alt="robust admin logo" src="{$ecjia_main_static_url}platform/images/logo/logo-dark-sm.png">
             		<h3 class="brand-text">{$platformAccount->getAccountName()}</h3>
             		</a>
