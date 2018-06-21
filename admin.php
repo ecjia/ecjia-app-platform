@@ -476,7 +476,6 @@ class admin extends ecjia_admin {
 		$page = new ecjia_page($count,10,5);
 
 		//已禁用的扩展不显示
-		$where = '';
 		$where = array('c.account_id' => $id, 'e.enabled' => array('neq' => 0));
 		
 		$arr = $this->dbview_platform_config->join(array('platform_extend', 'platform_account'))->field('a.id, c.account_id, a.name, a.platform, e.ext_name, c.ext_code, a.type, e.ext_desc')->where($where)->order(array('e.ext_id' => 'desc'))->limit($page->limit())->select();
