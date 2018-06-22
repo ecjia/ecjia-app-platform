@@ -186,6 +186,15 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		if (session('uuid')) {
 		    $this->platformAccount = new Account(session('uuid'));
 		    $this->assign('platformAccount', $this->platformAccount);
+		    
+		    if (session('store_id') == $this->platformAccount->getStoreId()) {
+		        if (session('session_user_type') == 'admin') {
+		            $this->currentStore = new \Ecjia\System\Admins\Stores\AdminShop(session('store_id'));
+		        } else if (session('session_user_type') == 'merchant') {
+		            $this->currentStore = new \Ecjia\App\Merchant\Frameworks\Stores\MerchantShop(session('store_id'));
+		        }
+		        $this->assign('currentStore', $this->currentStore);
+		    }
 		}
 		
 		if (session('session_user_id') && session('session_user_type')) {
@@ -196,16 +205,8 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		    }
 		    $this->assign('currentUser', $this->currentUser);
 		}
-		
-		if (session('store_id') == $this->platformAccount->getStoreId()) {
-		    if (session('session_user_type') == 'admin') {
-		        $this->currentStore = new \Ecjia\System\Admins\Stores\AdminShop(session('store_id'));
-		    } else if (session('session_user_type') == 'merchant') {
-		        $this->currentStore = new \Ecjia\App\Merchant\Frameworks\Stores\MerchantShop(session('store_id'));
-		    }
-		    $this->assign('currentStore', $this->currentStore);
-		}
 
+		
 		$rc_script = RC_Script::instance();
 		$rc_style = RC_Style::instance();
 		Loader::default_scripts($rc_script);
