@@ -195,6 +195,10 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		        }
 		        $this->assign('currentStore', $this->currentStore);
 		    }
+		    
+		    $this->assign('ecjia_platform_cptitle', sprintf("%s的%s", $this->currentStore->getStoreName(), $this->platformAccount->getAccountName()));
+		} else {
+		    $this->assign('ecjia_platform_cptitle', '公众平台');
 		}
 		
 		if (session('session_user_id') && session('session_user_type')) {
@@ -216,7 +220,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 
 		$this->load_default_script_style();
 		
-		$this->assign('ecjia_platform_cptitle', sprintf("%s的%s", $this->currentStore->getStoreName(), $this->platformAccount->getAccountName()));
+		
 		$this->assign('ecjia_main_static_url', $this->get_main_static_url());
 		$this->assign('ecjia_system_static_url', RC_Uri::system_static_url() . '/');
 		
