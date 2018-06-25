@@ -505,8 +505,9 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 	    RC_Style::enqueue_style('ecjia-platform-chosen');
 	    
 	    RC_Script::enqueue_script('jquery');
-	    RC_Script::enqueue_script('bootstrap');
+// 	    RC_Script::enqueue_script('bootstrap');
 	    RC_Script::enqueue_script('ecjia-platform-jquery-pjax');
+	    RC_Script::enqueue_script('jquery-ui-totop');
 	    
 	    RC_Script::enqueue_script('ecjia-platform-vendors');
 	    RC_Script::enqueue_script('ecjia-platform-jquery-sticky');
@@ -532,7 +533,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 	    RC_Script::enqueue_script('ecjia-platform-jquery-migrate');
 	    RC_Script::enqueue_script('ecjia-platform-jquery-quicksearch');
 	    RC_Script::enqueue_script('ecjia-platform-chosen-jquery');
-	    
+
 	    RC_Script::enqueue_script('ecjia-platform');
 	    RC_Script::enqueue_script('ecjia-platform-ui');
 	    
