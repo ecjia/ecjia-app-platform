@@ -24,7 +24,6 @@
     <!-- {ecjia:hook id=platform_head} -->
 </head>
 <body class="vertical-layout vertical-content-menu 2-columns fixed-navbar menu-expanded pace-done">
-	<div id="wrapper">
     <!-- start:wrapper -->
         <!-- {block name="common_header"} -->
         <!-- #BeginLibraryItem "/library/common_header.lbi" --><!-- #EndLibraryItem -->
@@ -51,7 +50,6 @@
         <!-- {block name="common_footer"} -->
         <!-- #BeginLibraryItem "/library/common_footer.lbi" --><!-- #EndLibraryItem -->
         <!-- {/block} -->
-    </div>
     <!-- end:wrapper -->
     
 	<!-- start:javascript -->
