@@ -21,7 +21,7 @@
 			ecjia.platform.alert_go();
 
 			/* to top */
-//			$().UItoTop({inDelay:200,outDelay:200,scrollSpeed: 500});
+			$().UItoTop({inDelay:200,outDelay:200,scrollSpeed: 500});
 
 			$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
 			

@@ -104,7 +104,7 @@ class Loader {
 		$scripts->add( 'ecjia-platform-chosen-jquery',    			$base_url.'/platform/lib/chosen/chosen.jquery.min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-bootstrap-fileupload-js',	$base_url.'/platform/lib/bootstrap-fileupload/bootstrap-fileupload.js', array(), false, 1 );
 
-		$scripts->add( 'ecjia-platform-jquery-quicksearch',   		$base_url.'/platform-js/jquery.quicksearch.js', array('jquery'), false, 1 );
+		$scripts->add( 'ecjia-platform-jquery-quicksearch',   		$base_url.'/platform/js/jquery.quicksearch.js', array('jquery'), false, 1 );
 	}
 
 
