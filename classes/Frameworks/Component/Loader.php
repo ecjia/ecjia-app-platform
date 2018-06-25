@@ -101,6 +101,7 @@ class Loader {
 		
 		$scripts->add( 'ecjia-platform-jquery-migrate',   			$base_url.'/platform/js/jquery-migrate.min.js', array('jquery'), false, 1 );
 		
+		$scripts->add( 'ecjia-platform-chosen-jquery',    			$base_url.'/platform/lib/chosen/chosen.jquery.min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-bootstrap-fileupload-js',	$base_url.'/platform/lib/bootstrap-fileupload/bootstrap-fileupload.js', array(), false, 1 );
 
 		$scripts->add( 'ecjia-platform-jquery-quicksearch',   		$base_url.'/platform-js/jquery.quicksearch.js', array('jquery'), false, 1 );
@@ -145,6 +146,7 @@ class Loader {
 		$styles->add( 'ecjia-platform-palette-climacon',    	$base_url."/platform/css/core/colors/palette-climacon.css" );
 		$styles->add( 'ecjia-platform-users',         		  	$base_url."/platform/css/pages/users.css" );
 		
+		$styles->add( 'ecjia-platform-chosen',         		  		$base_url."/platform/lib/chosen/chosen.css" );
 		$styles->add( 'ecjia-platform-bootstrap-fileupload-css',	$base_url.'/platform/lib/bootstrap-fileupload/bootstrap-fileupload.css');
 	}
 
