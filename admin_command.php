@@ -89,54 +89,6 @@ class admin_command extends ecjia_admin {
 	}
 
 	/**
-	 * 查询页面
-	 */
-	public function search() {
-		$this->admin_priv('platform_command_manage');
-	
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.command_search')));
-		ecjia_screen::get_current_screen()->add_help_tab(array(
-			'id'		=> 'overview',
-			'title'		=> RC_Lang::get('platform::platform.summarize'),
-			'content'	=>
-			'<p>' . RC_Lang::get('platform::platform.welcome') . '</p>'
-		));
-		
-		ecjia_screen::get_current_screen()->set_help_sidebar(
-			'<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
-			'<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:命令速查" target="_blank">'.RC_Lang::get('platform::platform.command_search_help').'</a>') . '</p>'
-		);
-		
-		$this->assign('ur_here', RC_Lang::get('platform::platform.command_search'));
-		$this->assign('search_action', RC_Uri::url('platform/admin_command/search'));
-		
-		$keywords = !empty($_GET['keywords']) ? trim($_GET['keywords']) : '';
-		$platform = !empty($_GET['platform']) ? $_GET['platform'] : '';
-		$where = '';
-		if (!empty($keywords)) {
-			$where['c.cmd_word'] = array('like' => '%'.$keywords.'%');
-		}
-		
-		$list = array();
-		if (!empty($keywords)) {
-			if (!empty($platform)) {
-				$where['c.platform'] = $platform;
-			}
-			$where['a.shop_id'] = 0;
-			$count = $this->command_viewdb->join(array('platform_extend', 'platform_account'))->where($where)->count();
-			$page = new ecjia_page($count, 20, 5);
-			
-			$arr = $this->command_viewdb->join(array('platform_extend', 'platform_account'))->field('e.ext_name, c.*, a.name')->where($where)->limit($page->limit())->select();
-			$list = array ('item' => $arr, 'page' => $page->show(5), 'desc' => $page->page_desc());
-		}
-		$this->assign('keywords', $keywords);
-		$this->assign('list', $list);
-		
-		$this->assign_lang();
-		$this->display('command_search_list.dwt');
-	}
-	
-	/**
 	 * 查看公众号扩展下的命令
 	 */
 	public function init() {
