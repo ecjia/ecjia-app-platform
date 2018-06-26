@@ -151,15 +151,15 @@ class platform_extend extends ecjia_platform {
 		$wechat_id = $this->platformAccount->getAccountID();
 		$code = trim($_POST['code']);
 		
+		$info = RC_DB::table('platform_extend')->where('ext_code', $code)->where('enabled', 1)->first();
+		
 		$data = array(
 			'ext_code' => $code,
 			'account_id' => $wechat_id,
-			'ext_config' => trim($_POST['config'])
+			'ext_config' => $info['ext_config']
 		);
 		RC_DB::table('platform_config')->insert($data);
 			
-		$info = RC_DB::table('platform_extend')->where('ext_code', $code)->where('enabled', 1)->first();
-		
 		ecjia_admin::admin_log(RC_Lang::get('platform::platform.extend_name_is').$info['ext_name'].'，'.RC_Lang::get('platform::platform.public_name_is').$info['name'], 'add', 'wechat_extend');
 		
 		return $this->showmessage('开通成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_extend/wechat_extend_view', array('code' => $code))));
@@ -189,7 +189,6 @@ class platform_extend extends ecjia_platform {
 		$this->assign('info', $info);
 		
 		$bd = RC_DB::table('platform_config')->where('ext_code', $code)->where('account_id', $id)->first();
-		$this->assign('bd', $bd);
 		if (!empty($bd)) {
 			/* 取得配置信息 */
 			if (is_string($bd['ext_config'])) {
@@ -202,11 +201,12 @@ class platform_extend extends ecjia_platform {
 					}
 				}
 			
-// 				$extend_handle = with(new Ecjia\App\Platform\PlatformPlugin)->channel($code);
-// 				$bd['ext_config'] = $extend_handle->makeFormData($code_list);
+				$extend_handle = with(new Ecjia\App\Platform\PlatformPlugin)->channel($code);
+				$bd['ext_config'] = $extend_handle->makeFormData($code_list);
 			}
 		}
-		
+		$bd['ext_config'] = []; //test
+		$this->assign('bd', $bd);
 		$this->assign('images_url', RC_App::apps_url('statics/image/', __FILE__));
 		
 		$this->assign_lang();

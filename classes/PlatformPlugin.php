@@ -257,7 +257,7 @@ class PlatformPlugin extends PluginModel
         if (!$handler) {
             return new ecjia_error('plugin_not_found', $data->ext_code . ' plugin not found!');
         }
-        $handler->setPlatform($data);
+//         $handler->setPlatform($data);
         
         return $handler;
     }

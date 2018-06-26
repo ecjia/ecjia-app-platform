@@ -23,7 +23,7 @@
             
 				<div class="highlight_box global icon_wrap group" id="js_apply_btn">
 					{if !$bd.ext_config}
-						<a class="btn btn-success btn-min-width f_r extend_handle" href="{RC_Uri::url('platform/platform_extend/wechat_extend_insert')}" data-code="{$info.ext_code}" data-config="{$info.ext_config}">开通</a>
+						<a class="btn btn-success btn-min-width f_r extend_handle" href="{RC_Uri::url('platform/platform_extend/wechat_extend_insert')}" data-code="{$info.ext_code}">开通</a>
 					{else}
 						<a class="btn btn-danger btn-min-width f_r extend_handle" href="{RC_Uri::url('platform/platform_extend/wechat_extend_remove')}" data-code="{$info.ext_code}">关闭</a>
 					{/if}
@@ -67,6 +67,31 @@
 										{$info.ext_name}
 									</div>
 								</div>
+								
+								<!-- {foreach from=$bd.ext_config item=config key=key} -->
+								<div class="form-group row">
+									<label class="col-lg-2 label-control text-right">{$config.label}</label>
+									<div class="col-lg-8 controls">
+										<!-- {if $config.type == "text"} -->
+										<input class="w350 form-control" id="cfg_value[]" name="cfg_value[]" type="{$config.type}" value="{$config.value}" size="40" />
+										<!-- {elseif $config.type == "textarea"} -->
+										<textarea class="w350 form-control" id="cfg_value[]" name="cfg_value[]" cols="80" rows="5">{$config.value}</textarea>
+										<!-- {elseif $config.type == "select"} -->
+										<select class="w350 form-control" id="cfg_value[]" name="cfg_value[]"  >
+											<!-- {html_options options=$config.range selected=$config.value} -->
+										</select>
+										<!-- {/if} -->
+										<input name="cfg_name[]" type="hidden" value="{$config.name}" />
+										<input name="cfg_type[]" type="hidden" value="{$config.type}" />
+										<input name="cfg_lang[]" type="hidden" value="{$config.lang}" />
+										{if $config.desc}
+			    						<div class="help-block">{$config.desc}</div>
+			    						{/if}
+										<!--the tenpay code -->
+									</div>
+								</div>
+								<!-- {/foreach} -->
+				
 							</div>
 						</div>
 						<div class="modal-footer justify-content-center">

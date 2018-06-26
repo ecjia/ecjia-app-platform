@@ -274,10 +274,8 @@
                 e.preventDefault();
                 var url = $(this).attr('href');
                 var code = $(this).attr('data-code');
-                var config = $(this).attr('data-config');
                 var info = {
-                	code: code,
-                	config: config
+                	code: code
                 }
                 $.post(url, info, function (data) {
                     ecjia.platform.showmessage(data);
