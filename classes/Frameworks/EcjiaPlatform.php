@@ -416,7 +416,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 // 	    		$this->assign('page_state', array('icon' => 'glyphicon glyphicon-exclamation-sign', 'msg' => __('操作警告'), 'class' => ''));
 // 	    		break;
 // 	    	default:
-	    		$this->assign('page_state', array('icon' => 'glyphicon glyphicon-remove-circle', 'msg' => __('操作错误'), 'class' => 'ecjiafc-red'));
+	    		$this->assign('page_state', array('icon' => 'ft-x-circle', 'msg' => __('操作错误'), 'class' => 'ecjiafc-red'));
 // 	    }   
 
         if (file_exists($system_tpl)) {

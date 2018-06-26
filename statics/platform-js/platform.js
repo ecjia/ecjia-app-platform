@@ -10,6 +10,7 @@
 			ecjia.platform.platform.command_edit();
 			ecjia.platform.platform.editForm();
 			ecjia.platform.platform.extend();
+			ecjia.platform.platform.extend_handle();
 		},
 		
 		//公众号列表 搜索/筛选
@@ -267,6 +268,22 @@
                 }, 'json');
             });
 		},
+		
+		extend_handle: function () {
+            $(".extend_handle").on('click', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                var code = $(this).attr('data-code');
+                var config = $(this).attr('data-config');
+                var info = {
+                	code: code,
+                	config: config
+                }
+                $.post(url, info, function (data) {
+                    ecjia.platform.showmessage(data);
+                }, 'json');
+            });
+		}
 	};
 })(ecjia.platform, jQuery);
 
