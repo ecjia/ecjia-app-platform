@@ -19,18 +19,12 @@
           			<li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu">         </i></a></li>
                     <!-- {include file="library/common_header_mega.lbi.php"} -->
           			<li class="nav-item d-none d-md-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li>
-          			<li class="nav-item nav-search">
-          				<a class="nav-link nav-link-search" href="#"><i class="ficon ft-search"></i></a>
-                        <div class="search-input">
-                          	<input class="input" type="text" placeholder="Explore Robust...">
-                        </div>
-          			</li>
         		</ul>
         		<ul class="nav navbar-nav float-right">         
           			<li class="dropdown dropdown-language nav-item">
           				<a class="dropdown-toggle nav-link" id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="flag-icon flag-icon-cn"></i><span>简体中文</span><span class="selected-language"></span></a>
                         <div class="dropdown-menu" aria-labelledby="dropdown-flag">
-                        	<a class="dropdown-item" href="javascript:;"><i class="flag-icon flag-icon-cn"></i> 简体中文</a>
+                        	<a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="flag-icon flag-icon-cn"></i> 简体中文</a>
                         </div>
           			</li>
           			<!-- {ecjia:hook id=platform_dashboard_header_links} -->
