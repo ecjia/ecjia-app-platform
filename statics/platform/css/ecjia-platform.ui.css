@@ -5606,3 +5606,7 @@ table tr th.sorting-desc{
     margin-top: 5px;
     color: #737373;
 }
+
+.nav.nav-tabs.nav-only-icon .nav-item .nav-link i {
+	font-size: 1rem;
+}
