@@ -30,7 +30,7 @@
           			<li class="dropdown dropdown-language nav-item">
           				<a class="dropdown-toggle nav-link" id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="flag-icon flag-icon-cn"></i><span>简体中文</span><span class="selected-language"></span></a>
                         <div class="dropdown-menu" aria-labelledby="dropdown-flag">
-                        	<a class="dropdown-item" href="icons-simple-line-icons.html#"><i class="flag-icon flag-icon-cn"></i> 简体中文</a>
+                        	<a class="dropdown-item" href="javascript:;"><i class="flag-icon flag-icon-cn"></i> 简体中文</a>
                         </div>
           			</li>
           			<!-- {ecjia:hook id=platform_dashboard_header_links} -->
