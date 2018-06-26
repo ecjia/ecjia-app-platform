@@ -204,6 +204,8 @@ class platform_extend extends ecjia_platform {
 		$bd['ext_name'] = RC_DB::table('platform_extend')->where('ext_code', $code)->pluck('ext_name');
 		$this->assign('bd', $bd);
 		
+		$this->assign('images_url', RC_App::apps_url('statics/image/', __FILE__));
+		
 		$this->assign_lang();
 		$this->display('wechat_extend_view.dwt');
 	}

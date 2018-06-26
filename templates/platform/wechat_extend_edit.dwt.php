@@ -16,7 +16,7 @@
                 <h4 class="card-title">
                 	{$ur_here}
 	               	{if $action_link}
-					<a class="btn btn-light plus_or_reply data-pjax float-right" href="{$action_link.href}" id="sticky_a"><i class="fa fa-reply"></i> {$action_link.text}</a>
+					<a class="btn btn-outline-primary plus_or_reply data-pjax float-right" href="{$action_link.href}" id="sticky_a"><i class="fa fa-reply"></i> {$action_link.text}</a>
 					{/if}
                 </h4>
             </div>
@@ -62,7 +62,7 @@
 						</div>
 					</div>
 					<div class="modal-footer justify-content-center">
-						<button class="btn btn-light" type="submit">{lang key='platform::platform.update'}</button>
+						<button class="btn btn-outline-primary" type="submit">{lang key='platform::platform.update'}</button>
 						<input type="hidden" name="account_id" value="{$bd.account_id}" />
 						<input type="hidden" name="ext_code" value="{$bd.ext_code}" />
 					</div>

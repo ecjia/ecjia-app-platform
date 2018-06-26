@@ -54,7 +54,7 @@
                 <h4 class="card-title">
                 	{$ext_name}<small>（{$code}）</small>
 	               	{if $back_link}
-					<a class="btn btn-light plus_or_reply data-pjax float-right" href="{$back_link.href}" id="sticky_a"><i class="fa fa-reply"></i> {$back_link.text}</a>
+					<a class="btn btn-outline-primary plus_or_reply data-pjax float-right" href="{$back_link.href}" id="sticky_a"><i class="fa fa-reply"></i> {$back_link.text}</a>
 					{/if}
                 </h4>
             </div>
@@ -63,7 +63,7 @@
 					<form method="post" action="{$search_action}" name="searchForm">
 						<div class="choose_list f_r" >
 							<input class="form-control" type="text" name="keywords" value="{$smarty.get.keywords}" placeholder="{lang key='platform::platform.command_key'}"/> 
-							<button class="btn btn-light" type="submit">{lang key='platform::platform.search'}</button>
+							<button class="btn btn-outline-primary" type="submit">{lang key='platform::platform.search'}</button>
 						</div>
 					</form>
 				</div>
@@ -109,7 +109,7 @@
 					</table>
 					<!-- {$modules.page} -->	
 					<div class="m_b20"><a href="javascript:;" onclick="addrow(this,0)" class="addtr">{lang key='platform::platform.add_again'}</a></div>
-					<button class="btn btn-light m_b20 add-command-btn" type="submit">{lang key='platform::platform.addition'}</button>
+					<button class="btn btn-outline-primary m_b20 add-command-btn" type="submit">{lang key='platform::platform.addition'}</button>
 				</form>
             </div>
         </div>

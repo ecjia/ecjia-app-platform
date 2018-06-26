@@ -106,7 +106,7 @@
 								<div class="card-body border-info" style="height: 400px;">
 									<div class="control-group control-group-small choose_list" data-url="{url path='platform/platform_extend/get_extend_list'}" data-id="{$id}">
 										<input class="w243 form-control" type="text" name='keywords' value="{$smarty.get.keywords}" placeholder="{lang key='platform::platform.input_plugname_keywords'}" size="16"/>
-										<a class="btn btn-light search_platform">{lang key='platform::platform.search'}</a>
+										<a class="btn btn-outline-primary search_platform">{lang key='platform::platform.search'}</a>
 									</div>
 									
 									<div class="control-group control-group-small draggable">
@@ -123,7 +123,7 @@
 									</div>
 									
 									<div class="control-group control-group-small m_b0 m_t10">
-										<input type="submit" value="{lang key='platform::platform.addition'}" class="btn btn-light" />
+										<input type="submit" value="{lang key='platform::platform.addition'}" class="btn btn-outline-primary" />
 										<input type="hidden" value="{$id}" name="id" />
 									</div>
 									

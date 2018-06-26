@@ -15,7 +15,7 @@
                 <h4 class="card-title">
                 	{$ur_here}
 	               	{if $action_link}
-					<a class="btn btn-light plus_or_reply data-pjax float-right" href="{$action_link.href}" id="sticky_a"><i class="fa fa-reply"></i> {$action_link.text}</a>
+					<a class="btn btn-outline-primary plus_or_reply data-pjax float-right" href="{$action_link.href}" id="sticky_a"><i class="fa fa-reply"></i> {$action_link.text}</a>
 					{/if}
                 </h4>
             </div>
@@ -24,7 +24,7 @@
 					{if !$bd.ext_config}<a class="btn btn-success btn-min-width f_r js_apply" href="javascript:;">开通</a>{/if}
 					<div class="fonticon-container">
 						<div class="fonticon-wrap">
-							<i class="ft-package"></i>
+							<img class="icon-extend" src="{$images_url}extend.png" />
 						</div>
 					</div>
 					<h4 class="title">{$bd.ext_name}</h4>
