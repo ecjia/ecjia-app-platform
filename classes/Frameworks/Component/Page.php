@@ -85,12 +85,12 @@ EOF;
     	return <<<EOF
 	    	<div class="card-body">
                 <div class="row">
-    				<div class="col-lg-6 col-md-6 col-sm-12">
+    				<div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="float-left my-1">
         					$page_desc
                         </div>
     				</div>
-    				<div class="col-lg-6 col-md-6 col-sm-12">
+    				<div class="col-lg-8 col-md-6 col-sm-12">
                         <div class="float-right">
     	    			    $code
                         </div>
