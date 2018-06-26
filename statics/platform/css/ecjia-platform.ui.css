@@ -5600,3 +5600,9 @@ table tr th.sorting-desc{
 	word-break: break-all;
 	white-space:pre-wrap;
 }
+
+.help-block {
+    display: block;
+    margin-top: 5px;
+    color: #737373;
+}
