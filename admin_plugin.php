@@ -137,15 +137,22 @@ class admin_plugin extends ecjia_admin {
 	
 		$code = trim($_GET['code']);
 		$bd = $this->db_extend->where(array('ext_code' => $code))->find();
-		$ext_config = unserialize($bd['ext_config']);
-		$code_list = array();
-		if (!empty($ext_config)) {
-			foreach ($ext_config as $key => $value) {
-				$code_list[$value['name']] = $value['value'];
+		
+		if (!empty($bd)) {
+			/* 取得配置信息 */
+			if (is_string($bd['ext_config'])) {
+				$ext_config = unserialize($bd['ext_config']);
+				/* 取出已经设置属性的code */
+				$code_list = array();
+				if (!empty($ext_config)) {
+					foreach ($ext_config as $key => $value) {
+						$code_list[$value['name']] = $value['value'];
+					}
+				}
+				$extend_handle = with(new Ecjia\App\Platform\PlatformPlugin)->channel($code);
+				$bd['ext_config'] = $extend_handle->makeFormData($code_list);
 			}
 		}
-		$payment_handle = new platform_factory($code);
-		$bd['ext_config'] = $payment_handle->configure_forms($code_list, true);
 		$this->assign('bd', $bd);
 		
 		$this->assign_lang();
