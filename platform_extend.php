@@ -178,7 +178,7 @@ class platform_extend extends ecjia_platform {
 					}
 				}
 			
-				$extend_handle = with(new Ecjia\App\Platform\PlatformPlugin)->channel($code);
+				$extend_handle = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($code);
 				$bd['ext_config'] = $extend_handle->makeFormData($code_list);
 			}
 		}
