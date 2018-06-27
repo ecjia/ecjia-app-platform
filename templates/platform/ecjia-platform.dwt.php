@@ -23,8 +23,9 @@
 	<!-- {block name="meta"} --><!-- {/block} -->
     <!-- {ecjia:hook id=platform_head} -->
 </head>
-<body class="vertical-layout vertical-content-menu 2-columns fixed-navbar menu-expanded pace-done">
-    <!-- start:wrapper -->
+<body class="vertical-layout vertical-content-menu 2-columns menu-expanded pace-done menu-flipped fixed-navbar">
+    
+	<div id="content-body">
         <!-- {block name="common_header"} -->
         <!-- #BeginLibraryItem "/library/common_header.lbi" --><!-- #EndLibraryItem -->
         <!-- {/block} -->
@@ -38,7 +39,7 @@
 	                <!-- end:breadcrumb -->
         		</div>
         		<!-- #BeginLibraryItem "/library/common_sidebar.lbi" --><!-- #EndLibraryItem -->
-	            <div class="content-body" id="content-body">
+	            <div class="content-body">
 	                <!-- {block name="home-content"} -->
 	                <!-- {/block} -->
 	                <!-- {ecjia:hook id=platform_print_main_bottom} -->
@@ -46,11 +47,11 @@
             </div>
         </div>
         <!-- end:main -->
+	</div>    	
         
-        <!-- {block name="common_footer"} -->
-        <!-- #BeginLibraryItem "/library/common_footer.lbi" --><!-- #EndLibraryItem -->
-        <!-- {/block} -->
-    <!-- end:wrapper -->
+    <!-- {block name="common_footer"} -->
+    <!-- #BeginLibraryItem "/library/common_footer.lbi" --><!-- #EndLibraryItem -->
+    <!-- {/block} -->
     
 	<!-- start:javascript -->
 	<!-- javascript default for all pages-->
