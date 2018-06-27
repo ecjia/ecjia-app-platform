@@ -745,8 +745,8 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 //         _dump($menus,1);
         if (!empty($menus)) {
             
-            echo '<div class="main-menu menu-light menu-accordion menu-shadow menu-fixed" data-scroll-to-active="true">' . PHP_EOL;
-            echo '<div class="main-menu-content ps-container ps-theme-dark ps-active-y">' . PHP_EOL;
+            echo '<div class="main-menu menu-static menu-light menu-accordion menu-shadow" data-scroll-to-active="true">' . PHP_EOL;
+            echo '<div class="main-menu-content">' . PHP_EOL;
             echo '<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">' . PHP_EOL;
             
             foreach ($menus as $type => $group) {

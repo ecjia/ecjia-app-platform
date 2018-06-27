@@ -32,13 +32,14 @@
         <!-- start:main -->
         <div class="app-content content">
         	<div class="content-wrapper">
-        		<div class="content-header row">
-        			<!-- start:breadcrumb -->
-	                <!-- {ecjia:hook id=platform_print_main_header} -->
-	                <!-- end:breadcrumb -->
-        		</div>
+        		
         		<!-- #BeginLibraryItem "/library/common_sidebar.lbi" --><!-- #EndLibraryItem -->
 	            <div class="content-body" id="content-body">
+	            
+	            	<div class="content-header row">
+		                <!-- {ecjia:hook id=platform_print_main_header} -->
+	                </div>
+	                
 	                <!-- {block name="home-content"} -->
 	                <!-- {/block} -->
 	                <!-- {ecjia:hook id=platform_print_main_bottom} -->
@@ -65,6 +66,11 @@
 <!-- {else} -->
 	<!-- {block name="meta"} --><!-- {/block} -->
 	<!-- {ecjia:hook id=platform_pjax_head} -->
+	
+	<div class="content-header row">
+		<!-- {ecjia:hook id=platform_print_main_header} -->
+	</div>
+	                
 	<!-- {block name="home-content"} --><!-- {/block} -->
 	<!-- {ecjia:hook id=platform_print_main_bottom} -->
 	<!-- {block name="footer"} --><!-- {/block} -->
