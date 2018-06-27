@@ -38,7 +38,7 @@
 								<label class="control-label">{lang key='platform::platform.lable_external_address'}</label>
 								<div class="controls l_h30">
 									<input class="w600" type="text" readonly value="{$url}" id="external_address" />&nbsp;&nbsp;
-									<a class="btn copy-btn" href='javascript:;' data-clipboard-action="copy" data-clipboard-target="#external_address">复制URL</a>
+									<a class="btn copy-url-btn" href='javascript:;' data-clipboard-action="copy" data-clipboard-target="#external_address">复制URL</a>
 								</div>
 							</div>
 							{/if}
@@ -99,7 +99,7 @@
 								<div class="controls">
 									<input class="generate_token w350" type="text" name="token" id="token" value="{$wechat.token}" />&nbsp;&nbsp;
 									<a class="toggle_view btn filter-btn" href='{url path="platform/admin/generate_token"}'  data-val="allow">生成Token</a>&nbsp;&nbsp;
-									<a class="btn copy-btn" href='javascript:;' data-clipboard-action="copy" data-clipboard-target="#token">复制Token</a>
+									<a class="btn copy-token-btn" href='javascript:;' data-clipboard-action="copy" data-clipboard-target="#token">复制Token</a>
 									<span class="input-must">{lang key='system::system.require_field'}</span>
 									<span class="help-block">自定义的Token值，或者点击生成Token创建一个，复制到微信公众平台配置中</span>
 								</div>

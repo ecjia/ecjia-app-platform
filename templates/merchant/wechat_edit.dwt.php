@@ -45,7 +45,7 @@
 									<div class="controls col-lg-6 l_h30">
 										<input class="form-control" type="text" readonly value="{$url}" id="external_address" />
 									</div>
-									<a class="btn btn-primary copy-btn" href='javascript:;' data-clipboard-action="copy" data-clipboard-target="#external_address">复制URL</a>
+									<a class="btn btn-primary copy-url-btn" href='javascript:;' data-clipboard-action="copy" data-clipboard-target="#external_address">复制URL</a>
 								</div>
 								{/if}
 								
@@ -108,7 +108,7 @@
 										<span class="help-block">自定义的Token值，或者点击生成Token创建一个，复制到微信公众平台配置中</span>
 									</div>
 									<a class="toggle_view btn btn-primary filter-btn" href='{url path="platform/merchant/generate_token"}'  data-val="allow" >生成Token</a>
-									<a class="btn btn-info copy-btn" href='javascript:;' data-clipboard-action="copy" data-clipboard-target="#token">复制Token</a>
+									<a class="btn btn-info copy-token-btn" href='javascript:;' data-clipboard-action="copy" data-clipboard-target="#token">复制Token</a>
 									<span class="input-must">{lang key='system::system.require_field'}</span>
 								</div>
 								

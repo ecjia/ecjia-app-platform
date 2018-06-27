@@ -270,15 +270,33 @@
 		},
 		
 		copy: function() {
-        	var clipboard = new ClipboardJS('.copy-btn');
-        	clipboard.on('success', function(e) {
-        		smoke.alert('复制成功', {ok: '确定',});
-        		e.clearSelection();
- 		    });
-        	clipboard.on('error', function(e) {
- 		    	smoke.alert('复制失败，请手动复制', {ok: '确定',});
- 		    	e.clearSelection();
- 		    });
+			$(".copy-url-btn").off('click').on('click', function (e) {
+	        	var url_clipboard = new ClipboardJS('.copy-url-btn');
+	        	url_clipboard.on('success', function(e) {
+	        		smoke.alert('复制成功', {ok: '确定'});
+	        		e.clearSelection();
+	        		url_clipboard.destroy();
+	 		    });
+	        	url_clipboard.on('error', function(e) {
+	 		    	smoke.alert('复制失败，请手动复制', {ok: '确定'});
+	 		    	e.clearSelection();
+	 		    	url_clipboard.destroy();
+	 		    });
+			});
+        	
+			$(".copy-token-btn").off('click').on('click', function (e) {
+	        	var token_clipboard = new ClipboardJS('.copy-token-btn');
+	        	token_clipboard.on('success', function(e) {
+	        		smoke.alert('复制成功', {ok: '确定'});
+	        		e.clearSelection();
+	        		token_clipboard.destroy();
+	 		    });
+	        	token_clipboard.on('error', function(e) {
+	 		    	smoke.alert('复制失败，请手动复制', {ok: '确定'});
+	 		    	e.clearSelection();
+	 		    	token_clipboard.destroy();
+	 		    });
+			});
 		}
 	};
 })(ecjia.admin, jQuery);
