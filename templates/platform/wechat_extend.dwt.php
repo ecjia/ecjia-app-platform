@@ -33,7 +33,7 @@
 							<!-- {foreach from=$arr.item item=module} -->
 								<div class="outline">
 									<a class="data-pjax"  href='{RC_Uri::url("platform/platform_extend/wechat_extend_view", "code={$module.ext_code}")}' >
-										<div class="outline-left"><img src="{$img_url}setting_shop.png" /></div>
+										<div class="outline-left"><img class="icon-extend" src="{if $module.icon}{$module.icon}{else}{$img_url}setting_shop.png{/if}" /></div>
 										<div class="outline-right">
 											<p>{$module.ext_name}</p>
 											<span>{$module.ext_code}</span>

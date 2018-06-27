@@ -4253,6 +4253,12 @@ table tr th.sorting-desc{
     float: left;
     width: 70px;
 }
+
+.outline .outline-left .icon-extend {
+	width: 60px;
+	height: 60px;
+}
+
 .outline .outline-right {
     margin-left: 70px;
 }

@@ -28,7 +28,7 @@
 					{/if}
 					<div class="fonticon-container">
 						<div class="fonticon-wrap">
-							<img class="icon-extend" src="{$images_url}extend.png" />
+							<img class="icon-extend" src="{if $info.icon}{$info.icon}{else}{$images_url}extend.png{/if}" />
 						</div>
 					</div>
 					<h4 class="title">{$info.ext_name}</h4>

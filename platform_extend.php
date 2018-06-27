@@ -108,6 +108,9 @@ class platform_extend extends ecjia_platform {
 				} else {
 					$arr[$k]['added'] = 0;
 				}
+
+				$extend_handle = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($v['ext_code']);
+				$arr[$k]['icon'] = $extend_handle->getPluginIconUrl();
 			}
 		}
 		$list = array('item' => $arr, 'page' => $page->show(5), 'desc' => $page->page_desc());
@@ -163,6 +166,8 @@ class platform_extend extends ecjia_platform {
 		if (empty($info)) {
 			return $this->showmessage('该扩展不存在或未启用', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => array(array('text' => '返回插件库', 'href' => RC_Uri::url('platform/platform_extend/init')))));
 		}
+		$extend_handle = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($code);
+		$info['icon'] = $extend_handle->getPluginIconUrl();
 		$this->assign('info', $info);
 		
 		$bd = RC_DB::table('platform_config')->where('ext_code', $code)->where('account_id', $id)->first();
@@ -177,7 +182,6 @@ class platform_extend extends ecjia_platform {
 						$code_list[$value['name']] = $value['value'];
 					}
 				}
-			
 				$extend_handle = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($code);
 				$bd['ext_config'] = $extend_handle->makeFormData($code_list);
 			}
