@@ -22,7 +22,7 @@
             <div class="card-body">
             
 				<div class="highlight_box global icon_wrap group" id="js_apply_btn">
-					{if !$bd.ext_config}
+					{if !$bd}
 						<a class="btn btn-success btn-min-width f_r extend_handle" href="{RC_Uri::url('platform/platform_extend/wechat_extend_insert')}" data-code="{$info.ext_code}">开通</a>
 					{else}
 						<a class="btn btn-danger btn-min-width f_r extend_handle" href="{RC_Uri::url('platform/platform_extend/wechat_extend_remove')}" data-code="{$info.ext_code}">关闭</a>
@@ -34,7 +34,7 @@
 					</div>
 					<h4 class="title">{$info.ext_name}</h4>
 					<p class="desc" id="js_status">
-					{if !$bd.ext_config}<span>未开通</span>{else}该功能已通过申请，可正常使用{/if}
+					{if !$bd}<span>未开通</span>{else}该功能已通过申请，可正常使用{/if}
 					</p>
 				</div>
 				
@@ -44,7 +44,7 @@
 							<dt><span class="ico_intro ico ico_1 l"></span>
 								<h4 class="card-title">功能介绍</h4>
 							</dt>
-							<dd>功能介绍内容显示区域</dd>
+							<dd>{$info.ext_desc}</dd>
 						</dl>
 					</div>
 				</div>
@@ -71,13 +71,13 @@
 								<!-- {foreach from=$bd.ext_config item=config key=key} -->
 								<div class="form-group row">
 									<label class="col-lg-2 label-control text-right">{$config.label}</label>
-									<div class="col-lg-8 controls">
+									<div class="col-lg-6 controls">
 										<!-- {if $config.type == "text"} -->
-										<input class="w350 form-control" id="cfg_value[]" name="cfg_value[]" type="{$config.type}" value="{$config.value}" size="40" />
+										<input class="form-control" id="cfg_value[]" name="cfg_value[]" type="{$config.type}" value="{$config.value}" size="40" />
 										<!-- {elseif $config.type == "textarea"} -->
-										<textarea class="w350 form-control" id="cfg_value[]" name="cfg_value[]" cols="80" rows="5">{$config.value}</textarea>
+										<textarea class="form-control" id="cfg_value[]" name="cfg_value[]" cols="80" rows="5">{$config.value}</textarea>
 										<!-- {elseif $config.type == "select"} -->
-										<select class="w350 form-control" id="cfg_value[]" name="cfg_value[]"  >
+										<select class="form-control" id="cfg_value[]" name="cfg_value[]"  >
 											<!-- {html_options options=$config.range selected=$config.value} -->
 										</select>
 										<!-- {/if} -->

@@ -11,6 +11,7 @@
 			ecjia.merchant.platform.editForm();
 			ecjia.merchant.platform.extend();
 			ecjia.merchant.platform.token();
+			ecjia.merchant.platform.copy();
 		},
 		
 		//公众号列表 搜索/筛选
@@ -288,6 +289,16 @@
                  }, 'json');
             });
         },
+        
+		copy: function() {
+		    var clipboard = new ClipboardJS('.copy-btn');
+		    clipboard.on('success', function(e) {
+		        smoke.alert('复制成功');
+		    });
+		    clipboard.on('error', function(e) {
+		    	smoke.alert('复制失败，请手动复制');
+		    });
+		}
 	};
 	
 	app.staff_info = {

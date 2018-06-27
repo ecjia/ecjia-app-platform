@@ -96,29 +96,6 @@ class platform_extend extends ecjia_platform {
 		$this->assign('form_action', RC_Uri::url('platform/platform_extend/wechat_extend_insert'));
 
 		$id = $this->platformAccount->getAccountID();
-// 		$count = RC_DB::table('platform_config')->where('account_id', $id)->count();
-// 		$page = new ecjia_platform_page($count, 15, 5);
-
-// 		//已禁用的扩展不显示
-// 		$arr = RC_DB::table('platform_config as c')
-// 			->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'))
-// 			->leftJoin('platform_account as a', RC_DB::raw('a.id'), '=', RC_DB::raw('c.account_id'))
-// 			->select(RC_DB::raw('a.id'), RC_DB::raw('c.account_id'), RC_DB::raw('a.name'), RC_DB::raw('a.platform'), RC_DB::raw('e.ext_name'), RC_DB::raw('c.ext_code'), RC_DB::raw('a.type'), RC_DB::raw('e.ext_desc'))
-// 			->where(RC_DB::raw('c.account_id'), $id)
-// 			->where(RC_DB::raw('e.enabled'), '!=', 0)
-// 			->orderBy(RC_DB::raw('e.ext_id'), 'desc')
-// 			->take(15)
-// 			->skip($page->start_id-1)
-// 			->get();
-		
-// 		if	(!empty($arr)) {
-// 			foreach ($arr as $k => $v) {
-// 				$command_list = RC_DB::table('platform_command')->where('account_id', $v['account_id'])->where('ext_code', $v['ext_code'])->lists('cmd_word');
-// 				if (!empty($command_list)) {
-// 					$arr[$k]['command_list'] = implode('; ', $command_list);
-// 				}
-// 			}
-// 		}
 		
 		$ext_code_list = RC_DB::table('platform_config')->where('account_id', $id)->lists('ext_code');
 		$count = RC_DB::table('platform_extend')->count();
@@ -205,7 +182,6 @@ class platform_extend extends ecjia_platform {
 				$bd['ext_config'] = $extend_handle->makeFormData($code_list);
 			}
 		}
-		$bd['ext_config'] = []; //test
 		$this->assign('bd', $bd);
 		$this->assign('images_url', RC_App::apps_url('statics/image/', __FILE__));
 		
