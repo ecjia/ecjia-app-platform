@@ -23,7 +23,7 @@
 	<!-- {block name="meta"} --><!-- {/block} -->
     <!-- {ecjia:hook id=platform_head} -->
 </head>
-<body class="vertical-layout vertical-content-menu 2-columns menu-expanded pace-done menu-flipped fixed-navbar">
+<body class="vertical-layout vertical-content-menu 2-columns fixed-navbar menu-expanded pace-done">
     
         <!-- {block name="common_header"} -->
         <!-- #BeginLibraryItem "/library/common_header.lbi" --><!-- #EndLibraryItem -->
