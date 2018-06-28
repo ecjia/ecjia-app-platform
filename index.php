@@ -68,7 +68,7 @@ class index extends ecjia_api {
            
            $platform_account = new Ecjia\App\Platform\Frameworks\Platform\Account($uuid);
            $platform = $platform_account->getPlatform();
-           RC_Api::api($platform, 'platform_response', $platform_account->getAccount());
+           RC_Api::api($platform, 'platform_response', $platform_account);
            
        } catch (Ecjia\App\Platform\Frameworks\Exceptions\AccountException $e) {
            ecjia_log_error($e->getMessage());
