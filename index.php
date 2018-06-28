@@ -1,5 +1,6 @@
 <?php
 use Ecjia\App\Platform\Frameworks\Exceptions\AccountException;
+use Symfony\Component\HttpFoundation\Response;
 
 //
 //    ______         ______           __         __         ______
@@ -68,7 +69,15 @@ class index extends ecjia_api {
            
            $platform_account = new Ecjia\App\Platform\Frameworks\Platform\Account($uuid);
            $platform = $platform_account->getPlatform();
-           RC_Api::api($platform, 'platform_response', $platform_account);
+           $response = RC_Api::api($platform, 'platform_response', $platform_account);
+           if ($response instanceof Symfony\Component\HttpFoundation\Response) {
+               return $response;
+           } else if (is_ecjia_error($response)) {
+               ecjia_log_error($response->get_error_message());
+               return $this->displayContent($response->get_error_message());
+           } else {
+               return $this->displayContent($response);
+           }
            
        } catch (Ecjia\App\Platform\Frameworks\Exceptions\AccountException $e) {
            ecjia_log_error($e->getMessage());
