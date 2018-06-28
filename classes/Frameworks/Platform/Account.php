@@ -5,6 +5,7 @@ namespace Ecjia\App\Platform\Frameworks\Platform;
 use Royalcms\Component\Repository\Repositories\AbstractRepository;
 use RC_Upload;
 use RC_Uri;
+use Ecjia\App\Platform\Frameworks\Exceptions\AccountException;
 
 class Account extends AbstractRepository
 {
@@ -22,7 +23,11 @@ class Account extends AbstractRepository
         $this->uuid = $uuid;
         
         $this->account = $this->findBy('uuid', $uuid);
-    }
+        
+        if (is_null($this->account)) {
+            throw new AccountException('Ecjia Platform uuid not exists.');
+        } 
+    } 
     
     
     public function getAccountID()

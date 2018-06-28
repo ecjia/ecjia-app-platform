@@ -1,4 +1,6 @@
 <?php
+use Ecjia\App\Platform\Frameworks\Exceptions\AccountException;
+
 //
 //    ______         ______           __         __         ______
 //   /\  ___\       /\  ___\         /\_\       /\_\       /\  __ \
@@ -58,14 +60,21 @@ class index extends ecjia_api {
 	   $request = royalcms('request');
        $uuid = $request->get('uuid');
 
-       RC_Loader::load_app_class('platform_account', 'platform', false);
-       $platform_account = platform_account::make($uuid);
-       $platform = $platform_account->getPlatform();
-       if (!is_ecjia_error($platform)) {
-           Royalcms\Component\Foundation\Api::api($platform, 'platform_response', $platform_account->getAccount());           
-       } else {
+       if (empty($uuid)) {
            echo 'NO ACCESS';
        }
+
+       try {
+           
+           $platform_account = new Ecjia\App\Platform\Frameworks\Platform\Account($uuid);
+           $platform = $platform_account->getPlatform();
+           RC_Api::api($platform, 'platform_response', $platform_account->getAccount());
+           
+       } catch (Ecjia\App\Platform\Frameworks\Exceptions\AccountException $e) {
+           ecjia_log_error($e->getMessage());
+           echo 'NO ACCESS';
+       }
+       
 	}
 }
 
