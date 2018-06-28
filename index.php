@@ -61,7 +61,7 @@ class index extends ecjia_api {
        $uuid = $request->get('uuid');
 
        if (empty($uuid)) {
-           echo 'NO ACCESS';
+           return $this->displayContent('NO ACCESS');
        }
 
        try {
@@ -72,7 +72,7 @@ class index extends ecjia_api {
            
        } catch (Ecjia\App\Platform\Frameworks\Exceptions\AccountException $e) {
            ecjia_log_error($e->getMessage());
-           echo 'NO ACCESS';
+           return $this->displayContent('NO ACCESS');
        }
        
 	}
