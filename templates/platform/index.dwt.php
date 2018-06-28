@@ -8,12 +8,9 @@
     </div>
 </div>
 
-<div class="row" id="home-content">
-	<div class="col-lg-8">
-    	<!-- {ecjia:hook id=platform_dashboard_left8} -->
-    </div>
-    <div class="col-lg-4">
-    	<!-- {ecjia:hook id=platform_dashboard_right4} -->
+<div class="row">
+	<div class="col-lg-12">
+    	<!-- {ecjia:hook id=platform_dashboard_center} -->
     </div>
 </div>
 
