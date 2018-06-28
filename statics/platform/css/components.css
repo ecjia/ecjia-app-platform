@@ -26,9 +26,9 @@ html body .content {
   -webkit-backface-visibility : hidden;
      -moz-backface-visibility : hidden;
           backface-visibility : hidden;
-  min-height : -webkit-calc(100% - 32px);
-  min-height :    -moz-calc(100% - 32px);
-  min-height :         calc(100% - 32px);
+  min-height : -webkit-calc(100% - 45px);
+  min-height :    -moz-calc(100% - 45px);
+  min-height :         calc(100% - 45px);
 }
 html body .content.app-content {
   overflow : hidden;
