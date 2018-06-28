@@ -2637,9 +2637,11 @@ h3.timeline-title {
 /*	FOOTER
 ==============================================*/
 
+/*
 footer{
 	margin-top: 30px;
 }
+*/
 
 footer .footer-widget{
 	margin-bottom: 20px;
@@ -5615,4 +5617,69 @@ table tr th.sorting-desc{
 
 .nav.nav-tabs.nav-only-icon .nav-item .nav-link i {
 	font-size: 1rem;
+}
+
+/*** 账号整体情况 样式 ***/
+.weui-desktop-panel_overview .weui-desktop-panel__bd {
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+.weui-desktop-home-overview {
+	text-align: center;
+	padding: 24px 0 56px;
+	list-style-type: none;
+}
+
+.weui-desktop-home-overview svg {
+	fill: #9A9A9A;
+	vertical-align: middle;
+	margin-right: 5px;
+	margin-top: -0.2em;
+}
+
+.weui-desktop-home-overview .weui-desktop-data-overview__desc {
+	font-size: 42px;
+	padding-top: 16px;
+}
+
+.weui-desktop-home-overview .weui-desktop-data-overview {
+	width: 33%;
+}
+
+.weui-desktop-data-overview {
+	display: inline-block;
+	vertical-align: top;
+	text-align: center;
+	font-size: 14px;
+}
+
+.weui-desktop-data-overview__title {
+	color: #353535;
+	font-weight: 400;
+}
+
+.weui-desktop-home-overview svg {
+	fill: #9A9A9A;
+	vertical-align: middle;
+	margin-right: 5px;
+	margin-top: -0.2em;
+}
+
+.weui-desktop-home-overview .weui-desktop-data-overview__desc {
+	font-size: 42px;
+	padding-top: 16px;
+}
+
+.weui-desktop-data-overview__desc {
+	padding-top: 24px;
+	display: block;
+	font-style: normal;
+	line-height: 1.2;
+	font-size: 32px;
+}
+
+.weui-desktop-data-overview__desc a {
+	color: #353535;
+	text-decoration: none;
 }
