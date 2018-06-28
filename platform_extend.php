@@ -78,7 +78,7 @@ class platform_extend extends ecjia_platform {
 	public function init() {
 		$this->admin_priv('platform_extend_manage');
 		
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.public_extend')));
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('插件管理'));
 		$this->assign('ur_here', '插件库');
 
 		ecjia_screen::get_current_screen()->add_help_tab(array(
@@ -151,7 +151,7 @@ class platform_extend extends ecjia_platform {
 	public function wechat_extend_view() {
 		$this->admin_priv('platform_extend_update');
 	
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.edit_pub_extend')));
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('功能详情'));
 	
 		$id = $this->platformAccount->getAccountID();
 	
