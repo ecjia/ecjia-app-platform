@@ -69,7 +69,6 @@
 						{$val.uuid}
 						<div class="edit-list">
 							<a target="__blank" href='{RC_Uri::url("platform/admin/autologin","id={$val.id}")}' title="进入管理">进入管理</a> &nbsp;|&nbsp;
-							<a class="data-pjax" href='{RC_Uri::url("platform/admin/wechat_extend","id={$val.id}")}' title="{lang key='platform::platform.function_extend'}">{lang key='platform::platform.function_extend'}</a> &nbsp;|&nbsp;
 					      	<a class="data-pjax" href='{RC_Uri::url("platform/admin/edit", "id={$val.id}")}' title="{lang key='system::system.edit'}">{lang key='platform::platform.edit'}</a> &nbsp;|&nbsp;
 					     	<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="{t}您确定要删除公众号[{$val.name}]吗？{/t}" href='{RC_Uri::url("platform/admin/remove","id={$val.id}")}' title="{lang key='platform::platform.delete'}">{lang key='platform::platform.delete'}</a>
 				     	</div>
