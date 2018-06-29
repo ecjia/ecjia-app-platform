@@ -78,12 +78,9 @@
 			smoke.confirm(options.msg,function(e){
 				if (e){
 					$.get(options.url, options.id, function(data){
-						// if(data.state == 'success'){
-							// options.obj.remove();
-							ecjia.pjax(window.location.href, function(){
-								ecjia.platform.showmessage(data);
-							});
-						// }
+						ecjia.pjax(window.location.href, function(){
+							ecjia.platform.showmessage(data);
+						});
 					}, 'json');
 				}
 			}, 

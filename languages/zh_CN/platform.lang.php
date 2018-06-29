@@ -241,7 +241,10 @@ return array(
         'fun_plug_name'      => '请输入功能扩展名称',
         'fun_plug_info'      => '请输入功能扩展描述',
         'search_no_plugin'	 => '未搜索到扩展信息',
-    )
+    ),
+    
+    'extend_name'	=> '插件名称',
+    
 );
 
 // end
