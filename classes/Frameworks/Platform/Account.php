@@ -94,7 +94,7 @@ class Account extends AbstractRepository
     
     public function getStoreId()
     {
-        return $this->account->shop_id;
+        return intval($this->account->shop_id);
     }
     
     public function getAccountName()
