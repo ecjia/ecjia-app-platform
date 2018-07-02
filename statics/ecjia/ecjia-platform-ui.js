@@ -141,13 +141,13 @@
 			(options.before == 'before') ? options.parentobj.before(tmpObj) : options.parentobj.after(tmpObj);
 
 			tmpObj.find('.chzn-container').remove();
-			tmpObj.find('select').removeClass('chosen_hide').removeClass('chzn-done').attr({'id' : ''}).chosen();
+//			tmpObj.find('select').removeClass('chosen_hide').removeClass('chzn-done').attr({'id' : ''}).chosen();
 			//清空默认数据
 			tmpObj.find('input').not(":hidden").val('');
 			tmpObj.find('textarea').not(":hidden").val('');
 			
 			options.parentobj.find('.chzn-container').remove();
-			options.parentobj.find('select').removeClass('chosen_hide').removeClass('chzn-done').attr({'id' : ''}).chosen();
+//			options.parentobj.find('select').removeClass('chosen_hide').removeClass('chzn-done').attr({'id' : ''}).chosen();
 		},
 
 		/*

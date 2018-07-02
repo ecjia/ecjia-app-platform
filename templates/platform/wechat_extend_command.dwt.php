@@ -15,6 +15,9 @@
 			<div class="card-header">
                 <h4 class="card-title">
                 	{$ur_here}
+                	{if $action_link}
+					<a class="btn btn-outline-primary plus_or_reply data-pjax float-right" href="{$action_link.href}" id="sticky_a"><i class="ft-plus"></i> {$action_link.text}</a>
+					{/if}
                 </h4>
             </div>
             
@@ -42,7 +45,11 @@
 							<!-- {foreach from=$modules.module item=module} -->
 							<tr>
 								<td>{$module.ext_name}</td>
-								<td>{$module.cmd_word}</td>
+								<td>
+									<!-- {foreach from=$module.cmd_list item=val} -->
+									<div>{$val.cmd_word}</div>
+									<!-- {/foreach} -->
+								</td>
 								<td>{$module.sub_code}</td>
 								<td>
 									<a class="ajaxremove" data-toggle="ajaxremove" data-msg="{lang key='platform::platform.sure_del_command'}" href='{RC_Uri::url("platform/platform_command/remove", "cmd_id={$module.cmd_id}")}' title="{lang key='platform::platform.remove'}"><i class="command_icon ft-trash-2"></i></a>
