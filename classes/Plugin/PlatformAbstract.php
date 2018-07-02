@@ -17,7 +17,7 @@ abstract class PlatformAbstract extends AbstractPlugin
     /**
      * 插件返回数据统一接口
      */
-    abstract public function event_reply();
+    abstract public function eventReply();
     
     
     public function setMessage($message)
