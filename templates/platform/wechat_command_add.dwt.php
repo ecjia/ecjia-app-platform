@@ -36,7 +36,7 @@
 							<div class="form-group row">
 								<label class="col-lg-2 label-control text-right">请选择插件：</label>
 								<div class="col-lg-8 controls">
-									<select name="ext_code" class="form-control">
+									<select name="ext_code" class="select2 form-control">
 										<option value="">请选择...</option>
 										<!-- {foreach from=$extend_list item=list} -->
 										<option value="{$list.ext_code}">{$list.ext_name}</option>

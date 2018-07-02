@@ -42,7 +42,7 @@
 									<input class="w350" name="cfg_value[]" type="{$config.type}" value="{$config.value}" size="40" />
 									<span class="help-block">{$config.desc}</span>
 									<!-- {elseif $config.type == "textarea"} -->
-									<textarea class="w350" name="cfg_value[]" cols="80" rows="5">{$config.value}</textarea>
+									<textarea class="w350 select2 form-control" name="cfg_value[]" cols="80" rows="5">{$config.value}</textarea>
 									<span class="help-block">{$config.desc}</span>
 									<!-- {elseif $config.type == "select"} -->
 									<select class="w350"   name="cfg_value[]"  >
