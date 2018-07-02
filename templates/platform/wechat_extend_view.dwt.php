@@ -79,7 +79,7 @@
 									<!-- {elseif $config.type == "textarea"} -->
 									<textarea class="form-control" id="cfg_value[]" name="cfg_value[]" cols="80" rows="5">{$config.value}</textarea>
 									<!-- {elseif $config.type == "select"} -->
-									<select class="form-control" id="cfg_value[]" name="cfg_value[]"  >
+									<select class="select2 form-control" id="cfg_value[]" name="cfg_value[]"  >
 										<!-- {html_options options=$config.range selected=$config.value} -->
 									</select>
 									<!-- {elseif $config.type == "radiobox"} -->

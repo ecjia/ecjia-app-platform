@@ -101,7 +101,8 @@ class Loader {
 		
 		$scripts->add( 'ecjia-platform-jquery-migrate',   			$base_url.'/platform/js/jquery-migrate.min.js', array('jquery'), false, 1 );
 		
-		$scripts->add( 'ecjia-platform-chosen-jquery',    			$base_url.'/platform/lib/chosen/chosen.jquery.min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-select-full',    			$base_url.'/platform/vendors/js/forms/select/select2.full.min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-form-select',    					$base_url.'/platform/js/scripts/forms/select/form-select2.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-bootstrap-fileupload-js',	$base_url.'/platform/lib/bootstrap-fileupload/bootstrap-fileupload.js', array(), false, 1 );
 
 		$scripts->add( 'ecjia-platform-jquery-quicksearch',   		$base_url.'/platform/js/jquery.quicksearch.js', array('jquery'), false, 1 );
@@ -136,6 +137,7 @@ class Loader {
 		$styles->add( 'ecjia-platform-morris',		      	    $base_url."/platform/vendors/css/charts/morris.css" );
 		$styles->add( 'ecjia-platform-unslider',          	    $base_url."/platform/vendors/css/extensions/unslider.css" );
 		$styles->add( 'ecjia-platform-climacons',         	    $base_url."/platform/vendors/css/weather-icons/climacons.min.css" );
+		$styles->add( 'ecjia-platform-select',         		  	$base_url."/platform/vendors/css/forms/selects/select2.min.css" );
 		$styles->add( 'ecjia-platform-app',               	    $base_url."/platform/css/app.css" );
 		
 		$styles->add( 'ecjia-platform-function',      			$base_url."/platform/css/ecjia.function.css" );
@@ -146,7 +148,7 @@ class Loader {
 		$styles->add( 'ecjia-platform-palette-climacon',    	$base_url."/platform/css/core/colors/palette-climacon.css" );
 		$styles->add( 'ecjia-platform-users',         		  	$base_url."/platform/css/pages/users.css" );
 		
-		$styles->add( 'ecjia-platform-chosen',         		  		$base_url."/platform/lib/chosen/chosen.css" );
+		
 		$styles->add( 'ecjia-platform-bootstrap-fileupload-css',	$base_url.'/platform/lib/bootstrap-fileupload/bootstrap-fileupload.css');
 	}
 
