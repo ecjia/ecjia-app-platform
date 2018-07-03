@@ -504,11 +504,11 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 	    RC_Style::enqueue_style('ecjia-platform-select');
 	    
 	    RC_Script::enqueue_script('jquery');
-// 	    RC_Script::enqueue_script('bootstrap');
-	    RC_Script::enqueue_script('ecjia-platform-jquery-pjax');
 	    RC_Script::enqueue_script('jquery-ui-totop');
 	    
 	    RC_Script::enqueue_script('ecjia-platform-vendors');
+	    RC_Script::enqueue_script('ecjia-platform-jquery-pjax');
+	    
 	    RC_Script::enqueue_script('ecjia-platform-jquery-sticky');
 	    RC_Script::enqueue_script('ecjia-platform-headroom');
 	    RC_Script::enqueue_script('ecjia-platform-jquery-knob');

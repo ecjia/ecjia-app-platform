@@ -131,6 +131,13 @@ class platform_command extends ecjia_platform {
 			}
 		}
 		
+		$count = array_count_values($val);
+		foreach ($count as $c) {
+			if ($c > 1) {
+				return $this->showmessage(RC_Lang::get('platform::platform.keyword_notrepeat'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			}
+		}
+		
 		if (empty($code)) {
 			return $this->showmessage('请选择插件', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
@@ -158,59 +165,12 @@ class platform_command extends ecjia_platform {
 	public function remove() {
 		$this->admin_priv('platform_command_delete', ecjia::MSGTYPE_JSON);
 	
-		$cmd_id = intval($_GET['cmd_id']);
+		$ext_code = trim($_GET['ext_code']);
 		$account_id = $this->platformAccount->getAccountID();
 		
-		$data = RC_DB::table('platform_command')->where('account_id', $account_id)->where('cmd_id', $cmd_id)->first();
-		
-		$info = RC_DB::table('platform_config as c')
-			->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'))
-			->leftJoin('platform_account as a', RC_DB::raw('a.id'), '=', RC_DB::raw('c.account_id'))
-			->select(RC_DB::raw('e.ext_name'), RC_DB::raw('a.name'))
-			->where(RC_DB::raw('a.id'), $data['account_id'])
-			->where(RC_DB::raw('e.ext_code'), $data['ext_code'])
-			->first();
-		
-		RC_DB::table('platform_command')->where('account_id', $account_id)->where('cmd_id', $cmd_id)->delete();
-		
-		//记录日志
-		ecjia_admin::admin_log(RC_Lang::get('platform::platform.public_name_is').$info['name'].'，'.RC_Lang::get('platform::platform.extend_name_is').$info['ext_name'].'，'.RC_Lang::get('platform::platform.keyword_is').$data['cmd_word'], 'remove', 'platform_extend_command');
+		RC_DB::table('platform_command')->where('account_id', $account_id)->where('ext_code', $ext_code)->delete();
 		
 		return $this->showmessage(RC_Lang::get('platform::platform.remove_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
-	}
-	
-	private function command_list() {
-		$db_command_view = RC_DB::table('platform_command as c')
-			->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'))
-			->leftJoin('platform_account as a', RC_DB::raw('a.id'), '=', RC_DB::raw('c.account_id'));
-	
-		$type = !empty($_GET['platform']) ? $_GET['platform'] : '';
-		$keywords = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
-	
-		$code = !empty($_GET['code']) ? trim($_GET['code']) : '';
-		$account_id = $this->platformAccount->getAccountID();
-		
-		$db_command_view->where(RC_DB::raw('c.ext_code'), $code)->where(RC_DB::raw('c.account_id'), $account_id);
-	
-		if (!empty($type)) {
-			$db_command_view->where(RC_DB::raw('c.platform'), $type);
-		}
-		if ($keywords) {
-			$db_command_view->where(RC_DB::raw('c.cmd_word'), 'like', '%'.$keywords.'%');
-		}
-		$store_id = $this->platformAccount->getStoreId();
-		$count = $db_command_view->where(RC_DB::raw('a.shop_id'), $store_id)->count();
-		$page = new ecjia_platform_page($count, 15, 5);
-		
-		$arr = array();
-		$data = $db_command_view->select(RC_DB::raw('c.*'))->orderBy(RC_DB::raw('c.cmd_id'), 'asc')->take(15)->skip($page->start_id - 1)->get();
-	
-		if (isset($data)) {
-			foreach ($data as $rows) {
-				$arr[] = $rows;
-			}
-		}
-		return array('module' => $arr, 'page' => $page->show(5), 'desc' => $page->page_desc());
 	}
 	
 	/**
@@ -219,7 +179,6 @@ class platform_command extends ecjia_platform {
 	private function get_command_list() {
 		$db_command_view = RC_DB::table('platform_command as c')
 			->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'));
-// 			->leftJoin('platform_account as a', RC_DB::raw('a.id'), '=', RC_DB::raw('c.account_id'));
 	
 		$type = !empty($_GET['platform']) ? $_GET['platform'] : '';
 		$keywords = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);

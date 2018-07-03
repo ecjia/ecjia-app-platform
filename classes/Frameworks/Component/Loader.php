@@ -69,7 +69,7 @@ class Loader {
 		$scripts->remove('jquery');
 		$scripts->remove('bootstrap');
 
-		// 		$scripts->add( 'bootstrap', 		        $base_url.'/platform/js/core/libraries/bootstrap.min.js' );
+		$scripts->add( 'ecjia-platform-vendors', 	                $base_url.'/platform/vendors/js/vendors.min.js');
 		$scripts->add( 'jquery', 			                        $base_url.'/platform/js/core/libraries/jquery.min.js' );
 		
 		$scripts->add( 'ecjia-platform-jquery-pjax',                $base_url.'/platform/js/jquery-pjax.js' );
@@ -77,25 +77,22 @@ class Loader {
 		$scripts->add( 'ecjia-platform', 			                $base_url.'/ecjia/ecjia-platform.js', array('jquery', 'ecjia') );
 		$scripts->add( 'ecjia-platform-ui',			                $base_url.'/ecjia/ecjia-platform-ui.js', array('jquery', 'ecjia') );
 		
-		$scripts->add( 'ecjia-platform-vendors', 	                $base_url.'/platform/vendors/js/vendors.min.js', array(), false, 1 );
+		
 		$scripts->add( 'ecjia-platform-jquery-sticky', 	            $base_url.'/platform/vendors/js/ui/jquery.sticky.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-headroom', 		            $base_url.'/platform/vendors/js/ui/headroom.min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-jquery-knob',                $base_url.'/platform/vendors/js/extensions/jquery.knob.min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-knob',  			            $base_url.'/platform/js/scripts/extensions/knob.js', array(), false, 1 );
 		
 		$scripts->add( 'ecjia-platform-raphael', 					$base_url.'/platform/vendors/js/charts/raphael-min.js', array(), false, 1 );
-		// 		$scripts->add( 'ecjia-platform-morris',     				$base_url.'/platform/vendors/js/charts/morris.min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-jquery-jvectormap', 			$base_url.'/platform/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-jquery-jvectormap-world',  	$base_url.'/platform/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-visitor-data',   			$base_url.'/platform/data/jvector/visitor-data.js', array(), false, 1 );
-		// 		$scripts->add( 'ecjia-platform-chart',   					$base_url.'/platform/vendors/js/charts/chart.min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-jquery-sparkline',   		$base_url.'/platform/vendors/js/charts/jquery.sparkline.min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-unslider',  					$base_url.'/platform/vendors/js/extensions/unslider-min.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-app-menu', 					$base_url.'/platform/js/core/app-menu.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-app',    					$base_url.'/platform/js/core/app.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-customizer',					$base_url.'/platform/js/scripts/customizer.js', array(), false, 1 );
 		$scripts->add( 'ecjia-platform-breadcrumbs-with-stats',    	$base_url.'/platform/js/scripts/ui/breadcrumbs-with-stats.js', array(), false, 1 );
-		// 		$scripts->add( 'ecjia-platform-dashboard-analytics',    	$base_url.'/platform/js/scripts/pages/dashboard-analytics.js', array(), false, 1 );
 		
 		$scripts->add( 'ecjia-platform-components-modal',    	    $base_url.'/platform/js/scripts/modal/components-modal.js', array(), false, 1 );
 		

@@ -27,9 +27,9 @@
 								<label class="col-lg-2 label-control text-right">关键词：</label>
 								<div class="col-lg-8 controls">
 									<div class="clone-input row m_b10">
-										<div class="col-md-8"><input type="text" name="cmd_word[]" class="form-control"/></div>
-										<label>
-											<a class="no-underline l_h35 col-md-4" data-toggle="clone-obj" data-parent=".clone-input" href="javascript:;"><i class="fa fa-plus"></i></a>
+										<div class="col-md-11"><input type="text" name="cmd_word[]" class="form-control"/></div>
+										<label class="col-md-1">
+											<a class="no-underline l_h35" data-toggle="clone-obj" data-parent=".clone-input" href="javascript:;"><i class="fa fa-plus"></i></a>
 										</label>
 									</div>
 								</div>
@@ -38,7 +38,7 @@
 							<div class="form-group row">
 								<label class="col-lg-2 label-control text-right">请选择插件：</label>
 								<div class="col-lg-8 controls">
-									<select name="ext_code" class="select2 form-control col-lg-8">
+									<select name="ext_code" class="select2 form-control">
 										<option value="">请选择...</option>
 										<!-- {foreach from=$extend_list item=list} -->
 										<option value="{$list.ext_code}">{$list.ext_name}</option>

@@ -353,3 +353,15 @@
     });
 
 })(window, document, jQuery);
+
+//页面载入方法和pjax刷新执行方法
+$(function(){
+	$("select").not(".noselect").select2();
+}).on('pjax:end', function(){
+	$("select").not(".noselect").select2();
+});
+
+//当浏览器大小变化时
+$(window).resize(function() {
+	$("select").not(".noselect").select2();
+});
