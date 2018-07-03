@@ -31,4 +31,11 @@ abstract class PlatformAbstract extends AbstractPlugin
         return $this->message;
     }
     
+    /**
+     * 获取子命令数组
+     */
+    public function getSubCode()
+    {
+        return $this->loadConfig('sub_code', false);
+    }
 }
