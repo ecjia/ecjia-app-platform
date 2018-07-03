@@ -52,6 +52,7 @@
 								</td>
 								<td>{$module.sub_code}</td>
 								<td>
+									<a class="data-pjax" href='{RC_Uri::url("platform/platform_command/edit", "ext_code={$module.ext_code}")}' title="{lang key='platform::platform.edit'}"><i class="ft-edit"></i></a>&nbsp;
 									<a class="ajaxremove" data-toggle="ajaxremove" data-msg="{lang key='platform::platform.sure_del_command'}" href='{RC_Uri::url("platform/platform_command/remove", "ext_code={$module.ext_code}")}' title="{lang key='platform::platform.remove'}"><i class="command_icon ft-trash-2"></i></a>
 								</td>
 							</tr>
