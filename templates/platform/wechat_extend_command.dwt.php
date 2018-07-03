@@ -47,10 +47,16 @@
 								<td>{$module.ext_name}</td>
 								<td>
 									<!-- {foreach from=$module.cmd_list item=val} -->
-									<div>{$val.cmd_word}</div>
+									<div class="border-bottom-eee">{$val.cmd_word}</div>
 									<!-- {/foreach} -->
 								</td>
-								<td>{$module.sub_code}</td>
+								<td>
+									{if $module.has_subcode eq 1}
+									<!-- {foreach from=$module.cmd_list item=val} -->
+									<div class="border-bottom-eee">{if $val.sub_code}{$val.sub_code}{else}&nbsp;{/if}</div>
+									<!-- {/foreach} -->
+									{/if}
+								</td>
 								<td>
 									<a class="data-pjax" href='{RC_Uri::url("platform/platform_command/edit", "ext_code={$module.ext_code}")}' title="{lang key='platform::platform.edit'}"><i class="ft-edit"></i></a>&nbsp;
 									<a class="ajaxremove" data-toggle="ajaxremove" data-msg="{lang key='platform::platform.sure_del_command'}" href='{RC_Uri::url("platform/platform_command/remove", "ext_code={$module.ext_code}")}' title="{lang key='platform::platform.remove'}"><i class="command_icon ft-trash-2"></i></a>

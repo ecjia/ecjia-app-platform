@@ -23,30 +23,10 @@
 				<form class="form" method="post" name="theForm" action="{$form_action}">
 					<div class="card-body">
 						<div class="form-body">
-							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">关键词：</label>
-								<div class="col-lg-8 controls">
-									<!-- {foreach from=$data item=val key=key name=n} -->
-									<div class="clone-input row m_b10">
-										<div class="col-md-11"><input type="text" readonly class="form-control" value="{$val.cmd_word}" /></div>
-										<label class="col-md-1">
-											<a class="no-underline l_h35" data-toggle="ajaxremove" data-msg="您确定要删除该关键词吗？" href='{RC_Uri::url("platform/platform_command/remove", "cmd_id={$val.cmd_id}")}'><i class="fa fa-minus"></i></a>
-										</label>
-									</div>
-									<!-- {/foreach} -->
-									<div class="clone-input row m_b10">
-										<div class="col-md-11"><input type="text" name="cmd_word[]" class="form-control"/></div>
-										<label class="col-md-1">
-											<a class="no-underline l_h35" data-toggle="clone-obj" data-parent=".clone-input" href="javascript:;"><i class="fa fa-plus"></i></a>
-										</label>
-									</div>
-								</div>
-							</div>
-							
-							{if $ext_code}
+						{if $ext_code}
 							<div class="form-group row">
 								<label class="col-lg-2 label-control text-right">已选插件：</label>
-								<div class="col-lg-8 controls">
+								<div class="col-lg-7 controls">
 									<!-- {foreach from=$extend_list item=list} -->
 									{if $ext_code eq $list.ext_code}
 									{$list.ext_name}
@@ -58,16 +38,57 @@
 							{else}
 							<div class="form-group row">
 								<label class="col-lg-2 label-control text-right">请选择插件：</label>
-								<div class="col-lg-8 controls">
-									<select name="ext_code" class="select2 form-control">
-										<option value="">请选择...</option>
-										<!-- {foreach from=$extend_list item=list} -->
-										<option value="{$list.ext_code}" {if $ext_code eq $list.ext_code}selected{/if}>{$list.ext_name}</option>
-										<!-- {/foreach} -->
-									</select>
+								<div class="col-lg-7 controls">
+									<div class="row">
+										<div class="col-md-11">
+											<select name="ext_code" class="select2 form-control" data-url="{RC_Uri::Url('platform/platform_command/get_sub_code')}">
+												<option value="">请选择...</option>
+												<!-- {foreach from=$extend_list item=list} -->
+												<option value="{$list.ext_code}" {if $ext_code eq $list.ext_code}selected{/if}>{$list.ext_name}</option>
+												<!-- {/foreach} -->
+											</select>
+										</div>
+									</div>
 								</div>
 							</div>
 							{/if}
+
+							<div class="form-group row">
+								<label class="col-lg-2 label-control text-right">关键词：</label>
+								<div class="col-lg-7 controls">
+									<!-- {foreach from=$data item=val key=key name=n} -->
+									<div class="clone-input row m_b10">
+										<div class="{if $sub_code}col-md-7{else}col-md-11{/if}"><input type="text" readonly class="form-control" value="{$val.cmd_word}" /></div>
+										{if $sub_code}
+										<div class="col-md-4 p_l0 p_r0">
+											<select class="select2 form-control" disabled>
+												<option>{if $val.sub_code}{$val.sub_code}{else}空子命令（默认）{/if}</option>
+											</select>
+										</div>
+										{/if}
+										<label class="col-md-1">
+											<a class="no-underline l_h35" data-toggle="ajaxremove" data-msg="您确定要删除该关键词吗？" href='{RC_Uri::url("platform/platform_command/remove", "cmd_id={$val.cmd_id}")}'><i class="fa fa-minus"></i></a>
+										</label>
+									</div>
+									<!-- {/foreach} -->
+									<div class="clone-input row m_b10">
+										<div class="{if $sub_code}col-md-7{else}col-md-11{/if} cmd_word"><input type="text" name="cmd_word[]" class="form-control"/></div>
+										{if $sub_code}
+										<div class="col-md-4 p_l0 p_r0">
+											<select name="sub_code[]" class="select2 form-control">
+												<option value="">空子命令（默认）</option>
+												<!-- {foreach from=$sub_code item=val} -->
+												<option value="{$val}">{$val}</option>
+												<!-- {/foreach} -->
+											</select>
+										</div>
+										{/if}
+										<label class="col-md-1">
+											<a class="no-underline l_h35" data-toggle="clone-cmd" data-parent=".clone-input" href="javascript:;"><i class="fa fa-plus"></i></a>
+										</label>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 	

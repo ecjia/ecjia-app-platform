@@ -134,6 +134,10 @@ class platform_command extends ecjia_platform {
 		$this->admin_priv('platform_command_add', ecjia::MSGTYPE_JSON);
 	
 		$code = !empty($_POST['ext_code']) ? trim($_POST['ext_code']) : '';
+		if (empty($code)) {
+			return $this->showmessage('请选择插件', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+		}
+		
 		$account_id = $this->platformAccount->getAccountID();
 		$platform = $this->platformAccount->getPlatform();
 		
@@ -151,7 +155,7 @@ class platform_command extends ecjia_platform {
 				$val[] = $value;
 			}
 		}
-		
+
 		$count = array_count_values($val);
 		foreach ($count as $c) {
 			if ($c > 1) {
@@ -159,10 +163,6 @@ class platform_command extends ecjia_platform {
 			}
 		}
 		
-		if (empty($code)) {
-			return $this->showmessage('请选择插件', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-		}
-
 		$code_count = RC_DB::table('platform_command')->where('account_id', $account_id)->where('platform', $platform)->where('ext_code', $code)->count();
 		if ($code_count > 0) {
 			return $this->showmessage('该插件已存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -174,6 +174,7 @@ class platform_command extends ecjia_platform {
 			$data[$k]['account_id'] = $account_id;
 			$data[$k]['platform'] = $platform;
 			$data[$k]['ext_code'] = $code;
+			$data[$k]['sub_code'] = $_POST['sub_code'][$k];
 		}
 		RC_DB::table('platform_command')->insert($data);
 		
@@ -206,6 +207,10 @@ class platform_command extends ecjia_platform {
 		
 		$ext_code = trim($_GET['ext_code']);
 		$this->assign('ext_code', $ext_code);
+		
+		$handler = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($ext_code);
+		$sub_code = $handler->getSubCode();
+		$this->assign('sub_code', $sub_code);
 		
 		$data = RC_DB::table('platform_command')->where('account_id', $account_id)->where('platform', $platform)->where('ext_code', $ext_code)->get();
 		$this->assign('data', $data);
@@ -257,6 +262,7 @@ class platform_command extends ecjia_platform {
 			$data[$k]['account_id'] = $account_id;
 			$data[$k]['platform'] = $platform;
 			$data[$k]['ext_code'] = $code;
+			$data[$k]['sub_code'] = $_POST['sub_code'][$k];
 		}
 		RC_DB::table('platform_command')->insert($data);
 		
@@ -293,6 +299,17 @@ class platform_command extends ecjia_platform {
 		return $this->showmessage(RC_Lang::get('platform::platform.remove_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 	
+	public function get_sub_code() {
+		$ext_code = trim($_POST['ext_code']);
+		$handler = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($ext_code);
+		$sub_code = $handler->getSubCode();
+		
+		$this->assign('sub_code', $sub_code);
+		
+		$lbi = $this->fetch('library/sub_code.lbi');
+		return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('data' => $sub_code, 'lbi' => $lbi));
+	}
+	
 	/**
 	 * 扩展下的命令列表
 	 */
@@ -315,10 +332,19 @@ class platform_command extends ecjia_platform {
 		$page = new ecjia_platform_page($count, 15, 5);
 	
 		$data = $db_command_view->select(RC_DB::raw('c.ext_code'), RC_DB::raw('e.ext_name'))->groupBy(RC_DB::raw('c.ext_code'))->orderBy(RC_DB::raw('c.cmd_id'), 'asc')->take(15)->skip($page->start_id - 1)->get();
+		
 		if (!empty($data)) {
 			foreach ($data as $k => $v) {
-				$cmd_list = RC_DB::table('platform_command')->where('account_id', $account_id)->where('ext_code', $v['ext_code'])->orderBy('cmd_id', 'desc')->get();
+				$cmd_list = RC_DB::table('platform_command')->where('account_id', $account_id)->where('ext_code', $v['ext_code'])->orderBy('cmd_id', 'asc')->get();
 				$data[$k]['cmd_list'] = $cmd_list;
+				$data[$k]['has_subcode'] = 0;
+				if (!empty($cmd_list)) {
+					foreach ($cmd_list as $key => $val) {
+						if (!empty($val['sub_code'])) {
+							$data[$k]['has_subcode'] = 1;
+						}
+					}
+				}
 			}
 		}
 		return array('module' => $data, 'page' => $page->show(5), 'desc' => $page->page_desc());

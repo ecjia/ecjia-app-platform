@@ -50,6 +50,10 @@ a,button,input {outline:none !important}
 	text-shadow: none;
 }
 
+.border-bottom-eee {
+	border-bottom: 1px solid #eee;
+}
+
 /*
 ::-webkit-scrollbar {
 	width: 10px;

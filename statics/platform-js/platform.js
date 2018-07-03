@@ -11,6 +11,8 @@
 			ecjia.platform.platform.editForm();
 			ecjia.platform.platform.extend();
 			ecjia.platform.platform.extend_handle();
+			
+			ecjia.platform.platform.get_subcode();
 		},
 		
 		//公众号列表 搜索/筛选
@@ -281,6 +283,55 @@
                     ecjia.platform.showmessage(data);
                 }, 'json');
             });
+		},
+		
+		get_subcode: function () {
+			$('[data-toggle="clone-cmd"]').off('click').on('click', function(e) {
+				e.preventDefault();
+
+				$('.clone-input').find('select').select2('destroy');
+				var $this		= $(this),
+					$parentobj	= $this.parents($this.attr('data-parent')),
+					before		= $this.attr('data-before') || 'after',
+					options		= {parentobj : $parentobj, before : before};
+				
+				var tmpObj = options.parentobj.clone();
+				tmpObj.find('[data-toggle="clone-cmd"]')
+					.attr('data-toggle','remove-cmd').on('click', function(){tmpObj.remove();})
+					.find('i').attr('class', 'fa fa-times ecjiafc-red');
+
+				options.parentobj.after(tmpObj);
+	            
+				//清空默认数据
+				tmpObj.find('input').not(":hidden").val('');
+				tmpObj.find('textarea').not(":hidden").val('');
+				
+				$('select').select2();
+			});
+			
+			$('[data-toggle="remove-cmd"]').off('click').on('click', function(e) {
+				e.preventDefault();
+
+				var $this		= $(this),
+					$parentobj	= $this.parents($this.attr('data-parent'));
+				$parentobj.remove();
+			});
+			
+			$('select[name="ext_code"]').change(function() {
+				var $this = $(this),
+					val = $this.val(),
+					url = $this.attr('data-url');
+				
+				$.post(url, {ext_code: val}, function(data) {
+					var sub_code = data.data;
+					if (sub_code) {
+						$('.cmd_word').removeClass('col-md-11').addClass('col-md-7').after(data.lbi);
+					} else {
+						$('.cmd_word').removeClass('col-md-7').addClass('col-md-11').parent().find('.col-md-4').remove();
+					}
+					$('select').select2();
+				});
+			});
 		}
 	};
 })(ecjia.platform, jQuery);
