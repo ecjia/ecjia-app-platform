@@ -332,10 +332,19 @@ class platform_command extends ecjia_platform {
 		$page = new ecjia_platform_page($count, 15, 5);
 	
 		$data = $db_command_view->select(RC_DB::raw('c.ext_code'), RC_DB::raw('e.ext_name'))->groupBy(RC_DB::raw('c.ext_code'))->orderBy(RC_DB::raw('c.cmd_id'), 'asc')->take(15)->skip($page->start_id - 1)->get();
+		
 		if (!empty($data)) {
 			foreach ($data as $k => $v) {
 				$cmd_list = RC_DB::table('platform_command')->where('account_id', $account_id)->where('ext_code', $v['ext_code'])->orderBy('cmd_id', 'asc')->get();
 				$data[$k]['cmd_list'] = $cmd_list;
+				$data[$k]['has_subcode'] = 0;
+				if (!empty($cmd_list)) {
+					foreach ($cmd_list as $key => $val) {
+						if (!empty($val['sub_code'])) {
+							$data[$k]['has_subcode'] = 1;
+						}
+					}
+				}
 			}
 		}
 		return array('module' => $data, 'page' => $page->show(5), 'desc' => $page->page_desc());
