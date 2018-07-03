@@ -9,6 +9,8 @@ abstract class PlatformAbstract extends AbstractPlugin
     
     protected $message;
     
+    protected $sub_code;
+    
     /**
      * 获取iconUrl
      */
@@ -29,6 +31,18 @@ abstract class PlatformAbstract extends AbstractPlugin
     public function getMessage()
     {
         return $this->message;
+    }
+    
+    
+    public function setSubCodeCommand($sub_code)
+    {
+        $this->sub_code = $sub_code;
+        return $this;
+    }
+    
+    public function getSubCodeCommand()
+    {
+        return $this->sub_code;
     }
     
     /**
