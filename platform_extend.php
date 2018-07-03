@@ -78,17 +78,17 @@ class platform_extend extends ecjia_platform {
 	public function init() {
 		$this->admin_priv('platform_extend_manage');
 		
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('插件管理'));
+		ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('插件管理'));
 		$this->assign('ur_here', '插件库');
 
-		ecjia_screen::get_current_screen()->add_help_tab(array(
+		ecjia_platform_screen::get_current_screen()->add_help_tab(array(
 			'id'		=> 'overview',
 			'title'		=> RC_Lang::get('platform::platform.summarize'),
 			'content'	=>
 			'<p>' . RC_Lang::get('platform::platform.welcome_pub_extend') . '</p>'
 		));
 		
-		ecjia_screen::get_current_screen()->set_help_sidebar(
+		ecjia_platform_screen::get_current_screen()->set_help_sidebar(
 			'<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
 			'<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:公众号扩展#.E5.85.AC.E4.BC.97.E5.8F.B7.E6.89.A9.E5.B1.95" target="_blank">'.RC_Lang::get('platform::platform.pub_extend_help').'</a>') . '</p>'
 		);
@@ -151,7 +151,7 @@ class platform_extend extends ecjia_platform {
 	public function wechat_extend_view() {
 		$this->admin_priv('platform_extend_update');
 	
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('功能详情'));
+		ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('功能详情'));
 	
 		$id = $this->platformAccount->getAccountID();
 	
@@ -199,16 +199,16 @@ class platform_extend extends ecjia_platform {
 	public function wechat_extend_edit() {
 		$this->admin_priv('platform_extend_update');
 		
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.edit_pub_extend')));
+		ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.edit_pub_extend')));
 		
-		ecjia_screen::get_current_screen()->add_help_tab(array(
+		ecjia_platform_screen::get_current_screen()->add_help_tab(array(
 			'id'		=> 'overview',
 			'title'		=> RC_Lang::get('platform::platform.summarize'),
 			'content'	=>
 			'<p>' . RC_Lang::get('platform::platform.welcome_pub_extend_edit') . '</p>'
 		));
 		
-		ecjia_screen::get_current_screen()->set_help_sidebar(
+		ecjia_platform_screen::get_current_screen()->set_help_sidebar(
 			'<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
 			'<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:公众号扩展#.E7.BC.96.E8.BE.91.E5.85.AC.E4.BC.97.E5.8F.B7.E6.89.A9.E5.B1.95" target="_blank">'.RC_Lang::get('platform::platform.pub_editext_help').'</a>') . '</p>'
 		);

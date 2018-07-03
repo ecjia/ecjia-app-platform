@@ -73,7 +73,7 @@ class merchant extends ecjia_merchant {
 		RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
 		RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
 		
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_list'), RC_Uri::url('platform/merchant/init')));
+		ecjia_merchant_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_list'), RC_Uri::url('platform/merchant/init')));
 	}
 	
 	/**
@@ -82,16 +82,16 @@ class merchant extends ecjia_merchant {
 	public function init() {
 		$this->admin_priv('platform_config_manage');
 		
-		ecjia_screen::get_current_screen()->remove_last_nav_here();
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_list')));
-		ecjia_screen::get_current_screen()->add_help_tab(array(
+		ecjia_merchant_screen::get_current_screen()->remove_last_nav_here();
+		ecjia_merchant_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_list')));
+		ecjia_merchant_screen::get_current_screen()->add_help_tab(array(
 			'id'		=> 'overview',
 			'title'		=> RC_Lang::get('platform::platform.summarize'),
 			'content'	=>
 			'<p>' . RC_Lang::get('platform::platform.welcome_pub_list') . '</p>'
 		));
 		
-		ecjia_screen::get_current_screen()->set_help_sidebar(
+		ecjia_merchant_screen::get_current_screen()->set_help_sidebar(
 			'<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
 			'<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号" target="_blank">'.RC_Lang::get('platform::platform.pub_list_help').'</a>') . '</p>'
 		);
@@ -113,15 +113,15 @@ class merchant extends ecjia_merchant {
 	public function add() {
 		$this->admin_priv('platform_config_add');
 		
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_list')));
-		ecjia_screen::get_current_screen()->add_help_tab(array(
+		ecjia_merchant_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_list')));
+		ecjia_merchant_screen::get_current_screen()->add_help_tab(array(
 			'id'		=> 'overview',
 			'title'		=> RC_Lang::get('platform::platform.summarize'),
 			'content'	=>
 			'<p>' . RC_Lang::get('platform::platform.welcome_pub_add') . '</p>'
 		));
 		
-		ecjia_screen::get_current_screen()->set_help_sidebar(
+		ecjia_merchant_screen::get_current_screen()->set_help_sidebar(
 			'<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
 			'<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号#.E6.B7.BB.E5.8A.A0.E5.85.AC.E4.BC.97.E5.8F.B7" target="_blank">'.RC_Lang::get('platform::platform.add_pub_help').'</a>') . '</p>'
 		);
@@ -209,16 +209,16 @@ class merchant extends ecjia_merchant {
 	
 		$this->assign('ur_here', RC_Lang::get('platform::platform.platform_edit'));
 		$this->assign('action_link', array('text' => RC_Lang::get('platform::platform.platform_list'), 'href' => RC_Uri::url('platform/merchant/init')));
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_edit')));
+		ecjia_merchant_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_edit')));
 		
-		ecjia_screen::get_current_screen()->add_help_tab(array(
+		ecjia_merchant_screen::get_current_screen()->add_help_tab(array(
 			'id'		=> 'overview',
 			'title'		=> RC_Lang::get('platform::platform.summarize'),
 			'content'	=>
 			'<p>' . RC_Lang::get('platform::platform.welcome_pub_edit') . '</p>'
 		));
 		
-		ecjia_screen::get_current_screen()->set_help_sidebar(
+		ecjia_merchant_screen::get_current_screen()->set_help_sidebar(
 			'<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
 			'<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号#.E7.BC.96.E8.BE.91.E5.85.AC.E4.BC.97.E5.8F.B7" target="_blank">'.RC_Lang::get('platform::platform.edit_pub_help').'</a>') . '</p>'
 		);

@@ -62,7 +62,7 @@ class merchant_privilege extends ecjia_merchant {
 		RC_Style::enqueue_style('uniform-aristo');
 		RC_Script::enqueue_script('platform', RC_App::apps_url('statics/mh-js/platform.js', __FILE__));
 
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('员工管理'), RC_Uri::url('staff/merchant/init')));
+		ecjia_merchant_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('员工管理'), RC_Uri::url('staff/merchant/init')));
         ecjia_merchant_screen::get_current_screen()->set_parentage('staff', 'staff/merchant.php');
 	}
 	
@@ -79,8 +79,8 @@ class merchant_privilege extends ecjia_merchant {
 			$this->admin_priv('all');
 		}
 		
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('分派权限')));
-		ecjia_screen::get_current_screen()->add_option('current_code', 'platform_privilege_menu');
+		ecjia_merchant_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('分派权限')));
+		ecjia_merchant_screen::get_current_screen()->add_option('current_code', 'platform_privilege_menu');
 		
 		/* 获得该管理员的权限 */
 		$user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($userid, session('store_id'), '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');

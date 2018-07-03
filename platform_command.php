@@ -75,7 +75,7 @@ class platform_command extends ecjia_platform {
 	public function init() {
 		$this->admin_priv('platform_command_manage');
 	
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('关键词命令'));
+		ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('关键词命令'));
 		$this->assign('ur_here', '关键词命令');
 		
 		$account_id = $this->platformAccount->getAccountID();
@@ -93,8 +93,8 @@ class platform_command extends ecjia_platform {
 	public function add() {
 		$this->admin_priv('platform_command_add');
 	
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('关键词命令', RC_Uri::url('platform/platform_command/init')));
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('添加关键词'));
+		ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('关键词命令', RC_Uri::url('platform/platform_command/init')));
+		ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('添加关键词'));
 		
 		$this->assign('ur_here', '添加关键词');
 		$this->assign('action_link', array('text' => '关键词列表', 'href' => RC_Uri::url('platform/platform_command/init')));
