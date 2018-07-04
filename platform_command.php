@@ -110,11 +110,13 @@ class platform_command extends ecjia_platform {
 				$arr[] = $value['ext_code'];
 			}
 		}
+		
+		$platform_extend = RC_DB::table('platform_config')->where('account_id', $account_id)->lists('ext_code');
 
 		$extend_list = RC_DB::table('platform_extend')->where('enabled', 1)->get();
 		if (!empty($extend_list)) {
 			foreach ($extend_list as $key => $value) {
-				if (in_array($value['ext_code'], $arr)) {
+				if (in_array($value['ext_code'], $arr) || !in_array($value['ext_code'], $platform_extend)) {
 					unset($extend_list[$key]);
 				}
 			}
@@ -174,7 +176,7 @@ class platform_command extends ecjia_platform {
 			$data[$k]['account_id'] = $account_id;
 			$data[$k]['platform'] = $platform;
 			$data[$k]['ext_code'] = $code;
-			$data[$k]['sub_code'] = $_POST['sub_code'][$k];
+			$data[$k]['sub_code'] = !empty($_POST['sub_code'][$k]) ? $_POST['sub_code'][$k] : '';
 		}
 		RC_DB::table('platform_command')->insert($data);
 		
@@ -262,7 +264,7 @@ class platform_command extends ecjia_platform {
 			$data[$k]['account_id'] = $account_id;
 			$data[$k]['platform'] = $platform;
 			$data[$k]['ext_code'] = $code;
-			$data[$k]['sub_code'] = $_POST['sub_code'][$k];
+			$data[$k]['sub_code'] = !empty($_POST['sub_code'][$k]) ? $_POST['sub_code'][$k] : '';
 		}
 		RC_DB::table('platform_command')->insert($data);
 		

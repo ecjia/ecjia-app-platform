@@ -101,16 +101,20 @@ class platform_extend extends ecjia_platform {
 		$count = RC_DB::table('platform_extend')->count();
 		$page = new ecjia_platform_page($count, 16, 5);
 		$arr = RC_DB::table('platform_extend')->where('enabled', 1)->orderBy('ext_id', 'desc')->take(16)->skip($page->start_id-1)->get();
+
 		if	(!empty($arr)) {
 			foreach ($arr as $k => $v) {
-				if (!empty($ext_code_list) && in_array($v['ext_code'], $ext_code_list)) {
-					$arr[$k]['added'] = 1;
-				} else {
-					$arr[$k]['added'] = 0;
-				}
-
 				$extend_handle = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($v['ext_code']);
-				$arr[$k]['icon'] = $extend_handle->getPluginIconUrl();
+				if (!$extend_handle->hasSupportTypeMerchant()) {
+					unset($arr[$k]);
+				} else {
+					if (!empty($ext_code_list) && in_array($v['ext_code'], $ext_code_list)) {
+						$arr[$k]['added'] = 1;
+					} else {
+						$arr[$k]['added'] = 0;
+					}
+					$arr[$k]['icon'] = $extend_handle->getPluginIconUrl();
+				}
 			}
 		}
 		$list = array('item' => $arr, 'page' => $page->show(5), 'desc' => $page->page_desc());
