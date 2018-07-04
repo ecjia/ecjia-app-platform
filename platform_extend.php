@@ -99,8 +99,8 @@ class platform_extend extends ecjia_platform {
 		
 		$ext_code_list = RC_DB::table('platform_config')->where('account_id', $id)->lists('ext_code');
 		$count = RC_DB::table('platform_extend')->count();
-		$page = new ecjia_platform_page($count, 16, 5);
-		$arr = RC_DB::table('platform_extend')->where('enabled', 1)->orderBy('ext_id', 'desc')->take(16)->skip($page->start_id-1)->get();
+		$page = new ecjia_platform_page($count, 2, 5);
+		$arr = RC_DB::table('platform_extend')->where('enabled', 1)->orderBy('ext_id', 'desc')->get();
 
 		if	(!empty($arr)) {
 			foreach ($arr as $k => $v) {
@@ -117,8 +117,7 @@ class platform_extend extends ecjia_platform {
 				}
 			}
 		}
-		$list = array('item' => $arr, 'page' => $page->show(5), 'desc' => $page->page_desc());
-		$this->assign('arr', $list);
+		$this->assign('arr', $arr);
 		
 		$this->assign('img_url', RC_App::apps_url('statics/image/', __FILE__));
 		
