@@ -11,6 +11,12 @@ abstract class PlatformAbstract extends AbstractPlugin
     
     protected $sub_code;
     
+    protected $store_id;
+    
+    const TypeAdmin = 0b01;
+    
+    const TypeMerchant = 0b11;
+    
     /**
      * 获取iconUrl
      */
@@ -52,4 +58,38 @@ abstract class PlatformAbstract extends AbstractPlugin
     {
         return $this->loadConfig('sub_code', false);
     }
+    
+    public function setStoreId($store_id)
+    {
+        $this->store_id = $store_id;
+        return $this;
+    }
+    
+    public function getStoreId()
+    {
+        return $this->store_id;
+    }
+    
+    /**
+     * 获取公众平台插件支持平台公众号
+     * @return bool
+     */
+    public function hasSupportTypeAdmin()
+    {
+        $type = $this->loadConfig('support_type', self::TypeAdmin);
+        
+        return ($type & self::TypeAdmin) == self::TypeAdmin;
+    }
+    
+    /**
+     * 获取公众平台插件支持商家公众号
+     * @return bool
+     */
+    public function hasSupportTypeMerchant()
+    {
+        $type = $this->loadConfig('support_type', self::TypeAdmin);
+        
+        return ($type & self::TypeMerchant) == self::TypeMerchant;
+    }
+    
 }
