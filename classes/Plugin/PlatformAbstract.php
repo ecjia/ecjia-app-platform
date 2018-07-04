@@ -13,6 +13,12 @@ abstract class PlatformAbstract extends AbstractPlugin
     
     protected $store_id;
     
+    /**
+     * 商家类型
+     * @var self::TypeAdmin | self::TypeMerchant 
+     */
+    protected $store_type;
+    
     const TypeAdmin = 0b01;
     
     const TypeMerchant = 0b11;
@@ -69,6 +75,18 @@ abstract class PlatformAbstract extends AbstractPlugin
     {
         return $this->store_id;
     }
+    
+    public function setStoreType($store_type)
+    {
+        $this->store_type = $store_type;
+        return $this;
+    }
+    
+    public function getStoreType()
+    {
+        return $this->store_type;
+    }
+    
     
     /**
      * 获取公众平台插件支持平台公众号
