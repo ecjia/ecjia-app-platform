@@ -12,6 +12,8 @@ abstract class PlatformAbstract extends AbstractPlugin
     protected $sub_code;
     
     protected $store_id;
+
+    protected $keywrod;
     
     /**
      * 商家类型
@@ -86,7 +88,18 @@ abstract class PlatformAbstract extends AbstractPlugin
     {
         return $this->store_type;
     }
-    
+
+
+    public function setKeyword($keyword)
+    {
+        $this->keywrod = $keyword;
+        return $this;
+    }
+
+    public function getKeyword()
+    {
+        return $this->keywrod;
+    }
     
     /**
      * 获取公众平台插件支持平台公众号
