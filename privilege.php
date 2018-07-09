@@ -49,75 +49,77 @@
  */
 defined('IN_ECJIA') or exit('No permission resources.');
 
-class privilege extends ecjia_platform {
-	
-	/**
-	 * 构造函数
-	 */
-	public function __construct() {
-		parent::__construct();
-		
-	}
-	
-	/**
-	 *  自营商家快速登录
-	 */
-	public function autologin() {
-	    $authcode = trim($_GET['authcode']);
-	    
-	    if ($authcode) {
-	        $authcode_decrypt = RC_Crypt::decrypt($authcode);
-	        
-	        $authcode_array = array();
-	        parse_str($authcode_decrypt, $authcode_array);
-	        
-	        if (array_key_exists('uuid', $authcode_array) &&
-	            array_key_exists('user_id', $authcode_array) &&
-	            array_key_exists('user_type', $authcode_array) &&
-	            array_key_exists('time', $authcode_array)
-	            )
-	        {
-	            $uuid      = $authcode_array['uuid'];
-	            $user_id   = $authcode_array['user_id'];
-	            $user_type = $authcode_array['user_type'];
-	            $start_time = $authcode_array['time'];
-	            
-	            $time = RC_Time::gmtime();
-	            $time_gap = $time - $start_time;
-	            
-	            if (intval($time_gap) < 30) {
-	                
-	                if ($user_type == 'admin') {
-	                    $user = new Ecjia\System\Admins\Users\AdminUser($user_id, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
-	                    
-	                    if ($user->getActionList()) {
-	                        
-	                        $_SESSION = array();
-	                        //平台登录
-	                        $store_id = 0;
-	                        $user_name = $user->getUserName();
-	                        $action_list = $user->getActionList();
-	                        $last_time = $user->getLastLogin();
-	                        $email = $user->getEmail();
-	                        
-	                        $this->admin_session($uuid, $store_id, $user_id, $user_type, $user_name, $action_list, $last_time, $email);
-	                        
-	                        return $this->redirect(RC_Uri::url('platform/dashboard/init'));
-	                    }
-	                    //没有权限判断提示
-	                    else {
-	                        $this->assign('error_message', '抱歉！该用户没有分配公众平台登录权限。');
-	                    }
-	                    
-	                }
+class privilege extends ecjia_platform
+{
+
+    /**
+     * 构造函数
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+    }
+
+    /**
+     *  自营商家快速登录
+     */
+    public function autologin()
+    {
+        $authcode = trim($_GET['authcode']);
+
+        if ($authcode) {
+            $authcode_decrypt = RC_Crypt::decrypt($authcode);
+
+            $authcode_array = array();
+            parse_str($authcode_decrypt, $authcode_array);
+
+            if (array_key_exists('uuid', $authcode_array) &&
+                array_key_exists('user_id', $authcode_array) &&
+                array_key_exists('user_type', $authcode_array) &&
+                array_key_exists('time', $authcode_array)
+            ) {
+                $uuid = $authcode_array['uuid'];
+                $user_id = $authcode_array['user_id'];
+                $user_type = $authcode_array['user_type'];
+                $start_time = $authcode_array['time'];
+
+                $time = RC_Time::gmtime();
+                $time_gap = $time - $start_time;
+
+                if (intval($time_gap) < 30) {
+
+                    if ($user_type == 'admin') {
+                        $user = new Ecjia\System\Admins\Users\AdminUser($user_id, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
+
+                        if ($user->getActionList()) {
+
+                            $_SESSION = array();
+                            //平台登录
+                            $store_id = 0;
+                            $user_name = $user->getUserName();
+                            $action_list = $user->getActionList();
+                            $last_time = $user->getLastLogin();
+                            $email = $user->getEmail();
+
+                            $this->admin_session($uuid, $store_id, $user_id, $user_type, $user_name, $action_list, $last_time, $email);
+
+                            return $this->redirect(RC_Uri::url('platform/dashboard/init'));
+                        }
+                        //没有权限判断提示
+                        else {
+                            $this->assign('error_message', '抱歉！该用户没有分配公众平台登录权限。');
+                        }
+
+                    }
                     //商家登录
                     else if ($user_type == 'merchant') {
                         $platformAccount = new Ecjia\App\Platform\Frameworks\Platform\Account($uuid);
                         // @todo
                         $user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($user_id, $platformAccount->getStoreId(), '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');
-                        
+
                         if ($user->getActionList()) {
-                            
+
                             $_SESSION = array();
                             //平台登录
                             $store_id = $platformAccount->getStoreId();
@@ -125,52 +127,52 @@ class privilege extends ecjia_platform {
                             $action_list = $user->getActionList();
                             $last_time = $user->getLastLogin();
                             $email = $user->getEmail();
-                            
+
                             $this->admin_session($uuid, $store_id, $user_id, $user_type, $user_name, $action_list, $last_time, $email);
-                            
+
                             return $this->redirect(RC_Uri::url('platform/dashboard/init'));
                         }
                         //没有权限判断提示
                         else {
                             $this->assign('error_message', '抱歉！该用户没有分配公众平台登录权限。');
                         }
-                        
+
                     }
-	                
-	            } 
-	            //请求超时，错误提示
-	            else {
-	                $this->assign('error_message', '抱歉！请求超时。');
-	            }
-	            
-	        }
-	        //参数不全，错误提示
-	        else {
-	            $this->assign('error_message', '传参出错。');
-	        }
-	    }
-	    //参数authcode接收失败，错误提示
-	    else {
-	        $this->assign('error_message', '抱歉！数据丢失，登录失败。');
-	    }
-	    
-	    $this->assign('shop_title', '公众平台登录');
-// 	    $this->assign('shop_title_link', RC_Uri::url('staff/privilege/login'));
-	    
-	    RC_Session::destroy();
-	    $this->display('platform_auto_login_error.dwt');
-	}
-	
-	
-	/**
-	 * 退出
-	 */
-	public function logout() {
-	    RC_Session::destroy();
-	    
-	    return $this->redirect($this->currentUser->getLogoutUrl());
-	}
-	
+
+                }
+                //请求超时，错误提示
+                else {
+                    $this->assign('error_message', '抱歉！请求超时。');
+                }
+
+            }
+            //参数不全，错误提示
+            else {
+                $this->assign('error_message', '传参出错。');
+            }
+        }
+        //参数authcode接收失败，错误提示
+        else {
+            $this->assign('error_message', '抱歉！数据丢失，登录失败。');
+        }
+
+        $this->assign('shop_title', '公众平台登录');
+//         $this->assign('shop_title_link', RC_Uri::url('staff/privilege/login'));
+
+        RC_Session::destroy();
+        $this->display('platform_auto_login_error.dwt');
+    }
+
+    /**
+     * 退出
+     */
+    public function logout()
+    {
+        RC_Session::destroy();
+
+        return $this->redirect($this->currentUser->getLogoutUrl());
+    }
+
 }
 
 // end

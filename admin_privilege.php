@@ -49,96 +49,97 @@
  */
 defined('IN_ECJIA') or exit('No permission resources.');
 
-class admin_privilege extends ecjia_admin {
-	
-	/**
-	 * 构造函数
-	 */
-	public function __construct() {
-		parent::__construct();
-		
-		RC_Style::enqueue_style('chosen');
-		RC_Style::enqueue_style('uniform-aristo');
-		
-		RC_Script::enqueue_script('smoke');
-		RC_Script::enqueue_script('jquery-form');
-		RC_Script::enqueue_script('jquery-chosen');
-		RC_Script::enqueue_script('jquery-uniform');
-		RC_Script::enqueue_script('jquery-validate');
-		
-		RC_Script::enqueue_script('ecjia-admin_privilege');
-		
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('管理员管理'), RC_Uri::url('@privilege/init')));
-	}
-	
-	
-	/**
-	 * 为管理员分配权限
-	 */
-	public function allot() 
-	{
-		$this->admin_priv('allot_priv');
-		
-		$userid = $this->request->query('id');
-		if ($_SESSION['admin_id'] == $userid) {
-			$this->admin_priv('all');
-		}
-		
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('分派权限')));
-		ecjia_screen::get_current_screen()->add_option('current_code', 'platform_privilege_menu');
-		
-		/* 获得该管理员的权限 */
-		$user = new Ecjia\System\Admins\Users\AdminUser($userid, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
-		$user_name = $user->getUserName();
-		$priv_str = $user->getActionList();
+class admin_privilege extends ecjia_admin
+{
 
-		/* 如果被编辑的管理员拥有了all这个权限，将不能编辑 */
-		if ($priv_str == 'all') {
-			$link[] = array('text' => __('返回管理员列表'), 'href' => RC_Uri::url('@privilege/init'));
-			return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => $link));
-		}
-		
-		$priv_group = \Ecjia\App\Platform\Frameworks\Component\Purview::load_purview($priv_str);
-		
-		/* 赋值 */
-		$this->assign('ur_here',		sprintf(__('分派公众平台权限 [ %s ] '), $user_name));
-		$this->assign('action_link',	array('href' => RC_Uri::url('@privilege/init'), 'text' => __('管理员列表')));
-		$this->assign('priv_group',		$priv_group);
-		$this->assign('user_id',		$userid);
-		
-		/* 显示页面 */
-		$this->assign('form_action',	RC_Uri::url('platform/admin_privilege/update_allot'));
-		
-		$this->display('privilege_allot.dwt');
-	}
+    /**
+     * 构造函数
+     */
+    public function __construct()
+    {
+        parent::__construct();
 
-	/**
-	 * 更新管理员的权限
-	 */
-	public function update_allot() 
-	{
-		$this->admin_priv('admin_manage');
-		
-		$userid = $this->request->input('id');
-		/* 取得当前管理员用户名 */
-		$user = new Ecjia\System\Admins\Users\AdminUser($userid, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
-		$user_name = $user->getUserName();
-		
-		/* 更新管理员的权限 */
-		$act_list = join(',', $_POST['action_code']);
+        RC_Style::enqueue_style('chosen');
+        RC_Style::enqueue_style('uniform-aristo');
 
-		$user->setActionList($act_list);
-		
-		/* 记录管理员操作 */
-		ecjia_admin::admin_log(addslashes($user_name), 'edit', 'privilege');
-		/* 提示信息 */
-		$link[] = array(
-			'text'	=> __('返回管理员列表'), 
-			'href'	=> RC_Uri::url('@privilege/init')
-		);
-		return $this->showmessage(sprintf(__('编辑 %s 操作成功！'), $user_name), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('link' => $link));
-	}
-	
+        RC_Script::enqueue_script('smoke');
+        RC_Script::enqueue_script('jquery-form');
+        RC_Script::enqueue_script('jquery-chosen');
+        RC_Script::enqueue_script('jquery-uniform');
+        RC_Script::enqueue_script('jquery-validate');
+
+        RC_Script::enqueue_script('ecjia-admin_privilege');
+
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('管理员管理'), RC_Uri::url('@privilege/init')));
+    }
+
+    /**
+     * 为管理员分配权限
+     */
+    public function allot()
+    {
+        $this->admin_priv('allot_priv');
+
+        $userid = $this->request->query('id');
+        if ($_SESSION['admin_id'] == $userid) {
+            $this->admin_priv('all');
+        }
+
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('分派权限')));
+        ecjia_screen::get_current_screen()->add_option('current_code', 'platform_privilege_menu');
+
+        /* 获得该管理员的权限 */
+        $user = new Ecjia\System\Admins\Users\AdminUser($userid, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
+        $user_name = $user->getUserName();
+        $priv_str = $user->getActionList();
+
+        /* 如果被编辑的管理员拥有了all这个权限，将不能编辑 */
+        if ($priv_str == 'all') {
+            $link[] = array('text' => __('返回管理员列表'), 'href' => RC_Uri::url('@privilege/init'));
+            return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => $link));
+        }
+
+        $priv_group = \Ecjia\App\Platform\Frameworks\Component\Purview::load_purview($priv_str);
+
+        /* 赋值 */
+        $this->assign('ur_here', sprintf(__('分派公众平台权限 [ %s ] '), $user_name));
+        $this->assign('action_link', array('href' => RC_Uri::url('@privilege/init'), 'text' => __('管理员列表')));
+        $this->assign('priv_group', $priv_group);
+        $this->assign('user_id', $userid);
+
+        /* 显示页面 */
+        $this->assign('form_action', RC_Uri::url('platform/admin_privilege/update_allot'));
+
+        $this->display('privilege_allot.dwt');
+    }
+
+    /**
+     * 更新管理员的权限
+     */
+    public function update_allot()
+    {
+        $this->admin_priv('admin_manage');
+
+        $userid = $this->request->input('id');
+        /* 取得当前管理员用户名 */
+        $user = new Ecjia\System\Admins\Users\AdminUser($userid, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
+        $user_name = $user->getUserName();
+
+        /* 更新管理员的权限 */
+        $act_list = join(',', $_POST['action_code']);
+
+        $user->setActionList($act_list);
+
+        /* 记录管理员操作 */
+        ecjia_admin::admin_log(addslashes($user_name), 'edit', 'privilege');
+        /* 提示信息 */
+        $link[] = array(
+            'text' => __('返回管理员列表'),
+            'href' => RC_Uri::url('@privilege/init'),
+        );
+        return $this->showmessage(sprintf(__('编辑 %s 操作成功！'), $user_name), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('link' => $link));
+    }
+
 }
 
 // end
