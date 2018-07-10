@@ -22,9 +22,9 @@
             <div class="card-body">
 				<div class="highlight_box global icon_wrap group" id="js_apply_btn">
 					{if !$bd}
-						<a class="btn btn-success btn-min-width f_r extend_handle" href="{RC_Uri::url('platform/platform_extend/wechat_extend_insert')}" data-code="{$info.ext_code}">开通</a>
+						<a class="btn btn-success btn-min-width f_r extend_handle" data-msg="开通该插件将添加该插件的默认命令为关键词命令，您确定要执行该操作吗？" href="{RC_Uri::url('platform/platform_extend/wechat_extend_insert')}" data-code="{$info.ext_code}">开通</a>
 					{else}
-						<a class="btn btn-danger btn-min-width f_r extend_handle" href="{RC_Uri::url('platform/platform_extend/wechat_extend_remove')}" data-code="{$info.ext_code}">关闭</a>
+						<a class="btn btn-danger btn-min-width f_r extend_handle" data-msg="关闭该插件将删除该插件相关的关键词命令，您确定要执行该操作吗？" href="{RC_Uri::url('platform/platform_extend/wechat_extend_remove')}" data-code="{$info.ext_code}">关闭</a>
 					{/if}
 					<div class="fonticon-container">
 						<div class="fonticon-wrap">
@@ -38,7 +38,7 @@
 				</div>
 				<div class="carkticket_index">
 					<div class="intro">
-						<dl class="">
+						<dl>
 							<dt><span class="ico_intro ico ico_1 l"></span>
 								<h4 class="card-title">功能介绍</h4>
 							</dt>
@@ -46,6 +46,41 @@
 						</dl>
 					</div>
 				</div>
+
+				{if $default_commands}
+				<div class="carkticket_index m_t20">
+					<div class="intro">
+						<dl>
+							<dt><span class="ico_intro ico ico_1 l"></span>
+								<h4 class="card-title">插件默认命令</h4>
+							</dt>
+							<dd>
+							<!-- {foreach from=$default_commands item=val name=v} -->
+							<span>{$val}{if !$smarty.foreach.v.last}、{/if}</span>
+							<!-- {/foreach} -->
+							</dd>
+						</dl>
+					</div>
+				</div>
+				{/if}
+
+				{if $sub_codes}
+				<div class="carkticket_index m_t20">
+					<div class="intro">
+						<dl>
+							<dt><span class="ico_intro ico ico_1 l"></span>
+								<h4 class="card-title">插件子命令</h4>
+							</dt>
+							<dd>
+							<!-- {foreach from=$sub_codes item=val name=v} -->
+							<span> {$val}{if !$smarty.foreach.v.last}、{/if}</span>
+							<!-- {/foreach} -->
+							</dd>
+						</dl>
+					</div>
+				</div>
+				{/if}
+
             </div>
         </div>
     </div>
@@ -63,13 +98,8 @@
         	<div class="card-body">
 				<form class="form" method="post" name="theForm" action="{$form_action}">
 					<div class="card-body">
+						{if $bd.ext_config}
 						<div class="form-body">
-							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">扩展名称：</label>
-								<div class="col-lg-8 controls">
-									{$info.ext_name}
-								</div>
-							</div>
 							<!-- {foreach from=$bd.ext_config item=config key=key} -->
 							<div class="form-group row">
 								<label class="col-lg-2 label-control text-right">{$config.label}</label>
@@ -98,16 +128,21 @@
 							</div>
 							<!-- {/foreach} -->
 						</div>
+						{else}
+						<div class="text-center">该插件暂无配置</div>
+						{/if}
 					</div>
+					{if $bd.ext_config}
 					<div class="modal-footer justify-content-center">
 						<input type="hidden" name="ext_code" value="{$bd.ext_code}" />
 						<input type="submit" class="btn btn-outline-primary" value="更新"/>
 					</div>
+					{/if}
 				</form>
 			</div>
 		</div>
 	</div>
-</div>	
+</div>
 {/if}
-				
+
 <!-- {/block} -->

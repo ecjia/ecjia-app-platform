@@ -136,8 +136,9 @@ class platform_extend extends ecjia_platform
         $this->admin_priv('platform_extend_add', ecjia::MSGTYPE_JSON);
 
         $wechat_id = $this->platformAccount->getAccountID();
-        $code = trim($_POST['code']);
+        $platform = $this->platformAccount->getPlatform();
 
+        $code = trim($_POST['code']);
         $info = RC_DB::table('platform_extend')->where('ext_code', $code)->where('enabled', 1)->first();
 
         $data = array(
@@ -147,9 +148,40 @@ class platform_extend extends ecjia_platform
         );
         RC_DB::table('platform_config')->insert($data);
 
+        //添加该插件的默认命令
+        $extend_handle = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($code);
+        $default_commands = $extend_handle->getDefaultCommands();
+
+        $cmd_word = '';
+        if (!empty($default_commands)) {
+            $arr = [];
+            foreach ($default_commands as $k => $v) {
+                //查询关键词是否存在
+                $count = RC_DB::table('platform_command')->where('account_id', $wechat_id)->where('cmd_word', $v)->count();
+                if ($count == 0) {
+                    $arr['cmd_word'] = $v;
+                    $arr['account_id'] = $wechat_id;
+                    $arr['platform'] = $platform;
+                    $arr['ext_code'] = $code;
+                    $arr['sub_code'] = '';
+                    RC_DB::table('platform_command')->insert($arr);
+                } else {
+                    if (empty($cmd_word)) {
+                        $cmd_word = $v;
+                    } else {
+                        $cmd_word .= '、'.$v;
+                    }
+                }
+            }
+        }
         ecjia_admin::admin_log(RC_Lang::get('platform::platform.extend_name_is') . $info['ext_name'] . '，' . RC_Lang::get('platform::platform.public_name_is') . $info['name'], 'add', 'wechat_extend');
 
-        return $this->showmessage('开通成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_extend/wechat_extend_view', array('code' => $code))));
+        if (empty($cmd_word)) {
+            $message = '开通成功';
+        } else {
+            $message = '开通成功，关键词 '.$cmd_word.' 已存在，无法添加。';
+        }
+        return $this->showmessage($message, ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_extend/wechat_extend_view', array('code' => $code))));
     }
 
     /**
@@ -190,10 +222,15 @@ class platform_extend extends ecjia_platform
                         $code_list[$value['name']] = $value['value'];
                     }
                 }
-                $extend_handle = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($code);
                 $bd['ext_config'] = $extend_handle->makeFormData($code_list);
             }
         }
+        $default_commands = $extend_handle->getDefaultCommands();
+        $this->assign('default_commands', $default_commands);
+
+        $sub_codes = $extend_handle->getSubCode();
+        $this->assign('sub_codes', $sub_codes);
+
         $this->assign('bd', $bd);
         $this->assign('images_url', RC_App::apps_url('statics/image/', __FILE__));
 

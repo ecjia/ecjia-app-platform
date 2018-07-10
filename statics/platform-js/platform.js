@@ -272,16 +272,25 @@
 		},
 		
 		extend_handle: function () {
-            $(".extend_handle").on('click', function (e) {
+            $(".extend_handle").off('click').on('click', function (e) {
                 e.preventDefault();
                 var url = $(this).attr('href');
-                var code = $(this).attr('data-code');
-                var info = {
+				var code = $(this).attr('data-code');
+				var msg = $(this).attr('data-msg');
+				var info = {
                 	code: code
-                }
-                $.post(url, info, function (data) {
-                    ecjia.platform.showmessage(data);
-                }, 'json');
+				}
+				if (msg != '' && msg != undefined) {
+					smoke.confirm(msg,function(e){
+						e && $.post(url, info, function (data) {
+							ecjia.platform.showmessage(data);
+						}, 'json');
+					}, {ok: '确定', cancel: '取消'});
+				} else {
+					$.post(url, info, function (data) {
+						ecjia.platform.showmessage(data);
+					}, 'json');
+				}
             });
 		},
 		
