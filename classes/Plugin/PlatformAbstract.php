@@ -20,6 +20,11 @@ abstract class PlatformAbstract extends AbstractPlugin
      * @var self::TypeAdmin | self::TypeMerchant 
      */
     protected $store_type;
+
+    /**
+     * 公众平台类型
+     */
+    protected $platform_type_code;
     
     const TypeAdmin = 0b01;
     
@@ -108,6 +113,39 @@ abstract class PlatformAbstract extends AbstractPlugin
     public function getKeyword()
     {
         return $this->keywrod;
+    }
+
+
+    public function setPlatformTypeCode($platform_type)
+    {
+        $this->platform_type_code = $platform_type;
+        return $this;
+    }
+
+    public function getPlatformTypeCode()
+    {
+        return $this->platform_type_code;
+    }
+
+    /**
+     * 获取插件是否支持该公众号
+     * @return bool
+     */
+    public function hasSupport($store_type)
+    {
+        if ($store_type == self::TypeAdmin) {
+            $supported = $this->hasSupportTypeAdmin();
+        }
+        else if ($store_type == self::TypeMerchant) {
+            $supported = $this->hasSupportTypeMerchant();
+        }
+
+        $types = $this->loadConfig('support_platform_type', ['server']);
+        if ($supported && in_array($this->getPlatformTypeCode(), $types)) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     /**
