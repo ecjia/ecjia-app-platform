@@ -77,6 +77,9 @@ class Account extends AbstractRepository
         elseif ($this->getType() == 2) {
             return 'service';
         }
+        elseif ($this->getType() == 3) {
+            return 'test';
+        }
     }
     
     public function getTypeName()
@@ -89,6 +92,9 @@ class Account extends AbstractRepository
         }
         elseif ($this->getType() == 2) {
             return '服务号';
+        }
+        elseif ($this->getType() == 3) {
+            return '测试账号';
         }
     }
     
