@@ -67,6 +67,15 @@ abstract class PlatformAbstract extends AbstractPlugin
         return $this->loadConfig('sub_code', false);
     }
     
+    /**
+     * 获取默认插件使用命令
+     * @return array | null
+     */
+    public function getDefaultCommands()
+    {
+        return $this->loadConfig('commands', null);
+    }
+    
     public function setStoreId($store_id)
     {
         $this->store_id = $store_id;
