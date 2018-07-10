@@ -108,9 +108,14 @@ class platform_extend extends ecjia_platform
         if (!empty($arr)) {
             foreach ($arr as $k => $v) {
                 $extend_handle = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($v['ext_code']);
-                if (($this->platformAccount->getStoreId() > 0 && !$extend_handle->hasSupportTypeMerchant()) || ($this->platformAccount->getStoreId() === 0 && !$extend_handle->hasSupportTypeAdmin())) {
+                $extend_handle->setPlatformTypeCode($this->platformAccount->getTypeCode());
+                if (($this->platformAccount->getStoreId() > 0 && !$extend_handle->hasSupport(\Ecjia\App\Platform\Plugin\PlatformAbstract::TypeMerchant))
+                    || ($this->platformAccount->getStoreId() === 0 && !$extend_handle->hasSupport(\Ecjia\App\Platform\Plugin\PlatformAbstract::TypeAdmin)))
+                {
                     unset($arr[$k]);
-                } else {
+                }
+                else
+                {
                     if (!empty($ext_code_list) && in_array($v['ext_code'], $ext_code_list)) {
                         $arr[$k]['added'] = 1;
                     } else {
