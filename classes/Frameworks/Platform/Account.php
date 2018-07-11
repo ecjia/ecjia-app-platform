@@ -178,6 +178,18 @@ class Account extends AbstractRepository
             return str_replace('sites/platform/index.php', 'index.php', RC_Uri::url('platform/admin/edit', ['id' => $this->getAccountID()]));
         }
     }
+
+    /**
+     * 获取公众平台帐户类型，是平台还是商家
+     */
+    public function getPlatformAccountType()
+    {
+        if ($this->getStoreId() > 0) {
+            return \Ecjia\App\Platform\Plugin\PlatformAbstract::TypeMerchant;
+        } else {
+            return \Ecjia\App\Platform\Plugin\PlatformAbstract::TypeAdmin;
+        }
+    }
     
 }
 
