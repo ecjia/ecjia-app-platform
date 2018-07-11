@@ -140,7 +140,7 @@ abstract class PlatformAbstract extends AbstractPlugin
             $supported = $this->hasSupportTypeMerchant();
         }
 
-        $types = $this->loadConfig('support_platform_type', ['server']);
+        $types = $this->loadConfig('support_platform_type', ['service']);
         if ($supported && in_array($this->getPlatformTypeCode(), $types)) {
             return true;
         } else {
