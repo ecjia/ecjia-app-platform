@@ -48,6 +48,8 @@ defined('IN_ECJIA') or exit('No permission resources.');
 
 class platform_merchant_hooks {
     public static function platform_merchant_menu_api($menus) {
+        //在父级菜单里添加权限值
+        $menus->add_purview('platform_config_manage');
     	$menu = ecjia_merchant::make_admin_menu('08_merchant_platform', __('公众平台'), RC_Uri::url('platform/merchant/init'), 8)->add_purview('platform_config_manage')->add_icon('fa-navicon');
     	 
     	$menus->add_submenu($menu);
