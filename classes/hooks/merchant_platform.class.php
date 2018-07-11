@@ -58,4 +58,5 @@ class platform_merchant_hooks {
 }
 
 RC_Hook::add_filter( 'merchant_merchant_menu_api', array('platform_merchant_hooks', 'platform_merchant_menu_api') );
+
 // end
