@@ -6,6 +6,7 @@ use Royalcms\Component\Repository\Repositories\AbstractRepository;
 use RC_Upload;
 use RC_Uri;
 use Ecjia\App\Platform\Frameworks\Exceptions\AccountException;
+use Ecjia\App\Platform\Plugin\PlatformAbstract;
 
 class Account extends AbstractRepository
 {
@@ -185,9 +186,9 @@ class Account extends AbstractRepository
     public function getPlatformAccountType()
     {
         if ($this->getStoreId() > 0) {
-            return \Ecjia\App\Platform\Plugin\PlatformAbstract::TypeMerchant;
+            return PlatformAbstract::TypeMerchant;
         } else {
-            return \Ecjia\App\Platform\Plugin\PlatformAbstract::TypeAdmin;
+            return PlatformAbstract::TypeAdmin;
         }
     }
     
