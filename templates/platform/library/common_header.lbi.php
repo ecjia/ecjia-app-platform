@@ -1,12 +1,12 @@
 <?php defined('IN_ECJIA') or exit('No permission resources.');?>
-<nav class="header-navbar navbar-expand-md navbar navbar-with-menu fixed-top navbar-light navbar-hide-on-scroll navbar-border navbar-shadow navbar-brand-center">
+<nav class="header-navbar navbar-expand-md navbar navbar-with-menu fixed-top navbar-dark navbar-border navbar-shadow navbar-brand-center bg-gradient-x-blue">
 	<div class="navbar-wrapper">
 		<div class="navbar-header">
       		<ul class="nav navbar-nav flex-row">
         		<li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
         		<li class="nav-item">
         			<a class="navbar-brand" href="{url path='platform/dashboard/init'}">
-        			<img class="brand-logo" alt="robust admin logo" src="{$ecjia_main_static_url}platform/images/logo/logo-dark-sm.png">
+        			<img class="brand-logo" alt="robust admin logo" src="{$ecjia_main_static_url}platform/images/logo/logo-light-sm.png">
             		<h3 class="brand-text">{$platformAccount->getAccountName()}</h3>
             		</a>
         		</li>

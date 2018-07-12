@@ -23,17 +23,18 @@
 	<!-- {block name="meta"} --><!-- {/block} -->
     <!-- {ecjia:hook id=platform_head} -->
 </head>
-<body class="vertical-layout vertical-content-menu 2-columns fixed-navbar menu-expanded pace-done">
+<body {if ecjia_platform_screen::get_current_screen()->get_sidebar_display()}class="vertical-layout vertical-content-menu 2-columns fixed-navbar menu-expanded pace-done" data-open="click" data-menu="vertical-content-menu" data-col="2-columns"{else}class="vertical-layout vertical-overlay-menu 2-columns fixed-navbar  menu-hide pace-done" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns"{/if}>
     
         <!-- {block name="common_header"} -->
         <!-- #BeginLibraryItem "/library/common_header.lbi" --><!-- #EndLibraryItem -->
         <!-- {/block} -->
-        
+
         <!-- start:main -->
         <div class="app-content content">
+
         	<div class="content-wrapper">
-        		
-        		<!-- #BeginLibraryItem "/library/common_sidebar.lbi" --><!-- #EndLibraryItem -->
+                <!-- #BeginLibraryItem "/library/common_sidebar.lbi" --><!-- #EndLibraryItem -->
+
 	            <div class="content-body" id="content-body">
 	            
 	            	<div class="content-header row">
