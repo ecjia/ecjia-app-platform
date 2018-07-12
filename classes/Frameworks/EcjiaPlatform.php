@@ -483,9 +483,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 
 	public final function load_default_script_style() {
 	    // 加载样式
-	    
-	    RC_Style::enqueue_style('ecjia-platform-ui');
-	    
+
 	    // RC_Style::enqueue_style('ecjia-platform-googleapis');
 	    RC_Style::enqueue_style('ecjia-platform-vendors');
 	    RC_Style::enqueue_style('ecjia-platform-jquery-jvectormap');
@@ -505,6 +503,10 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 	    
 	    RC_Script::enqueue_script('jquery');
 	    RC_Script::enqueue_script('jquery-ui-totop');
+
+        RC_Style::enqueue_style('ecjia-platform-ui');
+
+        // JS脚本
 	    
 	    RC_Script::enqueue_script('ecjia-platform-vendors');
 	    RC_Script::enqueue_script('ecjia-platform-jquery-pjax');
@@ -742,10 +744,16 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
     public static function display_admin_sidebar_nav() {
         $menus = Menu::singleton()->admin_menu();
         $screen = Screen::get_current_screen();
-//         _dump($menus,1);
+
+        if ($screen->get_sidebar_display()) {
+            $menuClass = 'main-menu menu-static menu-accordion menu-shadow menu-light';
+        } else {
+            $menuClass = 'main-menu menu-fixed menu-accordion menu-shadow menu-border menu-light';
+        }
+
         if (!empty($menus)) {
             
-            echo '<div class="main-menu menu-static menu-light menu-accordion menu-shadow" data-scroll-to-active="true">' . PHP_EOL;
+            echo '<div class="' . $menuClass . '" data-scroll-to-active="true">' . PHP_EOL;
             echo '<div class="main-menu-content">' . PHP_EOL;
             echo '<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">' . PHP_EOL;
             
@@ -858,7 +866,7 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
     }
 
     public static function display_admin_copyright() {
-    	$company_msg  = __('版权所有 © 2013-2016 上海商创网络科技有限公司，并保留所有权利。');
+    	$company_msg  = __('版权所有 © 2013-2018 上海商创网络科技有限公司，并保留所有权利。');
     	$ecjia_icon   = RC_Uri::admin_url('statics/images/ecjia_icon.png');
 
         echo "<div class='row-fluid footer'>
