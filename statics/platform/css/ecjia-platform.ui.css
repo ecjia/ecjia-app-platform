@@ -5892,7 +5892,6 @@ a.weui-desktop-mass-appmsg__title:hover {
 	font-size: 14px;
 }
 
-.footer.ecjia-platform-footer {
-	padding: 0.8rem 0 2.0rem;
+.col-12 .card:last-child {
+	margin-bottom: 0;
 }
-
