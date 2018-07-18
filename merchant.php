@@ -100,12 +100,15 @@ class merchant extends ecjia_merchant
         );
 
         $this->assign('ur_here', RC_Lang::get('platform::platform.platform_list'));
-        $this->assign('action_link', array('text' => RC_Lang::get('platform::platform.platform_add'), 'href' => RC_Uri::url('platform/merchant/add')));
 
         $wechat_list = $this->wechat_list();
         $this->assign('wechat_list', $wechat_list);
         $this->assign('search_action', RC_Uri::url('platform/merchant/init'));
 
+        if ($wechat_list['count'] == 0) {
+        	$this->assign('action_link', array('text' => RC_Lang::get('platform::platform.platform_add'), 'href' => RC_Uri::url('platform/merchant/add')));
+        }
+        
         $this->assign_lang();
         $this->display('wechat_list.dwt');
     }
@@ -130,6 +133,11 @@ class merchant extends ecjia_merchant
             '<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号#.E6.B7.BB.E5.8A.A0.E5.85.AC.E4.BC.97.E5.8F.B7" target="_blank">' . RC_Lang::get('platform::platform.add_pub_help') . '</a>') . '</p>'
         );
 
+        $count = RC_DB::table('platform_account')->where('shop_id', $_SESSION['store_id'])->count();
+        if ($count != 0) {
+        	return $this->showmessage('每个商家只能添加一个公众号', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
+        }
+        
         $this->assign('ur_here', RC_Lang::get('platform::platform.platform_add'));
         $this->assign('action_link', array('text' => RC_Lang::get('platform::platform.platform_list'), 'href' => RC_Uri::url('platform/merchant/init')));
         $this->assign('form_action', RC_Uri::url('platform/merchant/insert'));
@@ -154,6 +162,11 @@ class merchant extends ecjia_merchant
         $appsecret = !empty($_POST['appsecret']) ? trim($_POST['appsecret']) : '';
         $aeskey = !empty($_POST['aeskey']) ? trim($_POST['aeskey']) : '';
 
+        $count = RC_DB::table('platform_account')->where('shop_id', $_SESSION['store_id'])->count();
+        if ($count != 0) {
+        	return $this->showmessage('每个商家只能添加一个公众号', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        
         if (empty($platform)) {
             return $this->showmessage(RC_Lang::get('platform::platform.select_terrace'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
@@ -483,7 +496,7 @@ class merchant extends ecjia_merchant
                 $arr[] = $rows;
             }
         }
-        return array('item' => $arr, 'filter' => $filter, 'page' => $page->show(5), 'desc' => $page->page_desc());
+        return array('item' => $arr, 'filter' => $filter, 'page' => $page->show(5), 'desc' => $page->page_desc(), 'count' => $count);
     }
 
 }
