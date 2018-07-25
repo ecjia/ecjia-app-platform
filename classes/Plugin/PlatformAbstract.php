@@ -3,9 +3,11 @@
 namespace Ecjia\App\Platform\Plugin;
 
 use Ecjia\System\Plugin\AbstractPlugin;
+use Royalcms\Component\Support\Traits\Macroable;
 
 abstract class PlatformAbstract extends AbstractPlugin
 {
+    use Macroable;
     
     protected $message;
     
@@ -169,5 +171,29 @@ abstract class PlatformAbstract extends AbstractPlugin
         
         return ($type & self::TypeMerchant) == self::TypeMerchant;
     }
-    
+
+    /**
+     * 转发命令，这里直接使用插件代号
+     *
+     * @param $ext_code 插件代号
+     * @param null $sub_code    插件子命令
+     * @return null
+     */
+    public function forwardCommand($ext_code, $sub_code = null)
+    {
+        $extend_handle = with(new PlatformPlugin)->channel($ext_code);
+
+        if (is_ecjia_error($extend_handle))
+        {
+            return null;
+        }
+
+        $extend_handle->setMessage($this->getMessage());
+        $extend_handle->setSubCodeCommand($sub_code);
+        $extend_handle->setStoreId($this->getStoreId());
+        $extend_handle->setStoreType($this->getStoreType());
+        $extend_handle->setKeyword($this->getKeyword());
+        return $extend_handle->eventReply();
+    }
+
 }

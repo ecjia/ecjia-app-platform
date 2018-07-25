@@ -128,8 +128,6 @@ class PlatformPlugin extends PluginModel
             return new ecjia_error('extend_not_found', $data->ext_code . ' plugin not found!');
         }
         
-//         $handler->setPayment($data);
-        
         return $handler;
     }
     
