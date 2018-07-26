@@ -203,6 +203,11 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		
 		RC_Hook::do_action('ecjia_platform_finish_launching');
 	}
+	
+	public function getPlatformAccount()
+    {
+        return $this->platformAccount;
+    }
 
 	protected function session_start()
 	{
