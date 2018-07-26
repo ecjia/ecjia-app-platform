@@ -5,6 +5,9 @@ namespace Ecjia\App\Platform\Plugin;
 use Ecjia\System\Plugin\PluginModel;
 use ecjia_error;
 use ecjia_config;
+use RC_DB;
+use Ecjia\App\Platform\Frameworks\EcjiaPlatform;
+use Ecjia\App\Platform\Frameworks\Platform\Account;
 
 class PlatformPlugin extends PluginModel
 {
@@ -61,12 +64,32 @@ class PlatformPlugin extends PluginModel
     public function configData($code)
     {
         $pluginData = $this->getPluginDataByCode($code);
-        
-        $config = $this->unserializeConfig($pluginData['ext_config']);
-        
+
+        return $this->getAccountPluginConfig($code, $pluginData['ext_name']);
+    }
+
+    /**
+     * 获取公众平台指定帐号的插件配置
+     * @param $code
+     */
+    protected function getAccountPluginConfig($code, $name, $acount_id = null)
+    {
+        if (is_null($acount_id)) {
+            if (method_exists(EcjiaPlatform::$controller, 'getPlatformAccount')) {
+                $acount_id = EcjiaPlatform::$controller->getPlatformAccount()->getAccountID();
+            } else {
+                $uuid = royalcms('request')->input('uuid');
+                $acount_id = with(new Account($uuid))->getAccountId();
+            }
+        }
+
+        $ext_config = RC_DB::table('platform_config')->where('account_id', $acount_id)->where('ext_code', $code)->pluck('ext_config');
+
+        $config = $this->unserializeConfig($ext_config);
+
         $config['ext_code'] = $code;
-        $config['ext_name'] = $pluginData['ext_name'];
-        
+        $config['ext_name'] = $name;
+
         return $config;
     }
     
@@ -87,8 +110,8 @@ class PlatformPlugin extends PluginModel
     public function defaultChannel()
     {
         $data = $this->enabled()->orderBy('ext_code', 'asc')->first();
-        
-        $config = $this->unserializeConfig($data->ext_config);
+
+        $config = $this->getAccountPluginConfig($data->ext_code, $data->ext_name);
         
         $handler = $this->pluginInstance($data->ext_code, $config);
         
@@ -120,9 +143,9 @@ class PlatformPlugin extends PluginModel
         if (empty($data)) {
             return new ecjia_error('extend_not_found', $code . ' extend not found!');
         }
-        
-        $config = $this->unserializeConfig($data->ext_config);
-        
+
+        $config = $this->getAccountPluginConfig($data->ext_code, $data->ext_name);
+
         $handler = $this->pluginInstance($data->ext_code, $config);
         if (!$handler) {
             return new ecjia_error('extend_not_found', $data->ext_code . ' plugin not found!');
