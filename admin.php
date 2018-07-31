@@ -56,7 +56,6 @@ class admin extends ecjia_admin
     private $db_platform_config;
     private $dbview_platform_config;
     private $db_command;
-    private $db_oauth;
 
     public function __construct()
     {
@@ -70,10 +69,9 @@ class admin extends ecjia_admin
         $this->db_extend = RC_Loader::load_app_model('platform_extend_model');
         $this->dbview_platform_config = RC_Loader::load_app_model('platform_config_viewmodel');
         $this->db_command = RC_Loader::load_app_model('platform_command_model');
-        $this->db_oauth = RC_Loader::load_app_model('wechat_oauth_model', 'wechat');
 
         RC_Loader::load_app_class('platform_factory', null, false);
-        /* 加载全局 js/css */
+        /* 加载全局 js/css */11
         RC_Script::enqueue_script('jquery-validate');
         RC_Script::enqueue_script('jquery-form');
         RC_Script::enqueue_script('smoke');
@@ -349,7 +347,6 @@ class admin extends ecjia_admin
         //删除公众号扩展及扩展命令
         $this->db_platform_config->where(array('account_id' => $id))->delete();
         $this->db_command->where(array('account_id' => $id))->delete();
-        $this->db_oauth->where(array('wechat_id' => $id))->delete();
 
         if ($success) {
             ecjia_admin::admin_log($info['name'], 'remove', 'wechat');
