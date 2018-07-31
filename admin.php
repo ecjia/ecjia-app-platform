@@ -71,7 +71,7 @@ class admin extends ecjia_admin
         $this->db_command = RC_Loader::load_app_model('platform_command_model');
 
         RC_Loader::load_app_class('platform_factory', null, false);
-        /* 加载全局 js/css */11
+        /* 加载全局 js/css */
         RC_Script::enqueue_script('jquery-validate');
         RC_Script::enqueue_script('jquery-form');
         RC_Script::enqueue_script('smoke');
