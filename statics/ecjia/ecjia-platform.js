@@ -76,7 +76,7 @@
 				var $this = $(this),
 				message = $this.attr('data-message') || admin_lang.confirm_jump,
 				href 	= $this.attr('href') || '#';
-				smoke.confirm(message, function(e){
+				ecjia.platform_ui.confirm(message, function(e){
 					e && ecjia.pjax(href);
 				}, {ok:admin_lang.ok, cancel:admin_lang.cancel});
 			});
