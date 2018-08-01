@@ -281,7 +281,7 @@
                 	code: code
 				}
 				if (msg != '' && msg != undefined) {
-					smoke.confirm(msg,function(e){
+					ecjia.platform_ui.confirm(msg, function(e){
 						e && $.post(url, info, function (data) {
 							ecjia.platform.showmessage(data);
 						}, 'json');

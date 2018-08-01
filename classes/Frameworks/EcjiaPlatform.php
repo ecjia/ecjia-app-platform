@@ -545,6 +545,9 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 	    RC_Script::enqueue_script('ecjia-platform-select-full');
 	    RC_Script::enqueue_script('ecjia-platform-form-select');
 	    
+	    RC_Script::enqueue_script('ecjia-platform-sweetalert');
+	    RC_Script::enqueue_script('ecjia-platform-sweet');
+	    
 	    RC_Script::enqueue_script('ecjia-platform');
 	    RC_Script::enqueue_script('ecjia-platform-ui');
 	    

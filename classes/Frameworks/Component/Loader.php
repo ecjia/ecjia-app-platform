@@ -103,6 +103,9 @@ class Loader {
 		$scripts->add( 'ecjia-platform-bootstrap-fileupload-js',	$base_url.'/platform/lib/bootstrap-fileupload/bootstrap-fileupload.js', array(), false, 1 );
 
 		$scripts->add( 'ecjia-platform-jquery-quicksearch',   		$base_url.'/platform/js/jquery.quicksearch.js', array('jquery'), false, 1 );
+		
+		$scripts->add( 'ecjia-platform-sweetalert',   				$base_url.'/platform/vendors/js/extensions/sweetalert.min.js', array(), false, 1 );
+		$scripts->add( 'ecjia-platform-sweet',   					$base_url.'/platform/js/scripts/extensions/sweet-alerts.js', array(), false, 1 );
 	}
 
 
