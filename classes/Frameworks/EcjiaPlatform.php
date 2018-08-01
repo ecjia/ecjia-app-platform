@@ -122,12 +122,6 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 		// Clears file status cache
 		clearstatcache();
 
-		// load Lang file
-		RC_Lang::load(array('system/system', 'system/log_action'));
-		if (ROUTE_M == RC_Config::get('system.admin_entrance')) {
-			RC_Lang::load('system/' . ROUTE_C);
-		}
-
 		// Catch plugins that include admin-header.php before admin.php completes.
 		if ( empty( Screen::$current_screen ) ) {
 		    Screen::set_current_screen();

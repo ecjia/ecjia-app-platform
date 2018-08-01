@@ -55,7 +55,6 @@ class platform_extend extends ecjia_platform
     {
         parent::__construct();
 
-        RC_Lang::load('platform');
         Ecjia\App\Platform\Helper::assign_adminlog_content();
 
         RC_Loader::load_app_class('platform_factory', null, false);

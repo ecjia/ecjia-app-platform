@@ -62,7 +62,6 @@ class admin_command extends ecjia_admin
     {
         parent::__construct();
 
-        RC_Lang::load('platform');
         Ecjia\App\Platform\Helper::assign_adminlog_content();
 
         $this->command_viewdb = RC_Loader::load_app_model('platform_command_viewmodel');

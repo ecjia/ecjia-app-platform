@@ -55,7 +55,6 @@ class platform_command extends ecjia_platform
     {
         parent::__construct();
 
-        RC_Lang::load('platform');
         Ecjia\App\Platform\Helper::assign_adminlog_content();
 
         /* 加载全局 js/css */
