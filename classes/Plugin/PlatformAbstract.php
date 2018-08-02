@@ -196,4 +196,11 @@ abstract class PlatformAbstract extends AbstractPlugin
         return $extend_handle->eventReply();
     }
 
+
+    public function getOpenId()
+    {
+        $openid = $this->getMessage()->get('FromUserName');
+        return $openid;
+    }
+
 }
