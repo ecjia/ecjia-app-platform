@@ -336,9 +336,11 @@ abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_filelo
 						$this->currentStore = new \Ecjia\App\Merchant\Frameworks\Stores\MerchantShop(session('store_id'));
 					}
 					$this->assign('currentStore', $this->currentStore);
-				}
-			
-				$this->assign('ecjia_platform_cptitle', sprintf("%s的%s", $this->currentStore->getStoreName(), $this->platformAccount->getAccountName()));
+
+                    $this->assign('ecjia_platform_cptitle', sprintf("%s的%s", $this->currentStore->getStoreName(), $this->platformAccount->getAccountName()));
+				} else {
+                    return false;
+                }
 			} else {
 				$this->assign('ecjia_platform_cptitle', '公众平台');
 			}
