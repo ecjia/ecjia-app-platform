@@ -45,48 +45,16 @@
 //  ---------------------------------------------------------------------------------
 //
 
-defined('IN_ECJIA') or exit('No permission resources.');
+namespace Ecjia\App\Platform\Frameworks\Contracts;
 
-class plugin extends ecjia_front
+interface PluginPageInterface
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
+    
     /**
-     * 首页信息
+     * 插件返回数据的点击事件处理
      */
-    public function init()
-    {
-
-    }
-
-    /**
-     * 插件页面输出调用
-     */
-    public function show()
-    {
-        $action = rc_addslashes(trim($_GET['handle']));
-
-        if (file_exists(SITE_PLUGIN_PATH . $action . '.php')) {
-            $file = SITE_PLUGIN_PATH . $action . '.php';
-        } elseif (file_exists(RC_PLUGIN_PATH . $action . '.php')) {
-            $file = RC_PLUGIN_PATH . $action . '.php';
-        } else {
-            _404();
-        }
-
-        require_once $file;
-
-        $action_class = str_replace('/', '_', $action);
-
-        $handle = new $action_class();
-
-        if ($handle && is_a($handle, 'Ecjia\App\Platform\Frameworks\Contracts\PluginPageInterface')) {
-            $handle->action();
-        }
-    }
+    public function action();
+    
 }
 
 // end
