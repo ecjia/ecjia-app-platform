@@ -8,6 +8,8 @@
 
 namespace Ecjia\App\Platform\Frameworks\Controller;
 
+use ecjia_front;
+use RC_Plugin;
 
 class PluginPageController
 {
