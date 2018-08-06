@@ -44,6 +44,7 @@
 //
 //  ---------------------------------------------------------------------------------
 //
+use Ecjia\App\Platform\Frameworks\Contracts\PluginPageInterface;
 
 defined('IN_ECJIA') or exit('No permission resources.');
 
@@ -83,8 +84,10 @@ class plugin extends ecjia_front
 
         $handle = new $action_class();
 
-        if ($handle && is_a($handle, 'Ecjia\App\Platform\Frameworks\Contracts\PluginPageInterface')) {
+        if ($handle && ($handle instanceof PluginPageInterface)) {
             $handle->action();
+        } else {
+            _404();
         }
     }
 }
