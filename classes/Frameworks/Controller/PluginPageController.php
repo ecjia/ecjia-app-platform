@@ -55,7 +55,7 @@ class PluginPageController
     public function showErrorMessage($msg = null)
     {
         ecjia_front::$controller->assign('msg', $msg);
-        return ecjia_front::$controller->displayAppTemplate('front/plugin_page_showerror.dwt');
+        return ecjia_front::$controller->displayAppTemplate('platform', 'front/plugin_page_showerror.dwt');
     }
 
 
