@@ -10,9 +10,12 @@ namespace Ecjia\App\Platform\Frameworks\Controller;
 
 use ecjia_front;
 use RC_Plugin;
+use Royalcms\Component\Support\Traits\Macroable;
 
 class PluginPageController
 {
+
+    use Macroable;
 
     protected $__FILE__;
 
@@ -47,5 +50,15 @@ class PluginPageController
     }
 
 
+    /**
+     * 跳转
+     * @param $url
+     */
+    public function redirect($url)
+    {
+        ecjia_front::$controller->redirect($url);
+        royalcms('response')->send();
+        exit();
+    }
 
 }
