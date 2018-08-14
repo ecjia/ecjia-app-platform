@@ -61,14 +61,16 @@ class Account extends AbstractRepository
     
     protected $account;
     
-    public function __construct($uuid)
+    public function __construct($uuid, $account = null)
     {
         parent::__construct();
         
         $this->uuid = $uuid;
 
-        if (is_null($this->account)) {
+        if (is_null($account)) {
             $this->account = $this->findBy('uuid', $uuid);
+        } else {
+            $this->account = $account;
         }
 
         if (is_null($this->account)) {
