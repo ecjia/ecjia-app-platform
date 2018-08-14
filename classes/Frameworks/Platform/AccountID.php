@@ -46,10 +46,7 @@
 //
 namespace Ecjia\App\Platform\Frameworks\Platform;
 
-use RC_Upload;
-use RC_Uri;
 use Ecjia\App\Platform\Frameworks\Exceptions\AccountException;
-use Ecjia\App\Platform\Plugin\PlatformAbstract;
 use Ecjia\App\Platform\Models\PlatformAccountModel;
 
 class AccountID extends Account
@@ -64,7 +61,7 @@ class AccountID extends Account
     {
         $account = PlatformAccountModel::find($id);
 
-        $uuid = $this->account->uuid;
+        $uuid = $account->uuid;
 
         parent::__construct($uuid, $account);
     }
