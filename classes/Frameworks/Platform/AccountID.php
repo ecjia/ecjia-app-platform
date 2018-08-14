@@ -52,28 +52,18 @@ use RC_Uri;
 use Ecjia\App\Platform\Frameworks\Exceptions\AccountException;
 use Ecjia\App\Platform\Plugin\PlatformAbstract;
 
-class Account extends AbstractRepository
+class AccountID extends Account
 {
     
-    protected $uuid;
-    
-    protected $model = 'Ecjia\App\Platform\Models\PlatformAccountModel';
-    
-    protected $account;
-    
-    public function __construct($uuid)
+    public function __construct($id)
     {
-        parent::__construct();
-        
-        $this->uuid = $uuid;
-
-        if (is_null($this->account)) {
-            $this->account = $this->findBy('uuid', $uuid);
-        }
+        $this->account = $this->find($id);
 
         if (is_null($this->account)) {
             throw new AccountException('Ecjia Platform uuid not exists.');
-        } 
+        }
+
+        parent::__construct($this->uuid);
     } 
     
     
