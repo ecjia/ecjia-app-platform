@@ -53,7 +53,7 @@ class PlatformServiceProvider extends  AppParentServiceProvider
     
     public function boot()
     {
-        $this->package('ecjia/app-platform', null, dirname(__DIR__));
+        $this->package('ecjia/app-platform');
     }
     
     public function register()
