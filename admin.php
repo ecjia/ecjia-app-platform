@@ -167,7 +167,7 @@ class admin extends ecjia_admin
         $type = !empty($_POST['type']) ? intval($_POST['type']) : 0;
         $name = !empty($_POST['name']) ? trim($_POST['name']) : '';
         $token = !empty($_POST['token']) ? trim($_POST['token']) : '';
-        $appid = !empty($_POST['token']) ? trim($_POST['appid']) : '';
+        $appid = !empty($_POST['appid']) ? trim($_POST['appid']) : '';
         $appsecret = !empty($_POST['appsecret']) ? trim($_POST['appsecret']) : '';
         $aeskey = !empty($_POST['aeskey']) ? trim($_POST['aeskey']) : '';
 
@@ -272,7 +272,7 @@ class admin extends ecjia_admin
         $type = !empty($_POST['type']) ? intval($_POST['type']) : 0;
         $name = !empty($_POST['name']) ? trim($_POST['name']) : '';
         $token = !empty($_POST['token']) ? trim($_POST['token']) : '';
-        $appid = !empty($_POST['token']) ? trim($_POST['appid']) : '';
+        $appid = !empty($_POST['appid']) ? trim($_POST['appid']) : '';
         $appsecret = !empty($_POST['appsecret']) ? trim($_POST['appsecret']) : '';
         $aeskey = !empty($_POST['aeskey']) ? trim($_POST['aeskey']) : '';
 
