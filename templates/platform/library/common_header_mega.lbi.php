@@ -15,9 +15,11 @@
               			<p>{$platformAccount->getPlatformName()}</p>
 	              	</div>
 	              	<div class="mega-menu-carousel-row right">
+                        {if $platformAccount->getPlatform() eq 'wechat'}
 	              		<p>公众号类型</p>
               			<img src="{$ecjia_main_static_url}image/{$platformAccount->getTypeCode()}.png">
               			<p>{$platformAccount->getTypeName()}</p>
+                        {/if}
 	              	</div>
               	</div>
               	<div class="mega-menu-carousel-content right">
@@ -31,7 +33,7 @@
               		</div>
               		<div class="item">
               			<a class="btn btn-success" target="__blank" href="{$platformAccount->getPlatformSettingUrl()}">编辑配置</a>
-              			<a class="btn btn-info m_l20" href="{$platformAccount->getPlatformListUrl()}">返回公众平台</a>
+              			<a class="btn btn-info m_l20" href="{$platformAccount->getPlatformListUrl()}">返回{$platformAccount->getPlatformName()}</a>
               		</div>
               	</div>
             </div>
