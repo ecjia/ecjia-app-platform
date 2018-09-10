@@ -1,6 +1,6 @@
 <?php defined('IN_ECJIA') or exit('No permission resources.');?>
 <li class="dropdown nav-item mega-dropdown">
-<a class="dropdown-toggle nav-link" href="icons-simple-line-icons.html#" data-toggle="dropdown">公众平台</a>
+<a class="dropdown-toggle nav-link" href="icons-simple-line-icons.html#" data-toggle="dropdown">{$platformAccount->getPlatformName()}</a>
     <ul class="mega-dropdown-menu dropdown-menu row">
 		<li class="col-md-12">
         	<h3 class="dropdown-menu-header text-uppercase mb-1">

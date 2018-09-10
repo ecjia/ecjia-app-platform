@@ -97,13 +97,13 @@ class Account extends AbstractRepository
     public function getPlatformName()
     {
         if ($this->getPlatform() == 'wechat') {
-            return '微信';
+            return '微信公众平台';
         } 
         else if ($this->getPlatform() == 'alipay') {
             return '支付宝';
         } 
         else if ($this->getPlatform() == 'weapp') {
-            return '小程序';
+            return '微信小程序';
         }
         else {
             return '未知';
