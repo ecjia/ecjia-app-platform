@@ -52,7 +52,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
 class admin_plugin extends ecjia_admin
 {
     private $db_extend;
-    private $db_command;
+    //private $db_command;
     //private $db_platform_account;
 
     public function __construct()
@@ -62,7 +62,7 @@ class admin_plugin extends ecjia_admin
         Ecjia\App\Platform\Helper::assign_adminlog_content();
 
         $this->db_extend = RC_Loader::load_app_model('platform_extend_model');
-        $this->db_command = RC_Loader::load_app_model('platform_command_model');
+        //$this->db_command = RC_Loader::load_app_model('platform_command_model');
         //$this->db_platform_account = RC_Loader::load_app_model('platform_account_model');
 
         RC_Loader::load_app_class('platform_factory', null, false);
