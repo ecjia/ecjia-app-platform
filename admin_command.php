@@ -55,7 +55,7 @@ class admin_command extends ecjia_admin
     //private $db_platform_account;
     private $db_extend;
     //private $db_platform_config;
-    private $dbview_platform_config;
+    //private $dbview_platform_config;
     //private $db_command;
 
     public function __construct()
@@ -68,7 +68,7 @@ class admin_command extends ecjia_admin
         //$this->db_platform_account = RC_Loader::load_app_model('platform_account_model');
         //$this->db_platform_config = RC_Loader::load_app_model('platform_config_model');
         $this->db_extend = RC_Loader::load_app_model('platform_extend_model');
-        $this->dbview_platform_config = RC_Loader::load_app_model('platform_config_viewmodel');
+        //$this->dbview_platform_config = RC_Loader::load_app_model('platform_config_viewmodel');
         //$this->db_command = RC_Loader::load_app_model('platform_command_model');
 
         /* 加载全局 js/css */
