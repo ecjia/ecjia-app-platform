@@ -53,7 +53,7 @@ class admin_command extends ecjia_admin
 {
     //private $command_viewdb;
     //private $db_platform_account;
-    private $db_extend;
+    //private $db_extend;
     //private $db_platform_config;
     //private $dbview_platform_config;
     //private $db_command;
@@ -67,7 +67,7 @@ class admin_command extends ecjia_admin
         //$this->command_viewdb = RC_Loader::load_app_model('platform_command_viewmodel');
         //$this->db_platform_account = RC_Loader::load_app_model('platform_account_model');
         //$this->db_platform_config = RC_Loader::load_app_model('platform_config_model');
-        $this->db_extend = RC_Loader::load_app_model('platform_extend_model');
+        //$this->db_extend = RC_Loader::load_app_model('platform_extend_model');
         //$this->dbview_platform_config = RC_Loader::load_app_model('platform_config_viewmodel');
         //$this->db_command = RC_Loader::load_app_model('platform_command_model');
 
@@ -114,7 +114,8 @@ class admin_command extends ecjia_admin
         $this->assign('back_link', array('text' => RC_Lang::get('platform::platform.function_extend'), 'href' => RC_Uri::url('platform/admin_plugin/init')));
         $this->assign('search_action', RC_Uri::url('platform/admin_command/extend_command', array('code' => $code)));
 
-        $ext_name = $this->db_extend->where(array('ext_code' => $code))->get_field('ext_name');
+        //$ext_name = $this->db_extend->where(array('ext_code' => $code))->get_field('ext_name');
+        $ext_name = RC_DB::table('platform_extend')->where('ext_code', $code)->pluck('ext_name');
         $this->assign('code', $code);
         $this->assign('ext_name', $ext_name);
 

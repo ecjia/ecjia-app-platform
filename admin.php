@@ -52,7 +52,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
 class admin extends ecjia_admin
 {
     //private $db_platform_account;
-    private $db_extend;
+    //private $db_extend;
     //private $db_platform_config;
     //private $dbview_platform_config;
     //private $db_command;
@@ -65,7 +65,7 @@ class admin extends ecjia_admin
 
         //$this->db_platform_account = RC_Loader::load_app_model('platform_account_model');
         //$this->db_platform_config = RC_Loader::load_app_model('platform_config_model');
-        $this->db_extend = RC_Loader::load_app_model('platform_extend_model');
+        //$this->db_extend = RC_Loader::load_app_model('platform_extend_model');
         //$this->dbview_platform_config = RC_Loader::load_app_model('platform_config_viewmodel');
         //$this->db_command = RC_Loader::load_app_model('platform_command_model');
 
@@ -571,20 +571,28 @@ class admin extends ecjia_admin
     {
         $id = intval($_GET['JSON']['id']);
         $keywords = trim($_GET['JSON']['keywords']);
-
-        $where = "1";
-        if ($keywords) {
-            $where = "ext_name LIKE '%" . $keywords . "%'";
-            $where .= " OR ext_code LIKE '%" . $keywords . "%'";
-        }
+		$db_extend = RC_DB::table('platform_extend');
+		
+        //$where = "1";
+        //if ($keywords) {
+        //    $where = "ext_name LIKE '%" . $keywords . "%'";
+        //    $where .= " OR ext_code LIKE '%" . $keywords . "%'";
+        //}
         //已禁用的扩展搜索不显示
-        $where .= " AND enabled != 0";
-
+        //$where .= " AND enabled != 0";
+		$db_extend->where('enabled', '!=', 0);
+		if (!empty($keywords)) {
+			$db_extend->where(function($query) use ($keywords) {
+				$query->where('ext_name', 'like', '%'.mysql_like_quote($keywords).'%')->orWhere('ext_code', 'like', '%'.mysql_like_quote($keywords).'%');
+			});
+		}
+        
         //查找已关联的扩展
         //$ext_code_list = $this->db_platform_config->where(array('account_id' => $id))->get_field('ext_code', true);
         $ext_code_list = RC_DB::table('platform_config')->where('account_id', $id)->lists('ext_code');
-        $platform_list = $this->db_extend->where($where)->field('ext_id, ext_name, ext_code, ext_config')->order(array('ext_id' => 'desc'))->select();
-
+        //$platform_list = $this->db_extend->where($where)->field('ext_id, ext_name, ext_code, ext_config')->order(array('ext_id' => 'desc'))->select();
+        $platform_list = $db_extend->select('ext_id', 'ext_name', 'ext_code', 'ext_config')->orderBy('ext_id', 'desc')->get();
+        
         if ($ext_code_list) {
             if (!empty($platform_list)) {
                 foreach ($platform_list as $k => $v) {
