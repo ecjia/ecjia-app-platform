@@ -53,7 +53,7 @@ class admin extends ecjia_admin
 {
     //private $db_platform_account;
     private $db_extend;
-    private $db_platform_config;
+    //private $db_platform_config;
     private $dbview_platform_config;
     //private $db_command;
 
@@ -64,7 +64,7 @@ class admin extends ecjia_admin
         Ecjia\App\Platform\Helper::assign_adminlog_content();
 
         //$this->db_platform_account = RC_Loader::load_app_model('platform_account_model');
-        $this->db_platform_config = RC_Loader::load_app_model('platform_config_model');
+        //$this->db_platform_config = RC_Loader::load_app_model('platform_config_model');
         $this->db_extend = RC_Loader::load_app_model('platform_extend_model');
         $this->dbview_platform_config = RC_Loader::load_app_model('platform_config_viewmodel');
         //$this->db_command = RC_Loader::load_app_model('platform_command_model');
@@ -351,7 +351,8 @@ class admin extends ecjia_admin
         //$success = $this->db_platform_account->where(array('id' => $id))->delete();
         $success = RC_DB::table('platform_account')->where('id', $id)->delete();
         //删除公众号扩展及扩展命令
-        $this->db_platform_config->where(array('account_id' => $id))->delete();
+        //$this->db_platform_config->where(array('account_id' => $id))->delete();
+        RC_DB::table('platform_config')->where('account_id', $id)->delete();
         //$this->db_command->where(array('account_id' => $id))->delete();
 		RC_DB::table('platform_command')->where('account_id', $id)->delete();
 		
@@ -580,7 +581,8 @@ class admin extends ecjia_admin
         $where .= " AND enabled != 0";
 
         //查找已关联的扩展
-        $ext_code_list = $this->db_platform_config->where(array('account_id' => $id))->get_field('ext_code', true);
+        //$ext_code_list = $this->db_platform_config->where(array('account_id' => $id))->get_field('ext_code', true);
+        $ext_code_list = RC_DB::table('platform_config')->where('account_id', $id)->lists('ext_code');
         $platform_list = $this->db_extend->where($where)->field('ext_id, ext_name, ext_code, ext_config')->order(array('ext_id' => 'desc'))->select();
 
         if ($ext_code_list) {
