@@ -216,6 +216,24 @@ abstract class PlatformAbstract extends AbstractPlugin
         return ($type & self::TypeMerchant) == self::TypeMerchant;
     }
 
+
+    /**
+     * 判断当前插件是否支持指定的平台
+     *
+     * @param $platform
+     * @return bool
+     */
+    public function hasPlatform($platform)
+    {
+        $support_platforms = (array) $this->loadConfig('support_platform', 'wechat');
+
+        if (in_array($platform, $support_platforms)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * 转发命令，这里直接使用插件代号
      *

@@ -98,30 +98,19 @@ class platform_extend extends ecjia_platform
         $id = $this->platformAccount->getAccountID();
 
         $ext_code_list = RC_DB::table('platform_config')->where('account_id', $id)->lists('ext_code');
-        $count = RC_DB::table('platform_extend')->count();
-        $page = new ecjia_platform_page($count, 2, 5);
-        $arr = RC_DB::table('platform_extend')->where('enabled', 1)->orderBy('ext_id', 'desc')->get();
 
-        if (!empty($arr)) {
-            foreach ($arr as $k => $v) {
-                $extend_handle = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($v['ext_code']);
-                $extend_handle->setPlatformTypeCode($this->platformAccount->getTypeCode());
-                if (! $extend_handle->hasSupport($this->platformAccount->getPlatformAccountType()))
-                {
-                    unset($arr[$k]);
-                }
-                else
-                {
-                    if (!empty($ext_code_list) && in_array($v['ext_code'], $ext_code_list)) {
-                        $arr[$k]['added'] = 1;
-                    } else {
-                        $arr[$k]['added'] = 0;
-                    }
-                    $arr[$k]['icon'] = $extend_handle->getPluginIconUrl();
-                }
+        $plugins = with(new Ecjia\App\Platform\Plugin\PluginManager($this->platformAccount))->getEnabledPlugins(function($extend_handle, $plugin) use ($ext_code_list) {
+            if (!empty($ext_code_list) && in_array($plugin['ext_code'], $ext_code_list)) {
+                $plugin['added'] = 1;
+            } else {
+                $plugin['added'] = 0;
             }
-        }
-        $this->assign('arr', $arr);
+            $plugin['icon'] = $extend_handle->getPluginIconUrl();
+
+            return $plugin;
+        });
+
+        $this->assign('arr', $plugins);
 
         $this->assign('img_url', RC_App::apps_url('statics/image/', __FILE__));
 
