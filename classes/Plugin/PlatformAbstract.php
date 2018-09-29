@@ -59,6 +59,8 @@ abstract class PlatformAbstract extends AbstractPlugin
     
     protected $store_id;
 
+    protected $account;
+
     protected $keywrod;
     
     /**
@@ -126,10 +128,23 @@ abstract class PlatformAbstract extends AbstractPlugin
     {
         return $this->loadConfig('commands', null);
     }
+
+    public function setAccount($account)
+    {
+        $this->account = $account;
+
+        return $this;
+    }
+
+    public function getAccount()
+    {
+        return $this->account;
+    }
     
     public function setStoreId($store_id)
     {
         $this->store_id = $store_id;
+
         return $this;
     }
     
