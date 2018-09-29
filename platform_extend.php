@@ -109,7 +109,7 @@ class platform_extend extends ecjia_platform
 
             return $plugin;
         });
-
+        
         $this->assign('arr', $plugins);
 
         $this->assign('img_url', RC_App::apps_url('statics/image/', __FILE__));
