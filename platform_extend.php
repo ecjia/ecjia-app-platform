@@ -240,55 +240,6 @@ class platform_extend extends ecjia_platform
     }
 
     /**
-     * 编辑扩展功能页面
-     */
-    public function wechat_extend_edit()
-    {
-        $this->admin_priv('platform_extend_update');
-
-        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.edit_pub_extend')));
-
-        ecjia_platform_screen::get_current_screen()->add_help_tab(array(
-            'id' => 'overview',
-            'title' => RC_Lang::get('platform::platform.summarize'),
-            'content' =>
-            '<p>' . RC_Lang::get('platform::platform.welcome_pub_extend_edit') . '</p>',
-        ));
-
-        ecjia_platform_screen::get_current_screen()->set_help_sidebar(
-            '<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
-            '<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:公众号扩展#.E7.BC.96.E8.BE.91.E5.85.AC.E4.BC.97.E5.8F.B7.E6.89.A9.E5.B1.95" target="_blank">' . RC_Lang::get('platform::platform.pub_editext_help') . '</a>') . '</p>'
-        );
-
-        $id = $this->platformAccount->getAccountID();
-
-        $this->assign('action_link', array('text' => RC_Lang::get('platform::platform.public_extend'), 'href' => RC_Uri::url('platform/platform_extend/init')));
-        $this->assign('form_action', RC_Uri::url('platform/platform_extend/wechat_extend_save'));
-        $this->assign('ur_here', RC_Lang::get('platform::platform.edit_pub_extend'));
-
-        $code = !empty($_GET['code']) ? trim($_GET['code']) : '';
-        $name = $this->platformAccount->getAccountName();
-
-        $bd = RC_DB::table('platform_config')->where('ext_code', $code)->where('account_id', $id)->first();
-        $bd['ext_name'] = RC_DB::table('platform_extend')->where('ext_code', $code)->pluck('ext_name');
-
-        $ext_config = unserialize($bd['ext_config']);
-        $code_list = array();
-        if (!empty($ext_config)) {
-            foreach ($ext_config as $key => $value) {
-                $code_list[$value['name']] = $value['value'];
-            }
-        }
-        $payment_handle = new platform_factory($code);
-        $bd['ext_config'] = $payment_handle->configure_forms($code_list, true);
-        $this->assign('bd', $bd);
-        $this->assign('name', $name);
-
-        $this->assign_lang();
-        $this->display('wechat_extend_edit.dwt');
-    }
-
-    /**
      * 编辑扩展功能处理
      */
     public function wechat_extend_save()
