@@ -66,7 +66,7 @@ class AccountManager
     {
         $accountlist = $this->getAccountList($platform);
         $default = head($accountlist);
-        return $default->uuid;
+        return $default['uuid'];
     }
 
 
