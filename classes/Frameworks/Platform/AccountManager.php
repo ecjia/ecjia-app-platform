@@ -26,12 +26,18 @@ class AccountManager
      */
     public function getAccountList($platform) {
 
-        $accountlist = PlatformAccountModel::where('platform', $platform)
+        $model = PlatformAccountModel::where('platform', $platform)
             ->where('shop_id', $this->shopid)
             ->where('status', 1)
             ->orderBy('sort', 'DESC')
             ->orderBy('id', 'DESC')
             ->get();
+
+        if (empty($model)) {
+            $accountlist = [];
+        } else {
+            $accountlist = $model->toArray();
+        }
 
         return $accountlist;
     }
