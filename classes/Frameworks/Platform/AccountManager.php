@@ -32,12 +32,8 @@ class AccountManager
             ->orderBy('sort', 'DESC')
             ->orderBy('id', 'DESC')
             ->get();
-
-        if (empty($model)) {
-            $accountlist = [];
-        } else {
-            $accountlist = $model->toArray();
-        }
+            
+        $accountlist = $model->toArray();
 
         return $accountlist;
     }
