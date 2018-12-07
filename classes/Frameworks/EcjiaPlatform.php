@@ -88,8 +88,6 @@ define('IN_PLATFORM', true);
 
 abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_fileloader {
 
-	private $public_route;
-	
 	/**
 	 * 
 	 * @var \Ecjia\App\Platform\Frameworks\Platform\Account $platformAccount
