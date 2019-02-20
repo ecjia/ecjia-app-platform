@@ -89,9 +89,9 @@ class admin_privilege extends ecjia_admin
         ecjia_screen::get_current_screen()->add_option('current_code', 'platform_privilege_menu');
 
         /* 获得该管理员的权限 */
-        $user = new Ecjia\System\Admins\Users\AdminUser($userid, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
+        $user      = new Ecjia\System\Admins\Users\AdminUser($userid, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
         $user_name = $user->getUserName();
-        $priv_str = $user->getActionList();
+        $priv_str  = $user->getActionList();
 
         /* 如果被编辑的管理员拥有了all这个权限，将不能编辑 */
         if ($priv_str == 'all') {
@@ -122,7 +122,7 @@ class admin_privilege extends ecjia_admin
 
         $userid = $this->request->input('id');
         /* 取得当前管理员用户名 */
-        $user = new Ecjia\System\Admins\Users\AdminUser($userid, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
+        $user      = new Ecjia\System\Admins\Users\AdminUser($userid, '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
         $user_name = $user->getUserName();
 
         /* 更新管理员的权限 */

@@ -102,9 +102,9 @@ class platform_command extends ecjia_platform
         $this->assign('form_action', RC_Uri::url('platform/platform_command/insert'));
 
         $account_id = $this->platformAccount->getAccountID();
-        $platform = $this->platformAccount->getPlatform();
+        $platform   = $this->platformAccount->getPlatform();
 
-        $arr = [];
+        $arr       = [];
         $code_list = RC_DB::table('platform_command')->where('account_id', $account_id)->where('platform', $platform)->select(RC_DB::raw('distinct ext_code'))->get();
         if (!empty($code_list)) {
             foreach ($code_list as $key => $value) {
@@ -125,7 +125,7 @@ class platform_command extends ecjia_platform
         $this->assign('extend_list', $extend_list);
 
         $account_id = $this->platformAccount->getAccountID();
-        $platform = $this->platformAccount->getPlatform();
+        $platform   = $this->platformAccount->getPlatform();
 
         $this->display('wechat_command_add.dwt');
     }
@@ -143,7 +143,7 @@ class platform_command extends ecjia_platform
         }
 
         $account_id = $this->platformAccount->getAccountID();
-        $platform = $this->platformAccount->getPlatform();
+        $platform   = $this->platformAccount->getPlatform();
 
         $val = [];
         if (!empty($_POST['cmd_word'])) {
@@ -174,11 +174,11 @@ class platform_command extends ecjia_platform
 
         $data = [];
         foreach ($val as $k => $v) {
-            $data[$k]['cmd_word'] = $v;
+            $data[$k]['cmd_word']   = $v;
             $data[$k]['account_id'] = $account_id;
-            $data[$k]['platform'] = $platform;
-            $data[$k]['ext_code'] = $code;
-            $data[$k]['sub_code'] = !empty($_POST['sub_code'][$k]) ? $_POST['sub_code'][$k] : '';
+            $data[$k]['platform']   = $platform;
+            $data[$k]['ext_code']   = $code;
+            $data[$k]['sub_code']   = !empty($_POST['sub_code'][$k]) ? $_POST['sub_code'][$k] : '';
         }
         RC_DB::table('platform_command')->insert($data);
 
@@ -208,12 +208,12 @@ class platform_command extends ecjia_platform
         $this->assign('extend_list', $extend_list);
 
         $account_id = $this->platformAccount->getAccountID();
-        $platform = $this->platformAccount->getPlatform();
+        $platform   = $this->platformAccount->getPlatform();
 
         $ext_code = trim($_GET['ext_code']);
         $this->assign('ext_code', $ext_code);
 
-        $handler = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($ext_code);
+        $handler  = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($ext_code);
         $sub_code = $handler->getSubCode();
         $this->assign('sub_code', $sub_code);
 
@@ -233,8 +233,8 @@ class platform_command extends ecjia_platform
         $code = !empty($_POST['ext_code']) ? trim($_POST['ext_code']) : '';
 
         $account_id = $this->platformAccount->getAccountID();
-        $platform = $this->platformAccount->getPlatform();
-        $cmd_word = $_POST['cmd_word'];
+        $platform   = $this->platformAccount->getPlatform();
+        $cmd_word   = $_POST['cmd_word'];
 
         $val = [];
         if (!empty($cmd_word)) {
@@ -264,11 +264,11 @@ class platform_command extends ecjia_platform
 
         $data = [];
         foreach ($val as $k => $v) {
-            $data[$k]['cmd_word'] = $v;
+            $data[$k]['cmd_word']   = $v;
             $data[$k]['account_id'] = $account_id;
-            $data[$k]['platform'] = $platform;
-            $data[$k]['ext_code'] = $code;
-            $data[$k]['sub_code'] = !empty($_POST['sub_code'][$k]) ? $_POST['sub_code'][$k] : '';
+            $data[$k]['platform']   = $platform;
+            $data[$k]['ext_code']   = $code;
+            $data[$k]['sub_code']   = !empty($_POST['sub_code'][$k]) ? $_POST['sub_code'][$k] : '';
         }
         RC_DB::table('platform_command')->insert($data);
 
@@ -288,10 +288,10 @@ class platform_command extends ecjia_platform
         $this->admin_priv('platform_command_delete', ecjia::MSGTYPE_JSON);
 
         $ext_code = trim($_GET['ext_code']);
-        $cmd_id = intval($_GET['cmd_id']);
+        $cmd_id   = intval($_GET['cmd_id']);
 
         $account_id = $this->platformAccount->getAccountID();
-        $platform = $this->platformAccount->getPlatform();
+        $platform   = $this->platformAccount->getPlatform();
 
         $db = RC_DB::table('platform_command')->where('platform', $platform);
 
@@ -309,7 +309,7 @@ class platform_command extends ecjia_platform
     public function get_sub_code()
     {
         $ext_code = trim($_POST['ext_code']);
-        $handler = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($ext_code);
+        $handler  = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($ext_code);
         $sub_code = $handler->getSubCode();
 
         $this->assign('sub_code', $sub_code);
@@ -326,7 +326,7 @@ class platform_command extends ecjia_platform
         $db_command_view = RC_DB::table('platform_command as c')
             ->leftJoin('platform_extend as e', RC_DB::raw('e.ext_code'), '=', RC_DB::raw('c.ext_code'));
 
-        $type = !empty($_GET['platform']) ? $_GET['platform'] : '';
+        $type     = !empty($_GET['platform']) ? $_GET['platform'] : '';
         $keywords = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
 
         if (!empty($type)) {
@@ -338,14 +338,14 @@ class platform_command extends ecjia_platform
         $account_id = $this->platformAccount->getAccountID();
 
         $count = $db_command_view->where(RC_DB::raw('c.account_id'), $account_id)->groupBy(RC_DB::raw('c.ext_code'))->count();
-        $page = new ecjia_platform_page($count, 15, 5);
+        $page  = new ecjia_platform_page($count, 15, 5);
 
         $data = $db_command_view->select(RC_DB::raw('c.ext_code'), RC_DB::raw('e.ext_name'))->groupBy(RC_DB::raw('c.ext_code'))->orderBy(RC_DB::raw('c.cmd_id'), 'asc')->take(15)->skip($page->start_id - 1)->get();
 
         if (!empty($data)) {
             foreach ($data as $k => $v) {
-                $cmd_list = RC_DB::table('platform_command')->where('account_id', $account_id)->where('ext_code', $v['ext_code'])->orderBy('cmd_id', 'asc')->get();
-                $data[$k]['cmd_list'] = $cmd_list;
+                $cmd_list                = RC_DB::table('platform_command')->where('account_id', $account_id)->where('ext_code', $v['ext_code'])->orderBy('cmd_id', 'asc')->get();
+                $data[$k]['cmd_list']    = $cmd_list;
                 $data[$k]['has_subcode'] = 0;
                 if (!empty($cmd_list)) {
                     foreach ($cmd_list as $key => $val) {

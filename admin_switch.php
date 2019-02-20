@@ -59,13 +59,13 @@ class admin_switch extends ecjia_admin
 
     public function init()
     {
-        $request = royalcms('request');
-        $uuid = $request->get('uuid');
+        $request  = royalcms('request');
+        $uuid     = $request->get('uuid');
         $platform = $request->get('platform');
 
         RC_Loader::load_app_class('platform_account', 'platform', false);
         $platform_account = platform_account::make($uuid);
-        $account = $platform_account->getAccount();
+        $account          = $platform_account->getAccount();
 
         if (platform_account::getCurrentUUID($platform) == $uuid) {
             $url = $_SERVER['HTTP_REFERER'];

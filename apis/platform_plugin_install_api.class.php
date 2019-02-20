@@ -77,10 +77,7 @@ class platform_plugin_install_api extends Component_Event_Api
                 return ecjia_plugin::add_error('plugin_install_error', __('公众平台插件名称不能为空', 'platform'));
             }
 
-            //$db = RC_Loader::load_app_model('platform_extend_model', 'platform');
-
             /* 检测支付名称重复 */
-            //$data = $db->where("`ext_name` = '" . $format_name . "' and `ext_code` = '" . $options['config']['ext_code'] . "'")->count();
             $data = RC_DB::table('platform_extend')->where('ext_name', $format_name)->where('ext_code', $options['config']['ext_code'])->count();
             if ($data > 0) {
                 return ecjia_plugin::add_error('plugin_install_error', __('安装的插件已存在', 'platform'));
@@ -90,7 +87,6 @@ class platform_plugin_install_api extends Component_Event_Api
             $connect_config = serialize($options['config']['forms']);
 
             /* 安装，检查该支付方式是否曾经安装过 */
-            //$count = $db->where("`ext_code` = '" . $options['config']['ext_code'] . "'")->count();
             $count = RC_DB::table('platform_extend')->where('ext_code', $options['config']['ext_code'])->count();
 
             if ($count > 0) {
@@ -102,7 +98,6 @@ class platform_plugin_install_api extends Component_Event_Api
                     'enabled'    => 1
                 );
 
-                //$db->where("`ext_code` = '" . $options['config']['ext_code'] . "'")->update($data);
                 RC_DB::table('platform_extend')->where('ext_code', $options['config']['ext_code'])->update($data);
             } else {
                 /* 该支付方式没有安装过, 将该支付方式的信息添加到数据库 */

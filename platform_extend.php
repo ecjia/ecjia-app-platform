@@ -82,10 +82,10 @@ class platform_extend extends ecjia_platform
         $this->assign('ur_here', '插件库');
 
         ecjia_platform_screen::get_current_screen()->add_help_tab(array(
-            'id' => 'overview',
-            'title' => RC_Lang::get('platform::platform.summarize'),
+            'id'      => 'overview',
+            'title'   => RC_Lang::get('platform::platform.summarize'),
             'content' =>
-            '<p>' . RC_Lang::get('platform::platform.welcome_pub_extend') . '</p>',
+                '<p>' . RC_Lang::get('platform::platform.welcome_pub_extend') . '</p>',
         ));
 
         ecjia_platform_screen::get_current_screen()->set_help_sidebar(
@@ -99,7 +99,7 @@ class platform_extend extends ecjia_platform
 
         $ext_code_list = RC_DB::table('platform_config')->where('account_id', $id)->lists('ext_code');
 
-        $plugins = with(new Ecjia\App\Platform\Plugin\PluginManager($this->platformAccount))->getEnabledPlugins(function($extend_handle, $plugin) use ($ext_code_list) {
+        $plugins = with(new Ecjia\App\Platform\Plugin\PluginManager($this->platformAccount))->getEnabledPlugins(function ($extend_handle, $plugin) use ($ext_code_list) {
             if (!empty($ext_code_list) && in_array($plugin['ext_code'], $ext_code_list)) {
                 $plugin['added'] = 1;
             } else {
@@ -109,12 +109,10 @@ class platform_extend extends ecjia_platform
 
             return $plugin;
         });
-        
-        $this->assign('arr', $plugins);
 
+        $this->assign('arr', $plugins);
         $this->assign('img_url', RC_App::apps_url('statics/image/', __FILE__));
 
-        $this->assign_lang();
         $this->display('wechat_extend.dwt');
     }
 
@@ -126,20 +124,20 @@ class platform_extend extends ecjia_platform
         $this->admin_priv('platform_extend_add', ecjia::MSGTYPE_JSON);
 
         $wechat_id = $this->platformAccount->getAccountID();
-        $platform = $this->platformAccount->getPlatform();
+        $platform  = $this->platformAccount->getPlatform();
 
         $code = trim($_POST['code']);
         $info = RC_DB::table('platform_extend')->where('ext_code', $code)->where('enabled', 1)->first();
 
         $data = array(
-            'ext_code' => $code,
+            'ext_code'   => $code,
             'account_id' => $wechat_id,
             'ext_config' => $info['ext_config'],
         );
         RC_DB::table('platform_config')->insert($data);
 
         //添加该插件的默认命令
-        $extend_handle = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($code);
+        $extend_handle    = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($code);
         $default_commands = $extend_handle->getDefaultCommands();
 
         $cmd_word = '';
@@ -149,17 +147,17 @@ class platform_extend extends ecjia_platform
                 //查询关键词是否存在
                 $count = RC_DB::table('platform_command')->where('account_id', $wechat_id)->where('cmd_word', $v)->count();
                 if ($count == 0) {
-                    $arr['cmd_word'] = $v;
+                    $arr['cmd_word']   = $v;
                     $arr['account_id'] = $wechat_id;
-                    $arr['platform'] = $platform;
-                    $arr['ext_code'] = $code;
-                    $arr['sub_code'] = '';
+                    $arr['platform']   = $platform;
+                    $arr['ext_code']   = $code;
+                    $arr['sub_code']   = '';
                     RC_DB::table('platform_command')->insert($arr);
                 } else {
                     if (empty($cmd_word)) {
                         $cmd_word = $v;
                     } else {
-                        $cmd_word .= '、'.$v;
+                        $cmd_word .= '、' . $v;
                     }
                 }
             }
@@ -169,7 +167,7 @@ class platform_extend extends ecjia_platform
         if (empty($cmd_word)) {
             $message = '开通成功';
         } else {
-            $message = '开通成功，关键词 '.$cmd_word.' 已存在，无法添加。';
+            $message = '开通成功，关键词 ' . $cmd_word . ' 已存在，无法添加。';
         }
         return $this->showmessage($message, ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_extend/wechat_extend_view', array('code' => $code))));
     }
@@ -197,7 +195,7 @@ class platform_extend extends ecjia_platform
             return $this->showmessage('该扩展不存在或未启用', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => array(array('text' => '返回插件库', 'href' => RC_Uri::url('platform/platform_extend/init')))));
         }
         $extend_handle = with(new Ecjia\App\Platform\Plugin\PlatformPlugin)->channel($code);
-        $info['icon'] = $extend_handle->getPluginIconUrl();
+        $info['icon']  = $extend_handle->getPluginIconUrl();
         $this->assign('info', $info);
 
         $bd = RC_DB::table('platform_config')->where('ext_code', $code)->where('account_id', $id)->first();
@@ -224,7 +222,6 @@ class platform_extend extends ecjia_platform
         $this->assign('bd', $bd);
         $this->assign('images_url', RC_App::apps_url('statics/image/', __FILE__));
 
-        $this->assign_lang();
         $this->display('wechat_extend_view.dwt');
     }
 
@@ -236,15 +233,15 @@ class platform_extend extends ecjia_platform
         $this->admin_priv('platform_extend_update', ecjia::MSGTYPE_JSON);
 
         $account_id = $this->platformAccount->getAccountID();
-        $ext_code = !empty($_POST['ext_code']) ? trim($_POST['ext_code']) : '';
+        $ext_code   = !empty($_POST['ext_code']) ? trim($_POST['ext_code']) : '';
 
         /* 取得配置信息 */
         $ext_config = array();
         if (isset($_POST['cfg_value']) && is_array($_POST['cfg_value'])) {
             for ($i = 0; $i < count($_POST['cfg_value']); $i++) {
                 $ext_config[] = array(
-                    'name' => trim($_POST['cfg_name'][$i]),
-                    'type' => trim($_POST['cfg_type'][$i]),
+                    'name'  => trim($_POST['cfg_name'][$i]),
+                    'type'  => trim($_POST['cfg_type'][$i]),
                     'value' => trim($_POST['cfg_value'][$i]),
                 );
             }
@@ -271,7 +268,7 @@ class platform_extend extends ecjia_platform
     {
         $this->admin_priv('platform_extend_delete', ecjia::MSGTYPE_JSON);
 
-        $id = $this->platformAccount->getAccountID();
+        $id       = $this->platformAccount->getAccountID();
         $ext_code = !empty($_POST['code']) ? trim($_POST['code']) : '';
 
         $info = RC_DB::table('platform_config as c')
@@ -325,7 +322,7 @@ class platform_extend extends ecjia_platform
     {
         $db_platform_account = RC_DB::table('platform_account');
 
-        $filter = array();
+        $filter             = array();
         $filter['keywords'] = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
 
         $where = '';
@@ -339,11 +336,11 @@ class platform_extend extends ecjia_platform
             $db_platform_account->where('platform', $platform);
         }
 
-        $count = $db_platform_account->count();
+        $count                  = $db_platform_account->count();
         $filter['record_count'] = $count;
-        $page = new ecjia_platform_page($count, 10, 5);
+        $page                   = new ecjia_platform_page($count, 10, 5);
 
-        $arr = array();
+        $arr  = array();
         $data = $db_platform_account->orderBy('sort', 'asc')->orderBy('add_time', 'desc')->take(10)->skip($page->start_id - 1)->get();
         if (isset($data)) {
             foreach ($data as $rows) {
@@ -364,7 +361,7 @@ class platform_extend extends ecjia_platform
      */
     public function get_extend_list()
     {
-        $id = $this->platformAccount->getAccountID();
+        $id       = $this->platformAccount->getAccountID();
         $keywords = trim($_GET['JSON']['keywords']);
 
         $db_platform_extend = RC_DB::table('platform_extend');
@@ -393,9 +390,9 @@ class platform_extend extends ecjia_platform
         if (!empty($platform_list)) {
             foreach ($platform_list as $key => $val) {
                 $opt[] = array(
-                    'ext_id' => $val['ext_id'],
-                    'ext_name' => $val['ext_name'],
-                    'ext_code' => $val['ext_code'],
+                    'ext_id'     => $val['ext_id'],
+                    'ext_name'   => $val['ext_name'],
+                    'ext_code'   => $val['ext_code'],
                     'ext_config' => $val['ext_config'],
                 );
             }
