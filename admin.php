@@ -79,7 +79,7 @@ class admin extends ecjia_admin
         RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
         RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
 
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_list'), RC_Uri::url('platform/admin/init')));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('公众号列表', 'platform'), RC_Uri::url('platform/admin/init')));
     }
 
     /**
@@ -90,21 +90,21 @@ class admin extends ecjia_admin
         $this->admin_priv('platform_config_manage');
 
         ecjia_screen::get_current_screen()->remove_last_nav_here();
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_list')));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('公众号列表', 'platform')));
         ecjia_screen::get_current_screen()->add_help_tab(array(
             'id'      => 'overview',
-            'title'   => RC_Lang::get('platform::platform.summarize'),
+            'title'   => __('概述', 'platform'),
             'content' =>
-                '<p>' . RC_Lang::get('platform::platform.welcome_pub_list') . '</p>',
+                '<p>' . __('欢迎访问ECJia智能后台公众号列表页面，系统中所有的公众号都会显示在此列表中。', 'platform') . '</p>',
         ));
 
         ecjia_screen::get_current_screen()->set_help_sidebar(
-            '<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
-            '<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号" target="_blank">' . RC_Lang::get('platform::platform.pub_list_help') . '</a>') . '</p>'
+            '<p><strong>' . __('更多信息：') . '</strong></p>' .
+            '<p>' . sprintf(__('<a href="%s" target="_blank">关于公众号列表帮助文档</a>', 'platform'), 'https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号') . '</p>'
         );
 
-        $this->assign('ur_here', RC_Lang::get('platform::platform.platform_list'));
-        $this->assign('action_link', array('text' => RC_Lang::get('platform::platform.platform_add'), 'href' => RC_Uri::url('platform/admin/add')));
+        $this->assign('ur_here', __('公众号列表', 'platform'));
+        $this->assign('action_link', array('text' => __('添加公众号', 'platform'), 'href' => RC_Uri::url('platform/admin/add')));
 
         $wechat_list = $this->wechat_list();
         $this->assign('wechat_list', $wechat_list);
@@ -120,21 +120,21 @@ class admin extends ecjia_admin
     {
         $this->admin_priv('platform_config_add');
 
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_list')));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('公众号列表'));
         ecjia_screen::get_current_screen()->add_help_tab(array(
             'id'      => 'overview',
-            'title'   => RC_Lang::get('platform::platform.summarize'),
+            'title'   => __('概述', 'platform'),
             'content' =>
-                '<p>' . RC_Lang::get('platform::platform.welcome_pub_add') . '</p>',
+                '<p>' . __('欢迎访问ECJia智能后台添加公众号页面，在此页面可以进行添加公众号操作。', 'platform') . '</p>',
         ));
 
         ecjia_screen::get_current_screen()->set_help_sidebar(
-            '<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
-            '<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号#.E6.B7.BB.E5.8A.A0.E5.85.AC.E4.BC.97.E5.8F.B7" target="_blank">' . RC_Lang::get('platform::platform.add_pub_help') . '</a>') . '</p>'
+            '<p><strong>' . __('更多信息', 'platform') . '</strong></p>' .
+            '<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号#.E6.B7.BB.E5.8A.A0.E5.85.AC.E4.BC.97.E5.8F.B7" target="_blank">' . __('关于添加公众号帮助文档', 'platform') . '</a>') . '</p>'
         );
 
-        $this->assign('ur_here', RC_Lang::get('platform::platform.platform_add'));
-        $this->assign('action_link', array('text' => RC_Lang::get('platform::platform.platform_list'), 'href' => RC_Uri::url('platform/admin/init')));
+        $this->assign('ur_here', '添加公众号');
+        $this->assign('action_link', array('text' => '公众号列表', 'href' => RC_Uri::url('platform/admin/init')));
         $this->assign('form_action', RC_Uri::url('platform/admin/insert'));
         $this->assign('wechat', array('status' => 1));
 
@@ -157,7 +157,7 @@ class admin extends ecjia_admin
         $aeskey    = !empty($_POST['aeskey']) ? trim($_POST['aeskey']) : '';
 
         if (empty($platform)) {
-            return $this->showmessage(RC_Lang::get('platform::platform.select_terrace'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage('请选择平台', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         if (empty($name)) {
             return $this->showmessage('请输入公众号名称', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -204,7 +204,7 @@ class admin extends ecjia_admin
         $id   = RC_DB::table('platform_account')->insertGetId($data);
 
         ecjia_admin::admin_log($_POST['name'], 'add', 'wechat');
-        return $this->showmessage(RC_Lang::get('platform::platform.add_pub_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/edit', array('id' => $id))));
+        return $this->showmessage('添加公众号成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/edit', array('id' => $id))));
     }
 
     /**
@@ -214,20 +214,20 @@ class admin extends ecjia_admin
     {
         $this->admin_priv('platform_config_update');
 
-        $this->assign('ur_here', RC_Lang::get('platform::platform.platform_edit'));
-        $this->assign('action_link', array('text' => RC_Lang::get('platform::platform.platform_list'), 'href' => RC_Uri::url('platform/admin/init')));
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.platform_edit')));
+        $this->assign('ur_here', '编辑公众号');
+        $this->assign('action_link', array('text' => '公众号列表', 'href' => RC_Uri::url('platform/admin/init')));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('编辑公众号'));
 
         ecjia_screen::get_current_screen()->add_help_tab(array(
             'id'      => 'overview',
-            'title'   => RC_Lang::get('platform::platform.summarize'),
+            'title'   => '概述',
             'content' =>
-                '<p>' . RC_Lang::get('platform::platform.welcome_pub_edit') . '</p>',
+                '<p>' . __('欢迎访问ECJia智能后台编辑公众号页面，在此页面可以进行编辑公众号操作。', 'platform') . '</p>',
         ));
 
         ecjia_screen::get_current_screen()->set_help_sidebar(
-            '<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
-            '<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号#.E7.BC.96.E8.BE.91.E5.85.AC.E4.BC.97.E5.8F.B7" target="_blank">' . RC_Lang::get('platform::platform.edit_pub_help') . '</a>') . '</p>'
+            '<p><strong>' . __('更多信息', 'platform') . '</strong></p>' .
+            '<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号#.E7.BC.96.E8.BE.91.E5.85.AC.E4.BC.97.E5.8F.B7" target="_blank">' . __('关于编辑公众号帮助文档', 'platform') . '</a>') . '</p>'
         );
 
         $wechat = RC_DB::table('platform_account')->where('id', intval($_GET['id']))->first();
@@ -261,7 +261,7 @@ class admin extends ecjia_admin
         $aeskey    = !empty($_POST['aeskey']) ? trim($_POST['aeskey']) : '';
 
         if (empty($platform)) {
-            return $this->showmessage(RC_Lang::get('platform::platform.select_terrace'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage('请选择平台', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         if (empty($name)) {
             return $this->showmessage('请输入公众号名称', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -310,7 +310,7 @@ class admin extends ecjia_admin
         RC_DB::table('platform_account')->where('id', $id)->update($data);
 
         ecjia_admin::admin_log($_POST['name'], 'edit', 'wechat');
-        return $this->showmessage(RC_Lang::get('platform::platform.edit_pub_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/edit', array('id' => $id))));
+        return $this->showmessage('编辑公众号成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/edit', array('id' => $id))));
     }
 
     /**
@@ -334,9 +334,9 @@ class admin extends ecjia_admin
 
         if ($success) {
             ecjia_admin::admin_log($info['name'], 'remove', 'wechat');
-            return $this->showmessage(RC_Lang::get('platform::platform.remove_pub_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/init')));
+            return $this->showmessage('删除公众号成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/init')));
         } else {
-            return $this->showmessage(RC_Lang::get('platform::platform.remove_pub_failed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage('删除公众号失败！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
     }
 
@@ -356,12 +356,12 @@ class admin extends ecjia_admin
         $data   = array('logo' => '');
         $update = RC_DB::table('platform_account')->where('id', $id)->update($data);
 
-        ecjia_admin::admin_log(RC_Lang::get('platform::platform.public_name_is') . $info['name'], 'remove', 'platform_logo');
+        ecjia_admin::admin_log(sprintf(__('公众号名称为%s', 'platform'), $info['name']), 'remove', 'platform_logo');
 
         if ($update) {
-            return $this->showmessage(RC_Lang::get('platform::platform.remove_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+            return $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
         } else {
-            return $this->showmessage(RC_Lang::get('platform::platform.remove_failed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage('删除失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
     }
 
@@ -383,7 +383,7 @@ class admin extends ecjia_admin
             ecjia_admin::admin_log($name, 'stop', 'wechat');
         }
 
-        return $this->showmessage(RC_Lang::get('platform::platform.switch_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content' => $val, 'pjaxurl' => RC_Uri::url('platform/admin/init')));
+        return $this->showmessage('切换状态成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content' => $val, 'pjaxurl' => RC_Uri::url('platform/admin/init')));
     }
 
     /**
@@ -398,17 +398,17 @@ class admin extends ecjia_admin
 
         if (!empty($sort)) {
             if (!is_numeric($sort)) {
-                return $this->showmessage(RC_Lang::get('platform::platform.import_num'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage('请输入数值！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             } else {
                 $update = RC_DB::table('platform_account')->where('id', $id)->update(array('sort' => $sort));
                 if ($update) {
-                    return $this->showmessage(RC_Lang::get('platform::platform.editsort_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('platform/admin/init')));
+                    return $this->showmessage('编辑排序成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('platform/admin/init')));
                 } else {
-                    return $this->showmessage(RC_Lang::get('platform::platform.editsort_failed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                    return $this->showmessage('编辑排序失败！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
                 }
             }
         } else {
-            return $this->showmessage(RC_Lang::get('platform::platform.pubsort_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage('公众号排序不能为空！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
     }
 
@@ -466,7 +466,8 @@ class admin extends ecjia_admin
         }
         RC_DB::table('platform_account')->whereIn('id', $idArr)->delete();
 
-        return $this->showmessage(RC_Lang::get('platform::platform.deleted') . "[ " . $count . " ]" . RC_Lang::get('platform::platform.record_account'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/init')));
+
+        return $this->showmessage(sprintf(__('本次删除了[%s]条记录！', 'platform'), $count), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/init')));
     }
 
     /**
