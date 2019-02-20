@@ -99,8 +99,8 @@ class admin extends ecjia_admin
         ));
 
         ecjia_screen::get_current_screen()->set_help_sidebar(
-            '<p><strong>' . __('更多信息：') . '</strong></p>' .
-            '<p>' . sprintf(__('<a href="%s" target="_blank">关于公众号列表帮助文档</a>', 'platform'), 'https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号') . '</p>'
+            '<p><strong>' . __('更多信息：', 'platform') . '</strong></p>' .
+            '<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号" target="_blank">' . __('关于公众号列表帮助文档', 'platform') . '</a>') . '</p>'
         );
 
         $this->assign('ur_here', __('公众号列表', 'platform'));
@@ -120,12 +120,11 @@ class admin extends ecjia_admin
     {
         $this->admin_priv('platform_config_add');
 
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('公众号列表'));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('公众号列表', 'platform')));
         ecjia_screen::get_current_screen()->add_help_tab(array(
             'id'      => 'overview',
             'title'   => __('概述', 'platform'),
-            'content' =>
-                '<p>' . __('欢迎访问ECJia智能后台添加公众号页面，在此页面可以进行添加公众号操作。', 'platform') . '</p>',
+            'content' => '<p>' . __('欢迎访问ECJia智能后台添加公众号页面，在此页面可以进行添加公众号操作。', 'platform') . '</p>',
         ));
 
         ecjia_screen::get_current_screen()->set_help_sidebar(
@@ -133,8 +132,8 @@ class admin extends ecjia_admin
             '<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:管理公众号#.E6.B7.BB.E5.8A.A0.E5.85.AC.E4.BC.97.E5.8F.B7" target="_blank">' . __('关于添加公众号帮助文档', 'platform') . '</a>') . '</p>'
         );
 
-        $this->assign('ur_here', '添加公众号');
-        $this->assign('action_link', array('text' => '公众号列表', 'href' => RC_Uri::url('platform/admin/init')));
+        $this->assign('ur_here', __('添加公众号', 'platform'));
+        $this->assign('action_link', array('text' => __('公众号列表', 'platform'), 'href' => RC_Uri::url('platform/admin/init')));
         $this->assign('form_action', RC_Uri::url('platform/admin/insert'));
         $this->assign('wechat', array('status' => 1));
 
@@ -157,19 +156,19 @@ class admin extends ecjia_admin
         $aeskey    = !empty($_POST['aeskey']) ? trim($_POST['aeskey']) : '';
 
         if (empty($platform)) {
-            return $this->showmessage('请选择平台', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请选择平台', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         if (empty($name)) {
-            return $this->showmessage('请输入公众号名称', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请输入公众号名称', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         if (empty($token)) {
-            return $this->showmessage('请输入Token', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请输入Token', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         if (empty($appid)) {
-            return $this->showmessage('请输入AppID', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请输入AppID', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         if (empty($appsecret)) {
-            return $this->showmessage('请输入AppSecret', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请输入AppSecret', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         $uuid = Royalcms\Component\Uuid\Uuid::generate();
@@ -204,7 +203,7 @@ class admin extends ecjia_admin
         $id   = RC_DB::table('platform_account')->insertGetId($data);
 
         ecjia_admin::admin_log($_POST['name'], 'add', 'wechat');
-        return $this->showmessage('添加公众号成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/edit', array('id' => $id))));
+        return $this->showmessage(__('添加公众号成功！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/edit', array('id' => $id))));
     }
 
     /**
@@ -214,13 +213,13 @@ class admin extends ecjia_admin
     {
         $this->admin_priv('platform_config_update');
 
-        $this->assign('ur_here', '编辑公众号');
-        $this->assign('action_link', array('text' => '公众号列表', 'href' => RC_Uri::url('platform/admin/init')));
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('编辑公众号'));
+        $this->assign('ur_here', __('编辑公众号', 'platform'));
+        $this->assign('action_link', array('text' => __('公众号列表', 'platform'), 'href' => RC_Uri::url('platform/admin/init')));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('编辑公众号', 'platform')));
 
         ecjia_screen::get_current_screen()->add_help_tab(array(
             'id'      => 'overview',
-            'title'   => '概述',
+            'title'   => __('概述', 'platform'),
             'content' =>
                 '<p>' . __('欢迎访问ECJia智能后台编辑公众号页面，在此页面可以进行编辑公众号操作。', 'platform') . '</p>',
         ));
@@ -261,19 +260,19 @@ class admin extends ecjia_admin
         $aeskey    = !empty($_POST['aeskey']) ? trim($_POST['aeskey']) : '';
 
         if (empty($platform)) {
-            return $this->showmessage('请选择平台', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请选择平台', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         if (empty($name)) {
-            return $this->showmessage('请输入公众号名称', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请输入公众号名称', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         if (empty($token)) {
-            return $this->showmessage('请输入Token', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请输入Token', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         if (empty($appid)) {
-            return $this->showmessage('请输入AppID', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请输入AppID', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         if (empty($appsecret)) {
-            return $this->showmessage('请输入AppSecret', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请输入AppSecret', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         //获取旧的logo
@@ -310,7 +309,7 @@ class admin extends ecjia_admin
         RC_DB::table('platform_account')->where('id', $id)->update($data);
 
         ecjia_admin::admin_log($_POST['name'], 'edit', 'wechat');
-        return $this->showmessage('编辑公众号成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/edit', array('id' => $id))));
+        return $this->showmessage(__('编辑公众号成功！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/edit', array('id' => $id))));
     }
 
     /**
@@ -334,9 +333,9 @@ class admin extends ecjia_admin
 
         if ($success) {
             ecjia_admin::admin_log($info['name'], 'remove', 'wechat');
-            return $this->showmessage('删除公众号成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/init')));
+            return $this->showmessage(__('删除公众号成功！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/admin/init')));
         } else {
-            return $this->showmessage('删除公众号失败！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('删除公众号失败！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
     }
 
@@ -359,9 +358,9 @@ class admin extends ecjia_admin
         ecjia_admin::admin_log(sprintf(__('公众号名称为%s', 'platform'), $info['name']), 'remove', 'platform_logo');
 
         if ($update) {
-            return $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+            return $this->showmessage(__('删除成功', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
         } else {
-            return $this->showmessage('删除失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('删除失败', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
     }
 
@@ -383,7 +382,7 @@ class admin extends ecjia_admin
             ecjia_admin::admin_log($name, 'stop', 'wechat');
         }
 
-        return $this->showmessage('切换状态成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content' => $val, 'pjaxurl' => RC_Uri::url('platform/admin/init')));
+        return $this->showmessage(__('切换状态成功！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content' => $val, 'pjaxurl' => RC_Uri::url('platform/admin/init')));
     }
 
     /**
@@ -398,17 +397,17 @@ class admin extends ecjia_admin
 
         if (!empty($sort)) {
             if (!is_numeric($sort)) {
-                return $this->showmessage('请输入数值！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage(__('请输入数值！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             } else {
                 $update = RC_DB::table('platform_account')->where('id', $id)->update(array('sort' => $sort));
                 if ($update) {
-                    return $this->showmessage('编辑排序成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('platform/admin/init')));
+                    return $this->showmessage(__('编辑排序成功！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('platform/admin/init')));
                 } else {
-                    return $this->showmessage('编辑排序失败！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                    return $this->showmessage(__('编辑排序失败！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
                 }
             }
         } else {
-            return $this->showmessage('公众号排序不能为空！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('公众号排序不能为空！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
     }
 
@@ -418,7 +417,7 @@ class admin extends ecjia_admin
 
         $uuid = RC_DB::table('platform_account')->where('id', $id)->pluck('uuid');
         if (empty($uuid)) {
-            return $this->showmessage(__('该公众号不存在', 'app-platform'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('该公众号不存在', 'platform'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
         }
 
         //公众平台的超管权限同平台后台的权限
@@ -477,7 +476,7 @@ class admin extends ecjia_admin
     {
         $key = rc_random(16, 'abcdefghijklmnopqrstuvwxyz0123456789');
         $key = 'ecjia' . $key;
-        return $this->showmessage('生成token成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('token' => $key));
+        return $this->showmessage(__('生成token成功', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('token' => $key));
     }
 
     /**

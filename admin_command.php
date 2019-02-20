@@ -80,24 +80,24 @@ class admin_command extends ecjia_admin
     {
         $this->admin_priv('platform_command_manage');
 
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.function_extend'), RC_Uri::url('platform/admin_plugin/init')));
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('platform::platform.command_list')));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('功能扩展', 'platform'), RC_Uri::url('platform/admin_plugin/init')));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('命令列表', 'platform')));
         ecjia_screen::get_current_screen()->add_help_tab(array(
             'id'      => 'overview',
-            'title'   => RC_Lang::get('platform::platform.summarize'),
+            'title'   => __('概述', 'platform'),
             'content' =>
-                '<p>' . RC_Lang::get('platform::platform.welcome_command') . '</p>',
+                '<p>' . __('欢迎访问ECJia智能后台功能扩展命令页面，有关该扩展的命令都会显示在此列表中。', 'platform') . '</p>',
         ));
         ecjia_screen::get_current_screen()->set_help_sidebar(
-            '<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
-            '<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:功能扩展#.E6.9F.A5.E7.9C.8B.E5.91.BD.E4.BB.A4" target="_blank">' . RC_Lang::get('platform::platform.extend_commandlist_help') . '</a>') . '</p>'
+            '<p><strong>' . __('更多信息', 'platform') . '</strong></p>' .
+            '<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:功能扩展#.E6.9F.A5.E7.9C.8B.E5.91.BD.E4.BB.A4" target="_blank">' . __('关于功能扩展命令列表帮助文档', 'platform') . '</a>') . '</p>'
         );
 
         $id   = !empty($_GET['id']) ? $_GET['id'] : 0;
         $code = !empty($_GET['code']) ? trim($_GET['code']) : '';
 
-        $this->assign('ur_here', RC_Lang::get('platform::platform.command_list'));
-        $this->assign('back_link', array('text' => RC_Lang::get('platform::platform.function_extend'), 'href' => RC_Uri::url('platform/admin_plugin/init')));
+        $this->assign('ur_here', __('命令列表', 'platform'));
+        $this->assign('back_link', array('text' => __('功能扩展', 'platform'), 'href' => RC_Uri::url('platform/admin_plugin/init')));
         $this->assign('search_action', RC_Uri::url('platform/admin_command/extend_command', array('code' => $code)));
 
         $ext_name = RC_DB::table('platform_extend')->where('ext_code', $code)->pluck('ext_name');

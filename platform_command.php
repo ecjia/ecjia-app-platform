@@ -65,7 +65,7 @@ class platform_command extends ecjia_platform
         RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
         RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
 
-        ecjia_platform_screen::get_current_screen()->set_subject('关键词命令');
+        ecjia_platform_screen::get_current_screen()->set_subject(__('关键词命令', 'platform'));
     }
 
     /**
@@ -75,14 +75,14 @@ class platform_command extends ecjia_platform
     {
         $this->admin_priv('platform_command_manage');
 
-        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('关键词命令'));
-        $this->assign('ur_here', '关键词命令');
+        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('关键词命令', 'platform')));
+        $this->assign('ur_here', __('关键词命令', 'platform'));
 
         $account_id = $this->platformAccount->getAccountID();
 
-        $this->assign('ur_here', '关键词列表');
+        $this->assign('ur_here', __('关键词列表', 'platform'));
         $this->assign('search_action', RC_Uri::url('platform/platform_command/init'));
-        $this->assign('action_link', array('text' => '添加关键词', 'href' => RC_Uri::url('platform/platform_command/add')));
+        $this->assign('action_link', array('text' => __('添加关键词', 'platform'), 'href' => RC_Uri::url('platform/platform_command/add')));
 
         $modules = $this->get_command_list();
         $this->assign('modules', $modules);
@@ -94,11 +94,11 @@ class platform_command extends ecjia_platform
     {
         $this->admin_priv('platform_command_add');
 
-        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('关键词命令', RC_Uri::url('platform/platform_command/init')));
-        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('添加关键词'));
+        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('关键词命令', 'platform'), RC_Uri::url('platform/platform_command/init')));
+        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('添加关键词', 'platform')));
 
-        $this->assign('ur_here', '添加关键词');
-        $this->assign('action_link', array('text' => '关键词列表', 'href' => RC_Uri::url('platform/platform_command/init')));
+        $this->assign('ur_here', __('添加关键词', 'platform'));
+        $this->assign('action_link', array('text' => __('关键词列表', 'platform'), 'href' => RC_Uri::url('platform/platform_command/init')));
         $this->assign('form_action', RC_Uri::url('platform/platform_command/insert'));
 
         $account_id = $this->platformAccount->getAccountID();
@@ -139,7 +139,7 @@ class platform_command extends ecjia_platform
 
         $code = !empty($_POST['ext_code']) ? trim($_POST['ext_code']) : '';
         if (empty($code)) {
-            return $this->showmessage('请选择插件', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请选择插件', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         $account_id = $this->platformAccount->getAccountID();
@@ -149,12 +149,12 @@ class platform_command extends ecjia_platform
         if (!empty($_POST['cmd_word'])) {
             foreach ($_POST['cmd_word'] as $key => $value) {
                 if (empty($value)) {
-                    return $this->showmessage(RC_Lang::get('platform::platform.keyword_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                    return $this->showmessage(__('关键词不能为空！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
                 }
                 //判断关键词是否重复
                 $count = RC_DB::table('platform_command')->where('account_id', $account_id)->where('cmd_word', $value)->count();
                 if ($count != 0) {
-                    return $this->showmessage(sprintf(RC_Lang::get('platform::platform.keywords_exist'), $value), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                    return $this->showmessage(sprintf(__('关键词[%s]已存在', 'platform'), $value), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
                 }
                 $val[] = $value;
             }
@@ -163,13 +163,13 @@ class platform_command extends ecjia_platform
         $count = array_count_values($val);
         foreach ($count as $c) {
             if ($c > 1) {
-                return $this->showmessage(RC_Lang::get('platform::platform.keyword_notrepeat'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage(__('关键词不能重复！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
         }
 
         $code_count = RC_DB::table('platform_command')->where('account_id', $account_id)->where('platform', $platform)->where('ext_code', $code)->count();
         if ($code_count > 0) {
-            return $this->showmessage('该插件已存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('该插件已存在', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         $data = [];
@@ -185,9 +185,9 @@ class platform_command extends ecjia_platform
         $ext_name = RC_DB::table('platform_extend')->where('ext_code', $code)->pluck('ext_name');
 
         foreach ($data as $v) {
-            $this->admin_log(RC_Lang::get('platform::platform.extend_name_is') . $ext_name . '，' . RC_Lang::get('platform::platform.keyword_is') . $v['cmd_word'], 'add', 'keyword');
+            $this->admin_log(sprintf(__('扩展名称为 %s，' . '关键词为 %s', 'platform'), $ext_name, $v['cmd_word']), 'add', 'keyword');
         }
-        return $this->showmessage(RC_Lang::get('platform::platform.add_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_command/edit', array('ext_code' => $code))));
+        return $this->showmessage(__('添加成功', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_command/edit', array('ext_code' => $code))));
     }
 
     /**
@@ -197,11 +197,11 @@ class platform_command extends ecjia_platform
     {
         $this->admin_priv('platform_command_update');
 
-        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('关键词命令', RC_Uri::url('platform/platform_command/init')));
-        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('编辑关键词'));
+        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('关键词命令', 'platform'), RC_Uri::url('platform/platform_command/init')));
+        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('编辑关键词', 'platform')));
 
-        $this->assign('ur_here', '编辑关键词');
-        $this->assign('action_link', array('text' => '关键词列表', 'href' => RC_Uri::url('platform/platform_command/init')));
+        $this->assign('ur_here', __('编辑关键词', 'platform'));
+        $this->assign('action_link', array('text' => __('关键词列表', 'platform'), 'href' => RC_Uri::url('platform/platform_command/init')));
         $this->assign('form_action', RC_Uri::url('platform/platform_command/update'));
 
         $extend_list = RC_DB::table('platform_extend')->where('enabled', 1)->get();
@@ -240,12 +240,12 @@ class platform_command extends ecjia_platform
         if (!empty($cmd_word)) {
             foreach ($cmd_word as $key => $value) {
                 if (empty($value)) {
-                    return $this->showmessage(RC_Lang::get('platform::platform.keyword_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                    return $this->showmessage(__('关键词不能为空！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
                 }
                 //判断关键词是否重复
                 $count = RC_DB::table('platform_command')->where('account_id', $account_id)->where('cmd_word', $value)->count();
                 if ($count != 0) {
-                    return $this->showmessage(sprintf(RC_Lang::get('platform::platform.keywords_exist'), $value), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                    return $this->showmessage(sprintf(__('关键词[%s]已存在', 'platform'), $value), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
                 }
                 $val[] = $value;
             }
@@ -254,12 +254,12 @@ class platform_command extends ecjia_platform
         $count = array_count_values($val);
         foreach ($count as $c) {
             if ($c > 1) {
-                return $this->showmessage(RC_Lang::get('platform::platform.keyword_notrepeat'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage(__('关键词不能重复！', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
         }
 
         if (empty($code)) {
-            return $this->showmessage('请选择插件', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请选择插件', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         $data = [];
@@ -275,9 +275,9 @@ class platform_command extends ecjia_platform
         $ext_name = RC_DB::table('platform_extend')->where('ext_code', $code)->pluck('ext_name');
 
         foreach ($data as $v) {
-            $this->admin_log(RC_Lang::get('platform::platform.extend_name_is') . $ext_name . '，' . RC_Lang::get('platform::platform.keyword_is') . $v['cmd_word'], 'edit', 'keyword');
+            $this->admin_log(sprintf(__('扩展名称为 %s，' . '关键词为 %s', 'platform'), $ext_name, $v['cmd_word']), 'edit', 'keyword');
         }
-        return $this->showmessage(RC_Lang::get('platform::platform.edit_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_command/edit', array('ext_code' => $code))));
+        return $this->showmessage(__('编辑成功', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('platform/platform_command/edit', array('ext_code' => $code))));
     }
 
     /**
@@ -303,7 +303,7 @@ class platform_command extends ecjia_platform
         }
         $db->where('account_id', $account_id)->delete();
 
-        return $this->showmessage(RC_Lang::get('platform::platform.remove_succeed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+        return $this->showmessage(__('删除成功', 'platform'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
     public function get_sub_code()
