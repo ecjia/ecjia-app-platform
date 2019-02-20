@@ -66,7 +66,7 @@
 											<option value="wechat" {if $wechat.platform eq 'wechat'}selected="selected"{/if}>{lang key='platform::platform.weixin'}</option>
 										</select>
 									</div>
-									<span class="input-must">{lang key='system::system.require_field'}</span>
+									<span class="input-must">*</span>
 								</div>
 							
 								<div class="form-group">
@@ -87,7 +87,7 @@
 									<div class="controls col-lg-6">
 										<input class="form-control" type="text" name="name" id="name" value="{$wechat.name}" />
 									</div>
-									<span class="input-must">{lang key='system::system.require_field'}</span>
+									<span class="input-must">*</span>
 								</div>
 								
 								<div class="form-group">
@@ -118,7 +118,7 @@
 									</div>
 									<a class="toggle_view btn btn-primary filter-btn" href='{url path="platform/merchant/generate_token"}'  data-val="allow">生成Token</a>
 									<a class="btn btn-info copy-token-btn" href='javascript:;' data-clipboard-action="copy" data-clipboard-target="#token">复制Token</a>
-									<span class="input-must">{lang key='system::system.require_field'}</span>
+									<span class="input-must">*</span>
 								</div>
 								
 								<div class="form-group">
@@ -126,7 +126,7 @@
 									<div class="controls col-lg-6">
 										<input class="form-control" type="text" name="appid" id="appid" value="{$wechat.appid}" />
 									</div>
-									<span class="input-must">{lang key='system::system.require_field'}</span>
+									<span class="input-must">*</span>
 								</div>
 								
 								<div class="form-group">
@@ -134,7 +134,7 @@
 									<div class="controls col-lg-6">
 										<input class="form-control" type="text" name="appsecret" id="appsecret" value="{$wechat.appsecret}" />
 									</div>
-									<span class="input-must">{lang key='system::system.require_field'}</span>
+									<span class="input-must">*</span>
 								</div>
 								
 								<div class="form-group">
