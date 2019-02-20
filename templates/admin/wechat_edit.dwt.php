@@ -12,11 +12,11 @@
 
 <div class="staticalert alert alert-info alert-dismissable ui_showmessage panel"><a class="close" data-dismiss="alert">×</a>
 	<p><h3>{t domain="platform"}操作提示{/t}</h3></p>
-	<p>{t domain="platform"}一、配置前先需要申请一个微信服务号，并且通过微信认证。（认证服务号需要注意每年微信官方都需要重新认证，如果认证过期，接口功能将无法使用，具体请登录微信公众号平台了解详情）{/t}
-	<p>{t domain="platform"}二、网站域名 需要通过ICP备案并正确解析到空间服务器，临时域名与IP地址无法配置。{/t}
-	<p>{t domain="platform"}三、登录 <a href="https://mp.weixin.qq.com/" target="__blank">微信公众号平台 </a>，获取且依次填写好 公众号名称，公众号原始ID，Appid，Appsecret，token值。{/t}
-	<p>{t domain="platform"}四、自定义Token值，必须为英文或数字（长度为3-32字符），如 weixintoken，并保持后台与公众号平台填写的一致。{/t}
-	<p>{t domain="platform"}五、复制接口地址，填写到微信公众号平台 开发=> 基本配置，服务器配置下的 URL地址，验证提交通过后，并启用。（注意仅支持80端口）{/t}
+	<p>{t domain="platform"}一、配置前先需要申请一个微信服务号，并且通过微信认证。（认证服务号需要注意每年微信官方都需要重新认证，如果认证过期，接口功能将无法使用，具体请登录微信公众号平台了解详情）{/t}</p>
+	<p>{t domain="platform"}二、网站域名 需要通过ICP备案并正确解析到空间服务器，临时域名与IP地址无法配置。{/t}</p>
+	<p>{t escape=no domain="platform"}三、登录 <a href="https://mp.weixin.qq.com/" target="__blank">微信公众号平台 </a>，获取且依次填写好 公众号名称，公众号原始ID，Appid，Appsecret，token值。{/t}</p>
+	<p>{t domain="platform"}四、自定义Token值，必须为英文或数字（长度为3-32字符），如 weixintoken，并保持后台与公众号平台填写的一致。{/t}</p>
+    <p>{t domain="platform"}五、复制接口地址，填写到微信公众号平台 开发=> 基本配置，服务器配置下的 URL地址，验证提交通过后，并启用。（注意仅支持80端口）{/t}</p>
 </div>
 
 <div>
@@ -37,7 +37,7 @@
 						<div class="row-fluid edit-page">
 							{if $wechat.id neq ''}
 							<div class="control-group formSep">
-								<label class="control-label">UUID：</label>
+								<label class="control-label">{t domain="platform"}UUID：{/t}</label>
 								<div class="controls l_h30">
 									{$wechat.uuid}<br>
 									<input type="hidden" name="uuid" value="{$wechat.uuid}" />
@@ -86,7 +86,7 @@
 							</div>
 							
 							<div class="control-group formSep">
-								<label class="control-label">Logo：</label>
+								<label class="control-label">{t domain="platform"}Logo：{/t}</label>
 								<div class="controls chk_radio">
 									<div class="fileupload {if $wechat.logo}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">	
 										<div class="fileupload-preview fileupload-exists thumbnail" style="width: 50px; height: 50px; line-height: 50px;">
@@ -105,7 +105,7 @@
 							</div>		
 							
 							<div class="control-group formSep">
-								<label class="control-label">Token：</label>
+								<label class="control-label">{t domain="platform"}Token：{/t}</label>
 								<div class="controls">
 									<input class="generate_token w350" type="text" name="token" id="token" value="{$wechat.token}" />&nbsp;&nbsp;
 									<a class="toggle_view btn filter-btn" href='{url path="platform/admin/generate_token"}'  data-val="allow">{t domain="platform"}生成Token{/t}</a>&nbsp;&nbsp;
@@ -116,7 +116,7 @@
 							</div>
 							
 							<div class="control-group formSep">
-								<label class="control-label">AppID：</label>
+								<label class="control-label">{t domain="platform"}AppID：{/t}</label>
 								<div class="controls">
 									<input class="w350" type="text" name="appid" id="appid" value="{$wechat.appid}" />
 									<span class="input-must">*</span>
@@ -124,7 +124,7 @@
 							</div>
 							
 							<div class="control-group formSep">
-								<label class="control-label">AppSecret：</label>
+								<label class="control-label">{t domain="platform"}AppSecret：{/t}</label>
 								<div class="controls">
 									<input class="w350" type="text" name="appsecret" id="appsecret" value="{$wechat.appsecret}" />
 									<span class="input-must">*</span>
@@ -132,7 +132,7 @@
 							</div>
 							
 							<div class="control-group formSep">
-								<label class="control-label">EncodingAESKey：</label>
+								<label class="control-label">{t domain="platform"}EncodingAESKey：{/t}</label>
 								<div class="controls">
 									<input class="w350" type="text" name="aeskey" id="aeskey" value="{$wechat.aeskey}" />
 								</div>
