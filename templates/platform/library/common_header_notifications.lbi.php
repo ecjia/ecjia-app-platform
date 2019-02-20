@@ -71,6 +71,7 @@
             </a>
         </li>
         <li class="dropdown-menu-footer">
-            <a class="dropdown-item text-muted text-center" href="javascript:void(0)">{t domain="platform"}Read all notifications{/t}</a></li>
+            <a class="dropdown-item text-muted text-center" href="javascript:void(0)">{t domain="platform"}Read all notifications{/t}</a>
+        </li>
     </ul>
 </li>
