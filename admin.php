@@ -75,8 +75,8 @@ class admin extends ecjia_admin
         RC_Script::enqueue_script('clipboard', RC_App::apps_url('statics/js/clipboard.min.js', __FILE__));
         RC_Script::enqueue_script('platform', RC_App::apps_url('statics/js/platform.js', __FILE__), array(), false, true);
         RC_Script::enqueue_script('generate_token', RC_App::apps_url('statics/js/generate_token.js', __FILE__), array(), false, true);
+        RC_Script::localize_script('platform', 'js_lang', config('app-platform::jslang.admin_page'));
 
-        RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
         RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
 
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('公众号列表', 'platform'), RC_Uri::url('platform/admin/init')));

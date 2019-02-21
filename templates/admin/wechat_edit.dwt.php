@@ -91,7 +91,7 @@
 									<div class="fileupload {if $wechat.logo}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">	
 										<div class="fileupload-preview fileupload-exists thumbnail" style="width: 50px; height: 50px; line-height: 50px;">
 											{if $wechat.logo}
-											<img src="{$wechat.logo}" alt="{lang key='platform::platform.look_picture'}" />
+											<img src="{$wechat.logo}" alt='{t domain="platform"}图片预览{/t}' />
 											{/if}
 										</div>
 										<span class="btn btn-file">

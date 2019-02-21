@@ -70,7 +70,7 @@ class admin_command extends ecjia_admin
         RC_Style::enqueue_style('bootstrap-editable', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
         RC_Script::enqueue_script('platform', RC_App::apps_url('statics/js/platform.js', __FILE__), array(), false, true);
         RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
-        RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
+        RC_Script::localize_script('platform', 'js_lang', config('app-platform::jslang.admin_command_page'));
     }
 
     /**

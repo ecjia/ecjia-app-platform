@@ -48,11 +48,11 @@
                     appsecret: {required: true},
                 },
                 messages: {
-                    platform: {required: js_lang.platform},
-                    name: {required: js_lang.platform_name},
-                    token: {required: js_lang.token},
-                    appid: {required: js_lang.appid},
-                    appsecret: {required: js_lang.appsecret},
+                    platform: {required: js_lang.platform_required},
+                    name: {required: js_lang.platform_name_required},
+                    token: {required: js_lang.token_required},
+                    appid: {required: js_lang.appid_required},
+                    appsecret: {required: js_lang.appsecret_required},
                 },
                 submitHandler: function () {
                     $form.ajaxSubmit({
@@ -238,10 +238,10 @@
                 },
                 messages: {
                     ext_name: {
-                        required: js_lang.fun_plug_name,
+                        required: js_lang.fun_plug_name_required,
                     },
                     ext_desc: {
-                        required: js_lang.fun_plug_info,
+                        required: js_lang.fun_plug_info_required,
                     }
                 },
                 submitHandler: function () {
@@ -274,12 +274,12 @@
             $(".copy-url-btn").off('click').on('click', function (e) {
                 var url_clipboard = new ClipboardJS('.copy-url-btn');
                 url_clipboard.on('success', function (e) {
-                    smoke.alert('复制成功', {ok: '确定'});
+                    smoke.alert(js_lang.copy_success, {ok: js_lang.ok});
                     e.clearSelection();
                     url_clipboard.destroy();
                 });
                 url_clipboard.on('error', function (e) {
-                    smoke.alert('复制失败，请手动复制', {ok: '确定'});
+                    smoke.alert(js_lang.copy_failed, {ok: js_lang.ok});
                     e.clearSelection();
                     url_clipboard.destroy();
                 });
@@ -288,12 +288,12 @@
             $(".copy-token-btn").off('click').on('click', function (e) {
                 var token_clipboard = new ClipboardJS('.copy-token-btn');
                 token_clipboard.on('success', function (e) {
-                    smoke.alert('复制成功', {ok: '确定'});
+                    smoke.alert(js_lang.copy_success, {ok: js_lang.ok});
                     e.clearSelection();
                     token_clipboard.destroy();
                 });
                 token_clipboard.on('error', function (e) {
-                    smoke.alert('复制失败，请手动复制', {ok: '确定'});
+                    smoke.alert(js_lang.copy_failed, {ok: js_lang.ok});
                     e.clearSelection();
                     token_clipboard.destroy();
                 });

@@ -62,8 +62,9 @@ class platform_command extends ecjia_platform
         RC_Script::enqueue_script('jquery-form');
 
         RC_Script::enqueue_script('platform', RC_App::apps_url('statics/platform-js/platform.js', __FILE__), array(), false, true);
+        RC_Script::localize_script('platform', 'js_lang', config('app-platform::jslang.platform_command_page'));
+
         RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
-        RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
 
         ecjia_platform_screen::get_current_screen()->set_subject(__('关键词命令', 'platform'));
     }

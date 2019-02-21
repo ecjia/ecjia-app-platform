@@ -68,7 +68,8 @@ class admin_plugin extends ecjia_admin
         RC_Script::enqueue_script('jquery-chosen');
 
         RC_Script::enqueue_script('platform', RC_App::apps_url('statics/js/platform.js', __FILE__), array(), false, true);
-        RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
+        RC_Script::localize_script('platform', 'js_lang', config('app-platform::jslang.admin_plugin_page'));
+
         RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
 
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('公众平台', 'platform'), RC_Uri::url('platform/admin_plugin/init')));
@@ -117,7 +118,7 @@ class admin_plugin extends ecjia_admin
         ));
 
         ecjia_screen::get_current_screen()->set_help_sidebar(
-            '<p><strong>' . RC_Lang::get('platform::platform.more_info') . '</strong></p>' .
+            '<p><strong>' . __('更多信息：', 'platform') . '</strong></p>' .
             '<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia公众平台:功能扩展#.E7.BC.96.E8.BE.91.E5.8A.9F.E8.83.BD.E6.89.A9.E5.B1.95" target="_blank">' . __('关于编辑功能扩展帮助文档', 'platform') . '</a>') . '</p>'
         );
 

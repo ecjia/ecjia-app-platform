@@ -49,11 +49,11 @@
                     appsecret: {required: true},
                 },
                 messages: {
-                    platform: {required: js_lang.platform},
-                    name: {required: js_lang.platform_name},
-                    token: {required: js_lang.token},
-                    appid: {required: js_lang.appid},
-                    appsecret: {required: js_lang.appsecret},
+                    platform: {required: js_lang.platform_required},
+                    name: {required: js_lang.platform_name_required},
+                    token: {required: js_lang.token_required},
+                    appid: {required: js_lang.appid_required},
+                    appsecret: {required: js_lang.appsecret_required},
                 },
                 submitHandler: function () {
                     $form.ajaxSubmit({
@@ -239,10 +239,10 @@
                 },
                 messages: {
                     ext_name: {
-                        required: js_lang.fun_plug_name,
+                        required: js_lang.fun_plug_name_required,
                     },
                     ext_desc: {
-                        required: js_lang.fun_plug_info,
+                        required: js_lang.fun_plug_info_required,
                     }
                 },
                 submitHandler: function () {
@@ -285,7 +285,7 @@
                         e && $.post(url, info, function (data) {
                             ecjia.platform.showmessage(data);
                         }, 'json');
-                    }, {ok: '确定', cancel: '取消'});
+                    }, {ok: js_lang.ok, cancel: js_lang.cancel});
                 } else {
                     $.post(url, info, function (data) {
                         ecjia.platform.showmessage(data);

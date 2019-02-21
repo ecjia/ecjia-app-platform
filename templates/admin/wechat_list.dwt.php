@@ -26,7 +26,9 @@
 				<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu">
-				<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="platform/admin/batch_remove"}' data-msg='{t domain="platform"}您确定要这么做吗？{/t}' data-noSelectMsg="{lang key='platform::platform.delete_selected_plat'}" data-name="id" href="javascript:;"><i class="fontello-icon-trash"></i>{t domain="platform"}删除公众号{/t}</a></li>
+				<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="platform/admin/batch_remove"}' 
+				data-msg='{t domain="platform"}您确定要这么做吗？{/t}' data-noSelectMsg='{t domain="platform"}请先选中要删除的公众号！{/t}' 
+				data-name="id" href="javascript:;"><i class="fontello-icon-trash"></i>{t domain="platform"}删除公众号{/t}</a></li>
 			</ul>
 		</div>
 		

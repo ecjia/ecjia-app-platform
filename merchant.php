@@ -70,7 +70,8 @@ class merchant extends ecjia_merchant
 
         RC_Script::enqueue_script('clipboard', RC_App::apps_url('statics/js/clipboard.min.js', __FILE__));
         RC_Script::enqueue_script('platform', RC_App::apps_url('statics/mh-js/platform.js', __FILE__), array(), false, true);
-        RC_Script::localize_script('platform', 'js_lang', RC_Lang::get('platform::platform.js_lang'));
+        RC_Script::localize_script('platform', 'js_lang', config('app-platform::jslang.merchant_page'));
+
         RC_Style::enqueue_style('wechat_extend', RC_App::apps_url('statics/css/wechat_extend.css', __FILE__));
 
         ecjia_merchant_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('公众号列表', 'platform'), RC_Uri::url('platform/merchant/init')));
