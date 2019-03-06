@@ -1005,7 +1005,7 @@ msgstr ""
 #: content/apps/platform/templates/admin/wechat_edit.dwt.php:17
 #: content/apps/platform/templates/merchant/wechat_edit.dwt.php:16
 msgid ""
-"三、登录 <a href=\"https://mp.weixin.qq.com/\" target=\"__blank\">微信公众号"
+"三、登录 <a href=\"https://mp.weixin.qq.com/\" target=\"_blank\">微信公众号"
 "平台 </a>，获取且依次填写好 公众号名称，公众号原始ID，Appid，Appsecret，token"
 "值。"
 msgstr ""
