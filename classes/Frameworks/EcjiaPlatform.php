@@ -47,8 +47,8 @@
 namespace Ecjia\App\Platform\Frameworks;
 
 use ecjia;
+use Ecjia\System\Frameworks\Contracts\EcjiaTemplateFileLoader;
 use ecjia_base;
-use ecjia_template_fileloader;
 use ecjia_update_cache;
 use ecjia_admin_menu;
 use ecjia_view;
@@ -86,7 +86,8 @@ use Ecjia\App\Platform\Frameworks\Platform\Account;
 //定义在后台
 define('IN_PLATFORM', true);
 
-abstract class EcjiaPlatform extends ecjia_base implements ecjia_template_fileloader {
+abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoader
+{
 
 	/**
 	 * 
