@@ -125,6 +125,8 @@ class ScriptLoader extends EcjiaScriptLoader
         $this->scripts->add( 'ecjia-platform-app',    					$base_url.'/platform/js/core/app.js', array(), false, 1 );
         $this->scripts->add( 'ecjia-platform-customizer',				$base_url.'/platform/js/scripts/customizer.js', array(), false, 1 );
         $this->scripts->add( 'ecjia-platform-breadcrumbs-with-stats',   $base_url.'/platform/js/scripts/ui/breadcrumbs-with-stats.js', array(), false, 1 );
+        
+        $this->scripts->add( 'ecjia-platform-dashboard-analytics',   $base_url.'/platform/js/scripts/pages/dashboard-analytics.js', array(), false, 1 );
 
         $this->scripts->add( 'ecjia-platform-components-modal',    	    $base_url.'/platform/js/scripts/modal/components-modal.js', array(), false, 1 );
 
