@@ -363,6 +363,8 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 	 * 后台判断是否登录
 	 */
 	private function checkLogin() {
+        $this->assign('ecjia_platform_cptitle', __('公众平台', 'platform'));
+
         /* 验证公开路由 */
         if ($this->isVerificationPublicRoute()) {
             return true;
@@ -375,9 +377,6 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 
         /* 检测是否同一个商家 */
         if ($this->checkSameStore()) {
-
-            $this->assign('ecjia_platform_cptitle', __('公众平台', 'platform'));
-
             return true;
         }
 
