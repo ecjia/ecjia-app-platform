@@ -156,7 +156,7 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 		}
 
 
-        if (session('session_user_id') && session('session_user_type') && session('uuid')) {
+        if (session('session_user_id') && session('session_user_type') && session('uuid') && !is_null($this->platformAccount)) {
             if (session('session_user_type') == 'admin') {
 
                 $this->currentStore = new \Ecjia\System\Admins\Stores\AdminShop(session('store_id'));
