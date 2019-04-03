@@ -61,7 +61,6 @@ use admin_menu;
 use ecjia_admin_log;
 
 use RC_Loader;
-use RC_Lang;
 use RC_Config;
 use RC_Hook;
 use RC_Session;
@@ -156,7 +155,6 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 		    }
 		}
 
-        $this->assign('platformAccount', $this->platformAccount);
 
         if (session('session_user_id') && session('session_user_type')) {
             if (session('session_user_type') == 'admin') {
@@ -174,6 +172,7 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 
             }
 
+            $this->assign('platformAccount', $this->platformAccount);
             $this->assign('currentStore', $this->currentStore);
             $this->assign('ecjia_platform_cptitle', sprintf("%s的%s", $this->currentStore->getStoreName(), $this->platformAccount->getAccountName()));
             $this->assign('currentUser', $this->currentUser);
@@ -343,17 +342,22 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
         if (session('uuid')) {
             try {
                 $this->platformAccount = new Account(session('uuid'));
+
+                if (session('store_id') != $this->platformAccount->getStoreId()) {
+                    return false;
+                }
+
+                return true;
             }
             catch (AccountException $e) {
                 return false;
             }
 
-            if (session('store_id') != $this->platformAccount->getStoreId()) {
-                return false;
-            }
+        }
+        else {
+            return false;
         }
 
-        return true;
     }
 
 	/**
