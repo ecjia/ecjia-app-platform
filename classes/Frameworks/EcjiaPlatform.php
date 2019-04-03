@@ -137,7 +137,7 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 		$this->public_route = RC_Hook::apply_filters('platform_access_public_route', $this->public_route);
 
 		// 判断用户是否登录
-		if (!$this->_check_login()) {
+		if (!$this->checkLogin()) {
 		    RC_Session::destroy();
 		    if (is_pjax()) {
 		        Screen::$current_screen->add_nav_here(new admin_nav_here(__('系统提示', 'platform')));
@@ -155,8 +155,7 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 		    }
 		}
 
-
-        if (session('session_user_id') && session('session_user_type') && session('uuid') && !is_null($this->platformAccount)) {
+        if ($this->platformAccount) {
             if (session('session_user_type') == 'admin') {
 
                 $this->currentStore = new \Ecjia\System\Admins\Stores\AdminShop(session('store_id'));
@@ -363,7 +362,7 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 	/**
 	 * 后台判断是否登录
 	 */
-	private function _check_login() {
+	private function checkLogin() {
         /* 验证公开路由 */
         if ($this->isVerificationPublicRoute()) {
             return true;
