@@ -340,6 +340,8 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 			
 		    return true;
 		}
+
+		return false;
 	}
 
 	/**
