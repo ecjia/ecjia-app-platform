@@ -106,6 +106,10 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 	 */
 	protected $currentUser;
 
+    protected $public_route = array(
+        'platform/privilege/autologin',
+    );
+
 	public function __construct() {
 		parent::__construct();
 
@@ -131,10 +135,16 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 
 		RC_Hook::add_action('platform_print_main_header', array(Screen::$current_screen, 'render_screen_meta'));
 
-		$this->public_route = array(
-			'platform/privilege/autologin',
-		);
 		$this->public_route = RC_Hook::apply_filters('platform_access_public_route', $this->public_route);
+
+        if (session('uuid')) {
+            try {
+                $this->platformAccount = new Account(session('uuid'));
+            }
+            catch (AccountException $e) {
+                ecjia_log_error($e->getMessage());
+            }
+        }
 
 		// 判断用户是否登录
 		if (!$this->checkLogin()) {
@@ -338,25 +348,15 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
      */
     protected function checkSameStore()
     {
-        if (session('uuid')) {
-            try {
-                $this->platformAccount = new Account(session('uuid'));
-
-                if (session('store_id') != $this->platformAccount->getStoreId()) {
-                    return false;
-                }
-
-                return true;
-            }
-            catch (AccountException $e) {
-                return false;
-            }
-
-        }
-        else {
+        if (is_null($this->platformAccount)) {
             return false;
         }
 
+        if (session('store_id') !== $this->platformAccount->getStoreId()) {
+            return false;
+        }
+
+        return true;
     }
 
 	/**
@@ -480,7 +480,7 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 	public function admin_session($uuid, $store_id, $user_id, $user_type, $user_name, $action_list, $last_time, $email = '') 
 	{
 	    RC_Session::set('uuid', $uuid); 
-	    RC_Session::set('store_id', $store_id);
+	    RC_Session::set('store_id', intval($store_id));
 		RC_Session::set('action_list', $action_list);
 		RC_Session::set('session_user_id', $user_id);
 		RC_Session::set('session_user_type', $user_type);
