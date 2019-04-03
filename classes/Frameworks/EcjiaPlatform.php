@@ -157,8 +157,6 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 		}
 
         $this->assign('platformAccount', $this->platformAccount);
-        $this->assign('currentStore', $this->currentStore);
-        $this->assign('ecjia_platform_cptitle', sprintf("%s的%s", $this->currentStore->getStoreName(), $this->platformAccount->getAccountName()));
 
         if (session('session_user_id') && session('session_user_type')) {
             if (session('session_user_type') == 'admin') {
@@ -175,6 +173,9 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
                     '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');
 
             }
+
+            $this->assign('currentStore', $this->currentStore);
+            $this->assign('ecjia_platform_cptitle', sprintf("%s的%s", $this->currentStore->getStoreName(), $this->platformAccount->getAccountName()));
             $this->assign('currentUser', $this->currentUser);
         }
 
