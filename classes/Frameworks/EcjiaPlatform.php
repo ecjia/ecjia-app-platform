@@ -47,6 +47,7 @@
 namespace Ecjia\App\Platform\Frameworks;
 
 use ecjia;
+use Ecjia\App\Platform\Frameworks\Exceptions\AccountException;
 use Ecjia\System\Frameworks\Contracts\EcjiaTemplateFileLoader;
 use ecjia_base;
 use ecjia_update_cache;
@@ -154,6 +155,28 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 		        exit();
 		    }
 		}
+
+        $this->assign('platformAccount', $this->platformAccount);
+        $this->assign('currentStore', $this->currentStore);
+        $this->assign('ecjia_platform_cptitle', sprintf("%s的%s", $this->currentStore->getStoreName(), $this->platformAccount->getAccountName()));
+
+        if (session('session_user_id') && session('session_user_type')) {
+            if (session('session_user_type') == 'admin') {
+
+                $this->currentStore = new \Ecjia\System\Admins\Stores\AdminShop(session('store_id'));
+                $this->currentUser = new \Ecjia\System\Admins\Users\AdminUser(session('session_user_id'),
+                    '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
+
+            }
+            elseif (session('session_user_type') == 'merchant') {
+
+                $this->currentStore = new \Ecjia\App\Merchant\Frameworks\Stores\MerchantShop(session('store_id'));
+                $this->currentUser = new \Ecjia\App\Merchant\Frameworks\Users\StaffUser(session('session_user_id'), $this->platformAccount->getStoreId(),
+                    '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');
+
+            }
+            $this->assign('currentUser', $this->currentUser);
+        }
 
 		if (RC_Config::get('system.debug')) {
 			error_reporting(E_ALL);
@@ -296,50 +319,63 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 	    }
 	}
 
+    /**
+     * 登录session授权
+     */
+    protected function authSession()
+    {
+        /* 验证管理员身份 */
+        if (session('session_user_id') > 0 &&
+            (session('session_user_type') == 'admin' || session('session_user_type') == 'merchant')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 检测是否同一个商家
+     * @return bool
+     */
+    protected function checkSameStore()
+    {
+        if (session('uuid')) {
+            try {
+                $this->platformAccount = new Account(session('uuid'));
+            }
+            catch (AccountException $e) {
+                return false;
+            }
+
+            if (session('store_id') != $this->platformAccount->getStoreId()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 	/**
 	 * 后台判断是否登录
 	 */
 	private function _check_login() {
-		$route_controller = ROUTE_M . '/' . ROUTE_C . '/' . ROUTE_A;
-		if (in_array($route_controller, $this->public_route)) {
-		    return true;
-		}
+        /* 验证公开路由 */
+        if ($this->isVerificationPublicRoute()) {
+            return true;
+        }
 
-		/* 验证管理员身份 */
-		if (session('session_user_id') > 0 && 
-		    (session('session_user_type') == 'admin' || session('session_user_type') == 'merchant')) {
-			
-			if (session('uuid')) {
-				$this->platformAccount = new Account(session('uuid'));
-				$this->assign('platformAccount', $this->platformAccount);
-			
-				if (session('store_id') == $this->platformAccount->getStoreId()) {
-					if (session('session_user_type') == 'admin') {
-						$this->currentStore = new \Ecjia\System\Admins\Stores\AdminShop(session('store_id'));
-					} else if (session('session_user_type') == 'merchant') {
-						$this->currentStore = new \Ecjia\App\Merchant\Frameworks\Stores\MerchantShop(session('store_id'));
-					}
-					$this->assign('currentStore', $this->currentStore);
+        /* 验证管理员身份 */
+        if ($this->authSession()) {
+            return true;
+        }
 
-                    $this->assign('ecjia_platform_cptitle', sprintf("%s的%s", $this->currentStore->getStoreName(), $this->platformAccount->getAccountName()));
-				} else {
-                    return false;
-                }
-			} else {
-				$this->assign('ecjia_platform_cptitle', __('公众平台', 'platform'));
-			}
-			
-			if (session('session_user_id') && session('session_user_type')) {
-				if (session('session_user_type') == 'admin') {
-					$this->currentUser = new \Ecjia\System\Admins\Users\AdminUser(session('session_user_id'), '\Ecjia\App\Platform\Frameworks\Users\AdminUserAllotPurview');
-				} else if (session('session_user_type') == 'merchant') {
-					$this->currentUser = new \Ecjia\App\Merchant\Frameworks\Users\StaffUser(session('session_user_id'), $this->platformAccount->getStoreId(), '\Ecjia\App\Platform\Frameworks\Users\StaffUserAllotPurview');
-				}
-				$this->assign('currentUser', $this->currentUser);
-			}
-			
-		    return true;
-		}
+        /* 检测是否同一个商家 */
+        if ($this->checkSameStore()) {
+
+            $this->assign('ecjia_platform_cptitle', __('公众平台', 'platform'));
+
+            return true;
+        }
 
 		return false;
 	}
