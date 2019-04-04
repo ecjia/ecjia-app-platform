@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ecjia App platform 1.27.4\n"
 "Report-Msgid-Bugs-To: https://make.ecjia.com/polyglots/\n"
-"POT-Creation-Date: 2019-03-13 05:24:29+00:00\n"
+"POT-Creation-Date: 2019-04-04 05:54:39+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -156,7 +156,7 @@ msgid ""
 msgstr ""
 
 #: admin_plugin.php:75 apis/platform_admin_menu_api.class.php:58
-#: classes/Frameworks/EcjiaPlatform.php:329
+#: classes/Frameworks/EcjiaPlatform.php:366
 #: classes/hooks/merchant_platform.class.php:55 configs/package.php:55
 #: configs/package.php:56
 msgid "公众平台"
@@ -324,30 +324,30 @@ msgstr ""
 msgid " 页"
 msgstr ""
 
-#: classes/Frameworks/EcjiaPlatform.php:143
-#: classes/Frameworks/EcjiaPlatform.php:468
+#: classes/Frameworks/EcjiaPlatform.php:153
+#: classes/Frameworks/EcjiaPlatform.php:509
 msgid "系统提示"
 msgstr ""
 
-#: classes/Frameworks/EcjiaPlatform.php:144
-#: classes/Frameworks/EcjiaPlatform.php:148
+#: classes/Frameworks/EcjiaPlatform.php:154
+#: classes/Frameworks/EcjiaPlatform.php:158
 msgid "对不起 ,您没有执行此项操作的权限!"
 msgstr ""
 
-#: classes/Frameworks/EcjiaPlatform.php:144
+#: classes/Frameworks/EcjiaPlatform.php:154
 msgid "重新登录"
 msgstr ""
 
-#: classes/Frameworks/EcjiaPlatform.php:409
+#: classes/Frameworks/EcjiaPlatform.php:450
 msgid "操作错误"
 msgstr ""
 
-#: classes/Frameworks/EcjiaPlatform.php:464
-#: classes/Frameworks/EcjiaPlatform.php:469
+#: classes/Frameworks/EcjiaPlatform.php:505
+#: classes/Frameworks/EcjiaPlatform.php:510
 msgid "对不起，您没有执行此项操作的权限！"
 msgstr ""
 
-#: classes/Frameworks/EcjiaPlatform.php:859
+#: classes/Frameworks/EcjiaPlatform.php:900
 msgid "版权所有 © 2013-2018 上海商创网络科技有限公司，并保留所有权利。"
 msgstr ""
 
@@ -689,11 +689,11 @@ msgstr ""
 msgid "插件配置"
 msgstr ""
 
-#: content/apps/platform/templates/platform/wechat_extend_view.dwt.php:132
+#: content/apps/platform/templates/platform/wechat_extend_view.dwt.php:131
 msgid "该插件暂无配置"
 msgstr ""
 
-#: content/apps/platform/templates/platform/wechat_extend_view.dwt.php:138
+#: content/apps/platform/templates/platform/wechat_extend_view.dwt.php:136
 #: content/apps/platform/templates/admin/extend_edit.dwt.php:41
 #: content/apps/platform/templates/admin/wechat_edit.dwt.php:168
 #: content/apps/platform/templates/merchant/wechat_edit.dwt.php:174
