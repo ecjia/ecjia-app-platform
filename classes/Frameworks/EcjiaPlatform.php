@@ -107,6 +107,7 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 	protected $currentUser;
 
     protected $public_route = array(
+        'platform/privilege/autologin',
         'weapp/privilege/autologin',
     );
 
