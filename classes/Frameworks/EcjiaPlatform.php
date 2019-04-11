@@ -107,7 +107,7 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 	protected $currentUser;
 
     protected $public_route = array(
-        'platform/privilege/autologin',
+        'weapp/privilege/autologin',
     );
 
 	public function __construct() {
@@ -372,7 +372,6 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 	 * 后台判断是否登录
 	 */
 	private function checkLogin() {
-        $this->assign('ecjia_platform_cptitle', __('公众平台', 'platform'));
 
         /* 验证公开路由 */
         if ($this->isVerificationPublicRoute()) {
@@ -388,6 +387,8 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
         if ($this->checkSameStore()) {
             return true;
         }
+
+        $this->assign('ecjia_platform_cptitle', __('公众平台', 'platform'));
 
 		return false;
 	}
