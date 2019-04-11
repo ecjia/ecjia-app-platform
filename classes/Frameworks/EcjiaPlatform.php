@@ -159,8 +159,7 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
                 royalcms('response')->send();
 		        exit();
 		    } else {
-		        $back_url = str_replace(RC_Uri::site_url(), RC_Uri::home_url(), RC_Uri::url('@privilege/login'));
-		        $this->redirect($back_url);
+		        $this->redirect($this->platformAccount->getLoginUrl());
                 royalcms('response')->send();
 		        exit();
 		    }
