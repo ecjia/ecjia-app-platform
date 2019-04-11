@@ -159,7 +159,7 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
                 royalcms('response')->send();
 		        exit();
 		    } else {
-		        $this->redirect($this->platformAccount->getLoginUrl());
+		        $this->redirect($this->getPlatformLoginUrl());
                 royalcms('response')->send();
 		        exit();
 		    }
@@ -208,6 +208,15 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 		
 		RC_Hook::do_action('ecjia_platform_finish_launching');
 	}
+
+	public function getPlatformLoginUrl()
+    {
+        if ($this->platformAccount) {
+            return $this->platformAccount->getLoginUrl();
+        }
+
+        return RC_Uri::home_url();
+    }
 	
 	public function getPlatformAccount()
     {
