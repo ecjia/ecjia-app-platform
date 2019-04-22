@@ -199,7 +199,7 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 		Loader::default_scripts($rc_script);
 		Loader::default_styles($rc_style);
 
-		$this->load_cachekey();
+//		$this->load_cachekey();
 
 		$this->load_default_script_style();
 		
@@ -326,17 +326,17 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
 	    }
 	}
 
-	/**
-	 * 加载缓存key
-	 */
-	protected function load_cachekey() {
-	    $res = RC_Api::api('system', 'system_cache');
-	    if (! empty($res)) {
-	        foreach ($res as $cache_handle) {
-	            ecjia_update_cache::make()->register($cache_handle->getCode(), $cache_handle);
-	        }
-	    }
-	}
+//	/**
+//	 * 加载缓存key
+//	 */
+//	protected function load_cachekey() {
+//	    $res = RC_Api::api('system', 'system_cache');
+//	    if (! empty($res)) {
+//	        foreach ($res as $cache_handle) {
+//	            ecjia_update_cache::make()->register($cache_handle->getCode(), $cache_handle);
+//	        }
+//	    }
+//	}
 
     /**
      * 登录session授权
