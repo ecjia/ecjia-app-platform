@@ -229,6 +229,11 @@ abstract class EcjiaPlatform extends ecjia_base implements EcjiaTemplateFileLoad
         return $this->platformAccount->getPlatform();
     }
 
+    protected function registerServiceProvider()
+    {
+        royalcms()->forgeRegister('Ecjia\System\Providers\EcjiaAdminServiceProvider');
+    }
+
 	protected function session_start()
 	{
 	    RC_Hook::add_filter('royalcms_session_name', function ($sessin_name) {
