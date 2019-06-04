@@ -113,7 +113,7 @@ class admin_privilege extends ecjia_admin
         /* 显示页面 */
         $this->assign('form_action', RC_Uri::url('platform/admin_privilege/update_allot'));
 
-        $this->display('privilege_allot.dwt');
+        return $this->display('privilege_allot.dwt');
     }
 
     /**
