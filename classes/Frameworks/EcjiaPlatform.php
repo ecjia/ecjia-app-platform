@@ -156,9 +156,7 @@ abstract class EcjiaPlatform extends EcjiaController implements EcjiaTemplateFil
                 royalcms('response')->send();
 		        exit();
 		    } else {
-		        $this->redirect($this->getPlatformLoginUrl());
-                royalcms('response')->send();
-		        exit();
+		        $this->redirectWithExited($this->getPlatformLoginUrl());
 		    }
 		}
 
