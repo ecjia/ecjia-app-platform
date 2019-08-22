@@ -52,7 +52,7 @@ class platform_merchant_hooks
     {
         //在父级菜单里添加权限值
         $menus->add_purview('platform_config_manage');
-        $menu = ecjia_merchant::make_admin_menu('11_merchant_platform', __('公众平台', 'platform'), RC_Uri::url('platform/merchant/init'), 11)->add_purview('platform_config_manage')->add_icon('fa-navicon');
+        $menu = ecjia_merchant::make_admin_menu('08_merchant_platform', __('公众平台', 'platform'), RC_Uri::url('platform/merchant/init'), 8)->add_purview('platform_config_manage')->add_icon('fa-navicon');
 
         $menus->add_submenu($menu);
         return $menus;
